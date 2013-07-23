@@ -1,6 +1,4 @@
 <?php
-// Includes
-include('meta-boxes.php');
 // Task custom post type
 function register_cpt_task() {
     $labels = array( 
@@ -28,7 +26,7 @@ function register_cpt_task() {
         'show_ui' => true,
         'show_in_menu' => true,
         'menu_position' => 20,
-        'menu_icon' => plugins_url( '/ico.png' , __FILE__ ),
+        'menu_icon' => plugins_url( 'images/ico.png' , __FILE__ ),
         'show_in_nav_menus' => true,
         'publicly_queryable' => true,
         'exclude_from_search' => false,

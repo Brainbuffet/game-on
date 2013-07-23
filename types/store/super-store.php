@@ -8,14 +8,13 @@ Creation Date: 05/09/13
 */
 // Includes
 include ("store-shortcode.php");
-include ("meta-boxes.php");
 include ('includes/lightbox/backend-lightbox.php');
 //////////////////////////////////////////////////////////////////////////////////////
 /////////////////////          Store Taxonomy             ////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
 //Adds Store Texonomy
-add_action('init' , 'cb_store_taxonomy' );
-function cb_store_taxonomy()
+add_action('init' , 'go_store_taxonomy' );
+function go_store_taxonomy()
   {
      $labels = array(
     'name' => _x( 'Store Categories', 'taxonomy general name' ),
@@ -43,13 +42,13 @@ function cb_store_taxonomy()
 //////////////////////////////////////////////////////////////////////////////////////
 /////////////////////           Store Post Type           ////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
-add_action( 'init', 'cb_store_post_type' );
-function cb_store_post_type() {
-	register_post_type( 'cb_store',
+add_action( 'init', 'go_store_post_type' );
+function go_store_post_type() {
+	register_post_type( 'go_store',
 		array(
 			'labels' => array(
 				'name' => 'Store',
-				'menu_name' => 'Store Items',
+				'menu_name' => 'Store',
                 'singular_name' => 'Store Item',
                 'add_new' => 'New Store Item',
                 'add_new_item' => 'New Store Item',
@@ -70,46 +69,47 @@ function cb_store_post_type() {
 			'rewrite' => array('slug' => 'store'),
 			'menu_icon' => plugins_url( '/images/little-ico.png' , __FILE__ ),  // Icon Path
 			'hierachical' => true,
+			'menu_position' => 21,
 			'supports' => array( 'title', 'thumbnail', 'excerpt', 'page-attributes', 'editor', 'custom-fields', 'revisions', 'comments' )
 			
 		)
 	);
 }
 // Default Content
-$cb_store_new_page = $_GET["cb_store"]; // Gets t/f from permalink
-if($cb_store_new_page == true) { // if was linked to from the cb_store content type
-function cb_store_editor_content( $content ) { // run this function (that accepts $content paramater)
-	$cb_store_id = $_GET["cb_store_id"]; // define the cb_store item's id as a variable
-	$content = '[cb_store id="'.$cb_store_id.'"]'; // paste the id in a shortcode
+$go_store_new_page = $_GET["go_store"]; // Gets t/f from permalink
+if($go_store_new_page == true) { // if was linked to from the go_store content type
+function go_store_editor_content( $content ) { // run this function (that accepts $content paramater)
+	$go_store_id = $_GET["go_store_id"]; // define the go_store item's id as a variable
+	$content = '[go_store id="'.$go_store_id.'"]'; // paste the id in a shortcode
 	return $content; // return all of that
 }
-add_filter( 'default_content', 'cb_store_editor_content' ); // filter the content area using wp's default_content filter
+add_filter( 'default_content', 'go_store_editor_content' ); // filter the content area using wp's default_content filter
 }
 
 // Add New Post(of any content type) w/ Store Item Button
 $item_id = $_GET["post"];
-$cb_post_type = get_post_type($item_id);
-if ($cb_post_type === 'cb_store') {
-function cb_new_item_permalink( $arg, $post_id ){
+$go_post_type = get_post_type($item_id);
+if ($go_post_type === 'go_store') {
+function go_new_item_permalink( $arg, $post_id ){
 	global $is_resetable;
 	if( ereg('edit-slug', $arg) ){
 		$is_resetable = true;
-		$cb_store_id = $_GET["post"];
-		$arg .= '<span id="edit-slug button button-small hide-if-no-js"><a href="javascript:void(0)" onclick = "document.getElementById(\'cb_lightbox\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'" class="button button-small" >Insert </a></span>';
+		$go_store_id = $_GET["post"];
+		$arg .= '<span id="edit-slug button button-small hide-if-no-js"><a href="javascript:void(0)" onclick = "document.getElementById(\'go_lightbox\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'" class="button button-small" >Insert </a></span>';
 	}
 	return $arg;
 } 
-add_filter( 'get_sample_permalink_html', 'cb_new_item_permalink',5,2 );
+add_filter( 'get_sample_permalink_html', 'go_new_item_permalink',5,2 );
 } else {
-function cb_new_item_permalink( $arg, $post_id ){
+function go_new_item_permalink( $arg, $post_id ){
 	global $is_resetable;
 	if( ereg('edit-slug', $arg) ){
 		$is_resetable = true;
-		$cb_store_id = $_GET["post"];
-		$arg .= '<span id="edit-slug button button-small hide-if-no-js"><a href="javascript:void(0)" onclick="document.getElementById(\'cb_lightbox\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'" class="button button-small" >Insert Store</a></span> ';
+		$go_store_id = $_GET["post"];
+		$arg .= '<span id="edit-slug button button-small hide-if-no-js"><a href="javascript:void(0)" onclick="document.getElementById(\'go_lightbox\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'" class="button button-small" >Insert Store</a></span> ';
 	}
 	return $arg;
 } 
-add_filter( 'get_sample_permalink_html', 'cb_new_item_permalink',5,2 );
+add_filter( 'get_sample_permalink_html', 'go_new_item_permalink',5,2 );
 }
 ?>

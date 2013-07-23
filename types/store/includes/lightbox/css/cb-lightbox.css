@@ -24,19 +24,19 @@
 	overflow: auto;
 	border-radius: 3px;
 }
-.cb_lb_closer {
+.go_lb_closer {
 	position: absolute;
 	top: 7px;
 	right: 13px;
 }
-.cb-lb-loading {
+.go-lb-loading {
 	background: url('/wp-content/plugins/cube-gold/test-store/images/ajax-loader.gif');
 	width: 16px;
 	height: 16px;
 	margin: 0 auto;
 	margin-top: 25%;
 }
-#cb-buy-loading {
+#go-buy-loading {
 	width: 16px;
 	height: 11px;
 	margin: 0 auto;
@@ -49,7 +49,7 @@
 .buy_r {
 	background: url('/wp-content/plugins/cube-gold/test-store/images/ajax-loader-buy-red.gif');
 }
-.cblb-fr-boxes-r {
+.golb-fr-boxes-r {
 	float: left;
 	width: 30%;
 	padding: 5px 0px 5px 0px;
@@ -63,13 +63,13 @@
 	border-radius: 3px;
 	cursor:pointer;
 }
-.cblb-fr-boxes-r:hover {
+.golb-fr-boxes-r:hover {
 	background-color: #fff7f5;
 }
-.cblb-fr-boxes-r:active {
+.golb-fr-boxes-r:active {
 	background-color: #ffccc5;
 }
-.cblb-fr-boxes-g {
+.golb-fr-boxes-g {
 	float: left;
 	width: 30%;
 	padding: 5px 0px 5px 0px;
@@ -83,9 +83,9 @@
 	border-radius: 3px;
 	cursor: pointer;
 }
-.cblb-fr-boxes-g:hover {
+.golb-fr-boxes-g:hover {
 	background-color: #e8ffe8;
 }
-.cblb-fr-boxes-g:active {
+.golb-fr-boxes-g:active {
 	background-color: #93e293;
 }

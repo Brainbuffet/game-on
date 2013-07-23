@@ -54,7 +54,7 @@ function go_ranks_registration(){
 	global $wpdb;
 	$ranks = get_option('go_ranks',false);
 		if(!$ranks){
-			$ranks = array('Level 1'=>0);
+			$ranks = array('Level 1'=>0, 'Level 2'=> 100);
 			update_option('go_ranks',$ranks);
 			}
 	}
@@ -64,23 +64,18 @@ function go_install_data(){
 	global $wpdb;
 	 $table_name_user_meta = $wpdb->prefix . "usermeta";
 	 $table_name_go_totals = $wpdb->prefix . "go_totals";
-
-	$role = get_option('go_role','student');
+global $default_role;
+	$role = get_option('go_role',$default_role);
 	$uid = $wpdb->get_results("SELECT user_id
 FROM ".$table_name_user_meta."
 WHERE meta_key =  'wp_capabilities'
-AND meta_value LIKE  '%student%'");
+AND meta_value LIKE  '%".$role."%'");
  foreach($uid as $id){
  foreach($id as $uids){
 	 
 	 
 	 
- $rank_check =	get_user_meta($uids, 'go_rank');
- if(empty($rank_check)){ 
- $ranks = get_option('go_ranks', false);
  
-  update_user_meta($uids,'go_rank' );
-}
 
 
 
@@ -91,6 +86,24 @@ AND meta_value LIKE  '%student%'");
 						} else {
 		 					$wpdb->update( $table_name_go_totals, array( 'uid' => $uids), array( 'uid' => $uids ), array('%d'), array( '%d') ) ;
 								}
+								
+								
+$rank_check =	get_user_meta($uids, 'go_rank');
+ if(empty($rank_check)){ 
+ $ranks = get_option('go_ranks', false);
+ $current_points = go_return_points($uids);
+ while($current_points >= current($ranks)){
+	 next($ranks);
+	 }
+ $next_rank_points = current($ranks);
+ $next_rank = array_search($next_rank_points, $ranks);
+ $rank_points = prev($ranks);
+ $rank = array_search($rank_points, $ranks);
+ $new_rank= array(array($rank, $rank_points),array($next_rank, $next_rank_points));
+  update_user_meta($uids,'go_rank', $new_rank );
+}								
+
+								
 				}
 		}
 }
@@ -104,9 +117,9 @@ function go_user_registration($user_id) {
  $role = get_option('go_role',$role_default);
  $user_role = get_user_meta($user_id,'wp_capabilities', true);
  if(array_search(1, $user_role) == $role){
- $ranks = get_option('go_ranks', false);
- $wpdb->insert( $table_name_go_totals,array( 'uid' => $user_id ),  array(  '%s' ) );
- update_user_meta($user_id,'go_rank');
+ $rank = array(array('Level 1', 0),array('Level 2', 100));
+ $wpdb->insert( $table_name_go_totals,array( 'uid' => $user_id, 'totalpoints' => 0 ),  array(  '%s' ) );
+ update_user_meta($user_id,'go_rank', $rank);
  }
 }	
 

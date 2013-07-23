@@ -3,7 +3,8 @@
 function go_ranks() {
 global $wpdb;
 $dir = plugin_dir_url(__FILE__);
-add_menu_page('Ranks options', 'Ranks', 'manage_options', 'go_ranks_settings', 'go_ranks_menu');}
+add_menu_page('Ranks options', 'Ranks', 'manage_options', 'go_ranks_settings', 'go_ranks_menu');
+}
 
 function go_ranks_menu() {
 		global $wpdb;
@@ -120,7 +121,7 @@ function go_update_ranks($user_id, $added_points){
 	
 	}
 
-function go_get_rank($user_id){
+function go_get_rank($user_id) {
 	$rank = get_user_meta($user_id, 'go_rank');
 	global $current_rank;
 	global $current_rank_points;
@@ -131,7 +132,7 @@ function go_get_rank($user_id){
 	$next_rank = $rank[1][0];
 	$next_rank_points = $rank[1][1];
 }
-function go_get_all_ranks(){
+function go_get_all_ranks() {
 	$all_ranks = get_option('go_ranks');
 	$all_ranks_sorted = array();
 	 foreach($all_ranks as $level => $points) {
@@ -139,5 +140,20 @@ function go_get_all_ranks(){
 		 }
 	return $all_ranks_sorted;
 }
-	
+function go_clean_ranks() {
+	$all_ranks = get_option('go_ranks');
+	$all_ranks_sorted = array();
+	return $all_ranks_sorted;
+}
+function go_get_rank_key($points) {
+	global $wpdb;
+	$ranks = get_option('go_ranks',false);
+	foreach ($ranks as $key => $rank ) {
+		switch($rank) {
+			case $points:
+				return $key;
+				break;
+		}
+	}
+}
 ?>
