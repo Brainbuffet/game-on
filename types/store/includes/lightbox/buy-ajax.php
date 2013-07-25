@@ -20,7 +20,8 @@ function go_buy_item(){
 	$user_points = go_return_points($user_ID);
 	$user_currency = go_return_currency($user_ID);
 	if ($user_currency >= $req_currency && $user_points >= $req_points) {
-		echo 'Purchased';
+		echo 'Purchased for '.$req_currency;
+		go_add_post($user_ID, $the_id, $status, '' , -$req_currency);
 	} else {
 		if ($req_currency > $user_currency) {
 			echo 'Insuffcient Funds'; 
