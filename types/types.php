@@ -58,12 +58,12 @@ function go_mta_con_meta( array $meta_boxes ) {
 	    			'quicktags' => true // load Quicktags, can be used to pass settings directly to Quicktags using an array()	
 					),
 				),
-			array(
-				'name' => 'Repeatable',
-				'desc' => ' wether or not the task can be repeated',
-				'id'   => $prefix . 'task_repeat',
-				'type' => 'checkbox'
-			),
+				array(
+					'name' => 'Repeatable',
+					'desc' => ' wether or not the task can be repeated',
+					'id'   => $prefix . 'task_repeat',
+					'type' => 'checkbox'
+				),
 			),
 		);
 	// Store Meta Boxes

@@ -3,7 +3,6 @@ include('includes/lightbox/frontend-lightbox.php');
 // Store Shortcode
 function go_gold_store_sc ($atts, $content = null) {
 	$user_ID = get_current_user_id(); // Current User ID
-	$user_gold = 50;
 	$user_points = go_return_points( $user_ID ); // Current CubePoints points
 	$args = array( 'post_type' => 'go_store', 'posts_per_page' => 10 ); // Defines args used to get custom post type content
 	$loop = new WP_Query( $args ); // Loops in custom post type content

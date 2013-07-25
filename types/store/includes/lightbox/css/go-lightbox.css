@@ -30,7 +30,7 @@
 	right: 13px;
 }
 .go-lb-loading {
-	background: url('/wp-content/plugins/cube-gold/test-store/images/ajax-loader.gif');
+	background: url('/wp-content/plugins/game-on/types/store/images/ajax-loader.gif');
 	width: 16px;
 	height: 16px;
 	margin: 0 auto;
@@ -44,10 +44,10 @@
 	margin-bottom: 5px;
 }
 .buy_g {
-	background: url('/wp-content/plugins/cube-gold/test-store/images/ajax-loader-buy-green.gif');
+	background: url('/wp-content/plugins/game-on/types/store/images/ajax-loader-buy-green.gif');
 }
 .buy_r {
-	background: url('/wp-content/plugins/cube-gold/test-store/images/ajax-loader-buy-red.gif');
+	background: url('/wp-content/plugins/game-on/types/store/images/ajax-loader-buy-red.gif');
 }
 .golb-fr-boxes-r {
 	float: left;

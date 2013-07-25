@@ -45,6 +45,9 @@ function go_add_post($user_id, $post_id, $status, $points, $currency){
 			$wpdb->update($table_name_go,array('status'=>$status, 'points'=>$points, 'currency'=> $currency), array('uid'=>$user_id, 'post_id'=>$post_id));
 			}
 	
+	
+	go_update_totals($user_id,$points,$currency,0);
+	
 	}
 	
 // Adds minutes.
@@ -60,12 +63,13 @@ function go_add_minutes($user_id, $minutes, $reason){
 	
 	
 //Update totals
-function update_totals($user_id,$points, $currency, $minutes){
+function go_update_totals($user_id,$points, $currency, $minutes){
 	global $wpdb;
 	if($points != 0){
 		$table_name_go_totals = $wpdb->prefix . "go_totals";
 		$totalpoints = go_return_points($user_id);
 		$wpdb->update($table_name_go_totals, array('points'=> $totalpoints+$points), array('uid'=>$user_id));
+		go_update_ranks($user_id, $points);
 		}
 	if($currency != 0){
 		$table_name_go_totals = $wpdb->prefix . "go_totals";

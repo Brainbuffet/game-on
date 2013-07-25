@@ -1,4 +1,6 @@
 <?php
+// Includes
+include('task_shortcode.php');
 // Task custom post type
 function register_cpt_task() {
     $labels = array( 

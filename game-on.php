@@ -27,6 +27,7 @@ add_action('go_return_currency','go_return_currency');
 add_action('go_return_points','go_return_points');
 add_action('go_return_minutes','go_return_minutes');
 add_action('admin_menu', 'go_ranks', $capability, $menu_slug, $function);
+add_action('go_update_totals','go_update_totals');
 add_action( 'init', 'go_jquery' );
 add_action('wp_ajax_go_add_ranks', 'go_add_ranks');
 add_action('wp_ajax_go_remove_ranks', 'go_remove_ranks');
