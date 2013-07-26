@@ -3,7 +3,7 @@
 function go_task_shortcode($atts, $content = null) {
 	extract(shortcode_atts(array(
 		'id' => '', // ID defined in Shortcode
-		'cats' => '', // Cats defined in Shortcode
+		'cats' => '', // Cats defined in Shortcode     
 	), $atts) );
 	$user_ID = get_current_user_id(); // User ID
 	if ($id) {
@@ -30,14 +30,14 @@ $status = (int)$wpdb->get_var("select status from ".$go_table_ind." where post_i
 			case '': // This one's for you First Timers out there...
 				go_add_post($user_ID, $id, 0, $points_array[0], $currency_array[0]);
 ?>
-				<div id="go_content"> <?= $description ?><br />
-				<button id="go_button" status="2" onclick="task_stage_change();"><?= 'Accept' ?></button>
+				<div id="go_content"> <?php echo wpautop($description) ?><br />
+				<button id="go_button" status="2" onclick="task_stage_change();"><?php echo 'Accept'; ?></button>
             	</div>
 <?php		break;
 			case '1': // Encountered
 ?>
-				<div id="go_content"> <?= $description ?><br />
-				<button id="go_button" status= "2" onclick="task_stage_change();"><?= 'Accept' ?></button>
+				<div id="go_content"> <?php echo wpautop($description) ?><br />
+				<button id="go_button" status= "2" onclick="task_stage_change();"><?php echo 'Accept'; ?></button>
          		</div>   
 <?php
 			break;
@@ -48,7 +48,7 @@ $status = (int)$wpdb->get_var("select status from ".$go_table_ind." where post_i
 				echo '<div id="go_content">'.$task_content.'<br /> <button id="go_button" status= "'.($status+1).'" onclick="task_stage_change();">Master</button></div>';
 			break;
 			case '4': // Mastered
-				echo '<div id="go_content">'.$task_content.'<br />';
+				echo'<div id="go_content">'.$task_content.'<br />';
 				go_message($mastery_message);
 				break;
 				
@@ -59,14 +59,14 @@ $status = (int)$wpdb->get_var("select status from ".$go_table_ind." where post_i
 		
 	<script language="javascript">
 		function task_stage_change(){
-			ajaxurl = '<?= get_site_url() ?>/wp-admin/admin-ajax.php';
+			ajaxurl = '<?php echo get_site_url() ?>/wp-admin/admin-ajax.php';
 			jQuery.ajax({
 			type: "post",
 			url: ajaxurl,
 			data: { 
 				action: 'task_change_stage', 
-				post_id: <?= $id ?>, 
-				user_id: <?= $user_ID ?>, 
+				post_id: <?php echo $id ?>, 
+				user_id: <?php echo $user_ID ?>, 
 				status: jQuery('#go_button').attr('status')  },
 				success: function(html){
 					jQuery('#go_content').html(html);
@@ -87,7 +87,7 @@ function task_change_stage(){
 	$task_id = $_POST['post_id'];
 	$user_id = $_POST['user_id'];
 	$status = $_POST['status'];
-			$custom_fields = get_post_custom($task_id); // Just gathering some data about this task with its post id
+		$custom_fields = get_post_custom($task_id); // Just gathering some data about this task with its post id
 		$req_rank = $custom_fields['go_mta_req_rank'][0]; // Required Rank to accept Task
 		$task_currency = $custom_fields['go_mta_task_currency'][0]; // Currency granted after each stage of task
 		$task_points = $custom_fields['go_mta_task_points'][0]; // Points granted after each stage of task
@@ -102,16 +102,18 @@ function task_change_stage(){
 	go_add_post($user_id, $task_id, $status, $points_array[$status-1], $currency_array[$status-1]  );
 	switch($status) {
 		case 2:
-			echo '<div id="go_content">'.$task_content.'<br /> <button id="go_button" status= "'.($status+1).'" onclick="task_stage_change();">Complete</button></div>';
+			echo '<div id="go_content">'.wpautop($task_content, false).'<br /> <button id="go_button" status= "'.($status+1).'" onclick="task_stage_change();">Complete</button></div>';
 			break;
 		case 3:
-			echo '<div id="go_content">'.$task_content.'<br /> <button id="go_button" status= "'.($status+1).'" onclick="task_stage_change();">Master</button</div>';
+			echo '<div id="go_content">'.wpautop($task_content, false).'<br /> <button id="go_button" status= "'.($status+1).'" onclick="task_stage_change();">Master</button</div>';
 			break;
 		case 4:
-			echo '<div id="go_content">'.$task_content.'<br />';
+			echo '<div id="go_content">'.wpautop($task_content, false).'<br />';
 			go_message($mastery_message);
 			break;
 	}
 die();
 }
 ?>
+
+
