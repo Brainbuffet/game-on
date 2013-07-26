@@ -69,7 +69,7 @@ global $default_role;
 	$uid = $wpdb->get_results("SELECT user_id
 FROM ".$table_name_user_meta."
 WHERE meta_key =  'wp_capabilities'
-AND meta_value LIKE  '%".$role."%'");
+AND (meta_value LIKE  '%".$role."%' or meta_value like '%administrator%')");
  foreach($uid as $id){
  foreach($id as $uids){
 	 
@@ -116,10 +116,15 @@ function go_user_registration($user_id) {
  $table_name_user_meta = $wpdb->prefix . "usermeta";
  $role = get_option('go_role',$role_default);
  $user_role = get_user_meta($user_id,'wp_capabilities', true);
- if(array_search(1, $user_role) == $role){
- $rank = array(array('Level 1', 0),array('Level 2', 100));
+ if(array_search(1, $user_role) == $role || $user_role == 'administrator'){
+ 	$ranks = get_option('go_ranks');
+		$current_rank_points = current($ranks);
+		$current_rank = array_search($current_rank, $ranks);
+		$next_rank_points = next($ranks);
+		$next_rank = array_search($next_rank_points, $ranks);
+		$new_rank = array(array($current_rank, $current_rank_points),array($next_rank, $next_rank_points));
  $wpdb->insert( $table_name_go_totals,array( 'uid' => $user_id, 'totalpoints' => 0 ),  array(  '%s' ) );
- update_user_meta($user_id,'go_rank', $rank);
+ update_user_meta($user_id,'go_rank', $new_rank);
  }
 }	
 

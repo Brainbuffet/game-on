@@ -48,8 +48,12 @@ $status = (int)$wpdb->get_var("select status from ".$go_table_ind." where post_i
 				echo '<div id="go_content">'.$task_content.'<br /> <button id="go_button" status= "'.($status+1).'" onclick="task_stage_change();">Master</button></div>';
 			break;
 			case '4': // Mastered
+				echo '<div id="go_content">'.$task_content.'<br />';
 				go_message($mastery_message);
 				break;
+				
+				 
+				
 		}
 ?>
 		
@@ -73,6 +77,8 @@ $status = (int)$wpdb->get_var("select status from ".$go_table_ind." where post_i
 		
 <?php
 		echo $the_stage; // Just for Testing Purposes
+		edit_post_link('Edit Task', '<br />
+<p>', '</p>', $id);
 	}
 }
 add_shortcode('go_task','go_task_shortcode');
@@ -102,6 +108,7 @@ function task_change_stage(){
 			echo '<div id="go_content">'.$task_content.'<br /> <button id="go_button" status= "'.($status+1).'" onclick="task_stage_change();">Master</button</div>';
 			break;
 		case 4:
+			echo '<div id="go_content">'.$task_content.'<br />';
 			go_message($mastery_message);
 			break;
 	}

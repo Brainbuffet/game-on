@@ -17,7 +17,7 @@ function go_admin_bar(){
 		if (!is_admin_bar_showing() || !is_user_logged_in() )
 		return;
 		$wp_admin_bar->add_menu( array(
-		'title' => $current_currency. 'Currency',
+		'title' => $current_currency. ' Currency',
 		'href' => false,
 		'parent' => 'go_info',
 	));
