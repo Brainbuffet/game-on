@@ -39,10 +39,11 @@ function go_add_post($user_id, $post_id, $status, $points, $currency){
 	global $wpdb;
 	   $table_name_go = $wpdb->prefix . "go";
 
-	if($status == 1){
-		$wpdb->insert($table_name_go, array('uid'=> $user_id, 'post_id'=> $post_id, 'status'=> $status, 'points'=> $points, 'currency'=>$currency));
+	if($status == 0){
+		$wpdb->insert($table_name_go, array('uid'=> $user_id, 'post_id'=> $post_id, 'status'=> 1, 'points'=> $points, 'currency'=>$currency));
 		} else {
-			$wpdb->update($table_name_go,array('status'=>$status, 'points'=>$points, 'currency'=> $currency), array('uid'=>$user_id, 'post_id'=>$post_id));
+			$old_points = $wpdb->get_results("select points, currency from ".$table_name_go." where uid = $user_id and post_id = $post_id ");
+			$wpdb->update($table_name_go,array('status'=>$status, 'points'=>$points+ $old_points['points'], 'currency'=> $currency+$old_points['currency']), array('uid'=>$user_id, 'post_id'=>$post_id));
 			}
 	
 	

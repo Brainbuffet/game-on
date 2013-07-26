@@ -214,7 +214,7 @@ cursor:pointer;
 }
 </style>
 <?php
-	} else { // Else, do this stuff. I also could've said "elseif ($post_type = 'go_store')"
+	} elseif ($post_type == 'go_store') { // Else, do this stuff. I also could've said "elseif ($post_type == 'go_store')"
 
 	?>
 <div id="go_lightbox" class="store_white_content">

@@ -5,6 +5,9 @@ include('tasks/task.php');
 //Store Includes
 include('store/super-store.php');
 
+// Temp Include
+include('tasks/temp.php');
+
 // Meta Boxes
 function go_init_mtbxs() {
 	if ( ! class_exists( 'cmb_Meta_Box' ) )
@@ -23,6 +26,12 @@ function go_mta_con_meta( array $meta_boxes ) {
 		'priority'   => 'high',
 		'show_names' => true, // Show field names on the left
 		'fields'     => array(
+			array(
+				'name' => 'Quick Description',
+				'desc' => 'Enter a quick description for what this is about',
+				'id' => $prefix . 'quick_desc',
+				'type' => 'wysiwyg',
+				),
 			array(
 				'name' => 'Required Rank',
 				'desc' => 'rank required to begin task',
@@ -47,18 +56,8 @@ function go_mta_con_meta( array $meta_boxes ) {
 				'desc' => 'Enter a message for the user to recieve when they have completed the task',
 				'id' => $prefix . 'mastery_message',
 				'type' => 'wysiwyg',
-				'options' => array(
-	    			'wpautop' => true, // use wpautop?
-	    			'media_buttons' => true, // show insert/upload button(s)
-	    			'textarea_name' => 'mastery_message', // set the textarea name to something different, square brackets [] can be used here
-	    			'textarea_rows' => get_option('default_post_edit_rows', 10), // rows="..."
-	    			'teeny' => false, // output the minimal editor config used in Press This
-	    			'dfw' => false, // replace the default fullscreen with DFW (needs specific css)
-	    			'tinymce' => true, // load TinyMCE, can be used to pass settings directly to TinyMCE using an array()
-	    			'quicktags' => true // load Quicktags, can be used to pass settings directly to Quicktags using an array()	
-					),
 				),
-				array(
+			array(
 					'name' => 'Repeatable',
 					'desc' => ' wether or not the task can be repeated',
 					'id'   => $prefix . 'task_repeat',

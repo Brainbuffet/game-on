@@ -98,9 +98,9 @@ $rank_check =	get_user_meta($uids, 'go_rank');
  $next_rank_points = current($ranks);
  $next_rank = array_search($next_rank_points, $ranks);
  $rank_points = prev($ranks);
- $rank = array_search($rank_points, $ranks);
- $new_rank= array(array($rank, $rank_points),array($next_rank, $next_rank_points));
-  update_user_meta($uids,'go_rank', $new_rank );
+ $new_rank = array_search($rank_points, $ranks);
+ $new_rank_array= array(array($new_rank, $rank_points),array($next_rank, $next_rank_points));
+  update_user_meta($uids,'go_rank', $new_rank_array );
 }								
 
 								

@@ -17,6 +17,10 @@ function go_ranks_menu() {
 		if(!$ranks){
 			$ranks = array('Level 1'=>0);
 			}
+			
+		
+			
+			
 		?>
      <div>   <table style="width:250px;" id="ranks_table" class="widefat">
         <th style="width:125px;">Rank</th>
@@ -113,7 +117,7 @@ function go_update_ranks($user_id, $added_points){
 	if(($added_points+$current_points) >= $next_rank_points){
 		$ranks = get_option('go_ranks');
 		$ranks_keys = array_keys($ranks);
-		$new_rank_key = array_search($next_rank_points);
+		$new_rank_key = array_search($next_rank, $ranks_keys);
 		$new_next_rank = $ranks_keys[$new_rank_key+1];
 		$new_rank = array(array($next_rank, $next_rank_points),array($new_next_rank, $ranks[$new_next_rank]));
 		update_user_meta($user_id, 'go_rank', $new_rank);
@@ -122,15 +126,16 @@ function go_update_ranks($user_id, $added_points){
 	}
 
 function go_get_rank($user_id) {
+	global $wpdb;
 	$rank = get_user_meta($user_id, 'go_rank');
 	global $current_rank;
 	global $current_rank_points;
 	global $next_rank;
 	global $next_rank_points;
-	$current_rank = $rank[0][0];
-	$current_rank_points = $rank[0][1];
-	$next_rank = $rank[1][0];
-	$next_rank_points = $rank[1][1];
+		$current_rank = $rank[0][0][0];
+	$current_rank_points = $rank[0][0][1];
+	$next_rank = $rank[0][1][0];
+	$next_rank_points = $rank[0][1][1];
 }
 function go_get_all_ranks() {
 	$all_ranks = get_option('go_ranks');
