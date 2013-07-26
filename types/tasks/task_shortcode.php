@@ -7,8 +7,6 @@ function go_task_shortcode($atts, $content = null) {
 	), $atts) );
 	$user_ID = get_current_user_id(); // User ID
 	if ($id) {
-		//$the_meta_key = 'go_task_'.$id.'_stage'; // Task stage key
-		//$the_stage = get_user_meta($user_ID, $the_meta_key, true); // Task stage value (1:encountered, 2:accepted, 3:completed, 4:mastered)
 		$custom_fields = get_post_custom($id); // Just gathering some data about this task with its post id
 		$req_rank = $custom_fields['go_mta_req_rank'][0]; // Required Rank to accept Task
 		$task_currency = $custom_fields['go_mta_task_currency'][0]; // Currency granted after each stage of task
@@ -21,7 +19,10 @@ function go_task_shortcode($atts, $content = null) {
 		// Stage Stuff
 		$content_post = get_post($id);
 		$task_content = $content_post->post_content;
-		
+		// Functions
+		function go_repeatable($repeatable) {
+			
+		}
 		global $wpdb;
 	$user_ID = get_current_user_id(); // User ID
 	$go_table_ind = $wpdb->prefix.'go';
@@ -42,14 +43,19 @@ $status = (int)$wpdb->get_var("select status from ".$go_table_ind." where post_i
 <?php
 			break;
 			case '2': // Accepted
-				echo '<div id="go_content">'.$task_content.'<br /> <button id="go_button" status= "'.($status+1).'" onclick="task_stage_change();">Complete</button></div>';
+				echo '<div id="go_content">'.$task_content.'<br /> <button id="go_button" status="3" onclick="task_stage_change();">Complete</button></div>';
 			break;
 			case '3': // Completed
-				echo '<div id="go_content">'.$task_content.'<br /> <button id="go_button" status= "'.($status+1).'" onclick="task_stage_change();">Master</button></div>';
+				echo '<div id="go_content">'.$task_content.'<br /> <button id="go_button" status="4" onclick="task_stage_change();">Master</button></div>';
 			break;
-			case '4': // Mastered
+			case '4': // Mastered 
 				echo'<div id="go_content">'.$task_content.'<br />';
 				go_message($mastery_message);
+				if ($repeat == 'on') {
+				echo '<button id="go_button" status="1" onclick="task_stage_change();">Repeat</button>'.$repeatable;
+					} else {
+							
+				}
 				break;
 				
 				 
@@ -101,15 +107,23 @@ function task_change_stage(){
 		$task_content = $content_post->post_content;
 	go_add_post($user_id, $task_id, $status, $points_array[$status-1], $currency_array[$status-1]  );
 	switch($status) {
+		case 1:
+			echo '<div id="go_content">'.wpautop($task_content, false).'<br /> <button id="go_button" status="2" onclick="task_stage_change();">Accept</button></div>';
+			break;
 		case 2:
-			echo '<div id="go_content">'.wpautop($task_content, false).'<br /> <button id="go_button" status= "'.($status+1).'" onclick="task_stage_change();">Complete</button></div>';
+			echo '<div id="go_content">'.wpautop($task_content, false).'<br /> <button id="go_button" status="3" onclick="task_stage_change();">Complete</button></div>';
 			break;
 		case 3:
-			echo '<div id="go_content">'.wpautop($task_content, false).'<br /> <button id="go_button" status= "'.($status+1).'" onclick="task_stage_change();">Master</button</div>';
+			echo '<div id="go_content">'.wpautop($task_content, false).'<br /> <button id="go_button" status="4" onclick="task_stage_change();">Master</button</div>';
 			break;
 		case 4:
 			echo '<div id="go_content">'.wpautop($task_content, false).'<br />';
 			go_message($mastery_message);
+			if ($repeat == 'on') {
+				echo '<button id="go_button" status="1" onclick="task_stage_change();">Repeat</button>'.$repeatable;
+			} else {
+					
+			}
 			break;
 	}
 die();
