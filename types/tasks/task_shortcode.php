@@ -115,5 +115,3 @@ function task_change_stage(){
 die();
 }
 ?>
-
-
