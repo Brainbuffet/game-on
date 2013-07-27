@@ -31,11 +31,11 @@ function go_mta_con_meta( array $meta_boxes ) {
 				'desc' => 'Enter a quick description for what this is about',
 				'id' => $prefix . 'quick_desc',
 				'type' => 'wysiwyg',
-        'options' => array(
-           'wpautop' => true, // use wpautop?
-           'textarea_rows' => '5',
-          ),
-				),
+        		'options' => array(
+           			'wpautop' => true, // use wpautop?
+          			'textarea_rows' => '5',
+           		),
+			),
 			array(
 				'name' => 'Required Rank',
 				'desc' => 'rank required to begin task',
@@ -57,7 +57,7 @@ function go_mta_con_meta( array $meta_boxes ) {
 			),
 			array(
 				'name' => 'Mastery Message (Optional)',
-				'desc' => 'Enter a message for the user to recieve when they have completed the task',
+				'desc' => 'Enter a message for the user to recieve when they have mastered the task',
 				'id' => $prefix . 'mastery_message',
 				'type' => 'wysiwyg',
         'options' => array(
@@ -67,7 +67,7 @@ function go_mta_con_meta( array $meta_boxes ) {
 				),
 			array(
 					'name' => 'Repeatable',
-					'desc' => ' wether or not the task can be repeated',
+					'desc' => ' Select to make task repeatable',
 					'id'   => $prefix . 'task_repeat',
 					'type' => 'checkbox'
 				),

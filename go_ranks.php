@@ -60,7 +60,6 @@ ajaxurl = '<?= get_site_url() ?>/wp-admin/admin-ajax.php';
 </script>
         <?php
 		
-		
 		}
 	
 	}

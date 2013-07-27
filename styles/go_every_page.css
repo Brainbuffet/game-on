@@ -1,0 +1,14 @@
+#go_notification {
+	text-align: center;
+	font-size: 36px;
+	position: fixed;
+	right: 30px;
+	height: 68px;
+	width: 250px;
+	color: white;
+	display:none;
+	padding: 4px 1px 1px 1px;
+	border-radius: 8px;
+	background: #111111;
+	opacity: .9;
+}

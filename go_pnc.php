@@ -60,9 +60,17 @@ function go_add_minutes($user_id, $minutes, $reason){
 	$minutes_reason = array('reason'=>$reason, 'time'=>$time);
 	$minutes_reason_serialized = serialize($minutes_reason);
 	$wpdb->insert($table_name_go, array('uid'=> $user_id, 'minutes'=> $minutes, 'reason'=> $minutes_reason_serialized) );
+	go_update_totals($user_id,0,0,$minutes);
 	}
 	
-	
+function go_notify($type, $points='', $currency='', $time='') {
+	if ($points < 0 || $currency < 0) {
+		$sym = '-';
+	} else {
+		$sym = '+';
+	}
+	echo '<div id="go_notification" class="go_notification">'.$sym.$points.' '.$type.'</div><script type="text/javascript" language="javascript">go_notification();</script>';
+}
 //Update totals
 function go_update_totals($user_id,$points, $currency, $minutes){
 	global $wpdb;
@@ -71,16 +79,19 @@ function go_update_totals($user_id,$points, $currency, $minutes){
 		$totalpoints = go_return_points($user_id);
 		$wpdb->update($table_name_go_totals, array('points'=> $totalpoints+$points), array('uid'=>$user_id));
 		go_update_ranks($user_id, $points);
+		go_notify('Points', $points);
 		}
 	if($currency != 0){
 		$table_name_go_totals = $wpdb->prefix . "go_totals";
 		$totalcurrency = go_return_currency($user_id);
 		$wpdb->update($table_name_go_totals, array('currency'=> $totalcurrency+$currency), array('uid'=>$user_id));
+		go_notify('Currency', $currency);
 		}
 	if($minutes != 0){
 		$table_name_go_totals = $wpdb->prefix . "go_totals";
 		$totalminutes = go_return_minutes($user_id);
 		$wpdb->update($table_name_go_totals, array('minutes'=> $totalminutes+$minutes), array('uid'=>$user_id));
+		go_notify('Minutes', $minutes);
 		}
 	}
 

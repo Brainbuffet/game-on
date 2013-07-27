@@ -15,6 +15,7 @@ include('scripts/go_enque.php');
 include('go_globals.php');
 include('go_admin_bar.php');
 include('go_message.php');
+include('styles/go_enque_styles.php');
 register_activation_hook( __FILE__, 'go_table_totals' );
 register_activation_hook( __FILE__, 'go_table_individual' );
 register_activation_hook( __FILE__, 'go_ranks_registration' );
@@ -38,4 +39,6 @@ add_action('admin_bar_init','go_global_info');
 add_action('go_get_all_ranks','go_get_all_ranks');
 add_action('wp_ajax_task_change_stage','task_change_stage');
 add_action('admin_bar_init', 'go_admin_bar');
+add_action( 'init', 'go_style_everypage' );
+
 ?>
