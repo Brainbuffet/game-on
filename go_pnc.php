@@ -63,14 +63,21 @@ function go_add_minutes($user_id, $minutes, $reason){
 	go_update_totals($user_id,0,0,$minutes);
 	}
 	
+	
 function go_notify($type, $points='', $currency='', $time='') {
 	if ($points < 0 || $currency < 0) {
 		$sym = '-';
 	} else {
 		$sym = '+';
 	}
-	echo '<div id="go_notification" class="go_notification">'.$sym.$points.' '.$type.'</div><script type="text/javascript" language="javascript">go_notification();</script>';
+	global $counter;
+	$counter++;
+	$space = $counter*85;
+	echo '<div id="go_notification" class="go_notification" style="top: '.$space.'px">'.$sym.$points.' '.$type.'</div><script type="text/javascript" language="javascript">go_notification();</script>';
 }
+
+
+
 //Update totals
 function go_update_totals($user_id,$points, $currency, $minutes){
 	global $wpdb;
