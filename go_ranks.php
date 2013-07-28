@@ -106,22 +106,30 @@ foreach($ranks as $ranks => $points){
 		die();
 	}
 	
-function go_update_ranks($user_id, $added_points){
+function go_update_ranks($user_id, $total_points){
 	global $wpdb;
 	global $current_rank;
+	go_get_rank($user_id);
 	global $current_rank_points;
 	global $next_rank;
 	global $next_rank_points;
 	global $current_points;
-	if(($added_points+$current_points) >= $next_rank_points){
+	if($next_rank != ''){
+	if($total_points >= $next_rank_points){
 		$ranks = get_option('go_ranks');
 		$ranks_keys = array_keys($ranks);
 		$new_rank_key = array_search($next_rank, $ranks_keys);
-		$new_next_rank = $ranks_keys[$new_rank_key+1];
-		$new_rank = array(array($next_rank, $next_rank_points),array($new_next_rank, $ranks[$new_next_rank]));
+		$new_next_rank = $ranks_keys[($new_rank_key+1)];
+		
+		$new_rank = array(array($next_rank, $next_rank_points),	array($new_next_rank, $ranks[$new_next_rank]));
 		update_user_meta($user_id, 'go_rank', $new_rank);
+		global $counter;
+	$counter++;
+	$space = $counter*85;
+	echo '<div id="go_notification" class="go_notification" style="top: '.$space.'px; color: #FFD700;"> '.$next_rank.'!</div><script type="text/javascript" language="javascript">go_notification();</script>';
 		}
-	
+		
+	}
 	}
 
 function go_get_rank($user_id) {
@@ -147,7 +155,9 @@ function go_get_all_ranks() {
 function go_clean_ranks() {
 	$all_ranks = get_option('go_ranks');
 	$all_ranks_sorted = array();
-	return $all_ranks_sorted;
+	foreach($all_ranks as $level => $points) {
+    	echo '<option value="'.$points.'">'.$level.'</option>';
+	}
 }
 function go_get_rank_key($points) {
 	global $wpdb;

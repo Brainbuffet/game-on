@@ -76,23 +76,32 @@ function go_notify($type, $points='', $currency='', $time='') {
 	echo '<div id="go_notification" class="go_notification" style="top: '.$space.'px">'.$sym.$points.' '.$type.'</div><script type="text/javascript" language="javascript">go_notification();</script>';
 }
 
+function go_update_admin_bar($type, $title, $points_currency){
+	echo '<script language="javascript">
+		jQuery("#go_admin_bar_'.$type.'").html("'.$points_currency.' '.$title.'");
+	</script>';
+	}
 
 
 //Update totals
 function go_update_totals($user_id,$points, $currency, $minutes){
 	global $wpdb;
 	if($points != 0){
+		
 		$table_name_go_totals = $wpdb->prefix . "go_totals";
 		$totalpoints = go_return_points($user_id);
 		$wpdb->update($table_name_go_totals, array('points'=> $totalpoints+$points), array('uid'=>$user_id));
-		go_update_ranks($user_id, $points);
+		go_update_ranks($user_id, ($totalpoints+$points));
 		go_notify('Points', $points);
+		$p = (string)($totalpoints+$points);
+		go_update_admin_bar('points','Points',$p);
 		}
 	if($currency != 0){
 		$table_name_go_totals = $wpdb->prefix . "go_totals";
 		$totalcurrency = go_return_currency($user_id);
 		$wpdb->update($table_name_go_totals, array('currency'=> $totalcurrency+$currency), array('uid'=>$user_id));
 		go_notify('Currency', $currency);
+		go_update_admin_bar('currency', 'Currency', ($totalcurrency+$currency));
 		}
 	if($minutes != 0){
 		$table_name_go_totals = $wpdb->prefix . "go_totals";

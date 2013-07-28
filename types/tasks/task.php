@@ -1,6 +1,7 @@
 <?php
 // Includes
-include('task_shortcode.php');
+include('task_shortcode.php'); // Task Shotcode
+include('includes/task_insert.php'); // New Task Inserter
 // Task custom post type
 function register_cpt_task() {
     $labels = array( 
