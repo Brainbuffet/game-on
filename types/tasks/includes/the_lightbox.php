@@ -37,7 +37,7 @@ function tsk_new_ajx(){
 	update_post_meta($new_task_id, 'go_mta_task_currency', $currency);
 	update_post_meta($new_task_id, 'go_mta_mastery_message', $mastery_message);
 	update_post_meta($new_task_id, 'go_mta_task_repeat', $repeats);
-	echo 'Copy and Paste this shortcode into the content area: [go_task id="'.$new_task_id.'"]';
+	echo $new_task_id;
 	die();
 }
 add_action('wp_ajax_tsk_new_ajx', 'tsk_new_ajx');
@@ -79,7 +79,8 @@ function new_task_ajax() {
   		},
 		dataType : 'html',
 		success:function(results){
-			jQuery('#tsk_shortcode').append(results);
+			window.parent.send_to_editor('[go_task id="'+results+'"]');
+			tsk_admn_clsr();
 		},
 		error: function(MLHttpRequest, textStatus, errorThrown){  
   			alert(errorThrown);
