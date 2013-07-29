@@ -23,17 +23,18 @@ function go_task_shortcode($atts, $content = null) {
 	$user_ID = get_current_user_id(); // User ID
 	$go_table_ind = $wpdb->prefix.'go';
 $status = (int)$wpdb->get_var("select status from ".$go_table_ind." where post_id = $id and uid = $user_ID");
+?> <div id="go_description"> <?php echo wpautop($description) ;?> </div><?php
 		switch ($status) {
 			case '': // This one's for you First Timers out there...
 				go_add_post($user_ID, $id, 0, $points_array[0], $currency_array[0]);
 ?>
-				<div id="go_content"> <?php echo wpautop($description) ?><br />
+				<div id="go_content"> <br />
 				<button id="go_button" status="2" onclick="task_stage_change();"><?php echo 'Accept'; ?></button>
             	</div>
 <?php			break;
 			case '1': // Encountered
 ?>
-				<div id="go_content"> <?php echo wpautop($description) ?><br />
+				<div id="go_content"> <br />
 				<button id="go_button" status= "2" onclick="task_stage_change();"><?php echo 'Accept'; ?></button>
          		</div>   
 <?php
