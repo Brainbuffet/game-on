@@ -55,12 +55,12 @@ function tsk_admn_clsr() {
 
 function new_task_ajax() {
 	var lite_tsk_title = jQuery("#lte_tsk_title").val();
-	var lite_tsk_content = jQuery("#lte_tsk_content").val();
-	var lite_tsk_desc = jQuery("#lte_tsk_desc").val();
+	var lite_tsk_content = tinymce.editors['ltetskcontent'].getContent();
+	var lite_tsk_desc = tinymce.editors['ltetskdesc'].getContent();
 	var lite_tsk_rank = jQuery('#lte_tsk_rank option:selected').val();
 	var lite_tsk_points = jQuery("#lte_tsk_points").val();
 	var lite_tsk_currency = jQuery("#lte_tsk_currency").val();
-	var lite_tsk_mastery_message = jQuery("#lte_tsk_mastery_message").val();
+	var lite_tsk_mastery_message = tinymce.editors['ltetskmasterymessage'].getContent();
 	var lite_tsk_repeat = jQuery('#lte_tsk_repeat').is(':checked');
 	
 	jQuery.ajax({
@@ -79,7 +79,7 @@ function new_task_ajax() {
   		},
 		dataType : 'html',
 		success:function(results){
-			window.parent.send_to_editor('[go_task id="'+results+'"]');
+			tinyMCE.execInstanceCommand('content', 'mceInsertContent', false, '[go_task id="'+results+'"]');
 			tsk_admn_clsr();
 		},
 		error: function(MLHttpRequest, textStatus, errorThrown){  
@@ -112,7 +112,7 @@ function new_task_ajax() {
                             	<label for="lte_tsk_content">Task Content</label>
                             </th> 
                             <td>
-                            	<textarea id="lte_tsk_content" rows="4" cols="50"></textarea>
+                            	<?php wp_editor( '', 'ltetskcontent', $settings = array('textarea_name' => 'ltetskcontent') ); ?>
                                 <p class="cmb_metabox_description">The main body content for your task</p>
                             </td>
                       </tr>
@@ -123,7 +123,7 @@ function new_task_ajax() {
                     	</th> <br>
 
 						<td>
-                    		<textarea id="lte_tsk_desc" rows="4" cols="50"></textarea>
+                    		<?php wp_editor( '', 'ltetskdesc', $settings = array('textarea_name' => 'ltetskdesc') ); ?>
                             <p class="cmb_metabox_description">Enter a (quick!) description of the task</p>
                    		</td>		
                     </tr>
@@ -166,7 +166,7 @@ function new_task_ajax() {
                             	<label for="lte_tsk_mastery_message">Mastery Message</label>
                             </th> 
                             <td>
-                            	<textarea id="lte_tsk_mastery_message" rows="4" cols="50"></textarea>
+                            	<?php wp_editor( '', 'ltetskmasterymessage', $settings = array('textarea_name' => 'ltetskmasterymessage') ); ?>
                                 <p class="cmb_metabox_description">Enter a message for the user to recieve when they have mastered the task</p>
                             </td>
                       </tr>
