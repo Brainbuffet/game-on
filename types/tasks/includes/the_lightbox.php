@@ -45,14 +45,24 @@ function task_admin_lb($the_task_id, $task_check) {
 ?>
 <script type="text/javascript">
 function tsk_admn_opnr() {
-	document.getElementById('tsk_admin_light').style.display='block';;
-	document.getElementById('tsk_admin_fade').style.display='block';;
+	document.getElementById('tsk_admin_light').style.display='block';
+	document.getElementById('tsk_admin_fade').style.display='block';
+}
+function quck_tsk_clear() {
+	jQuery("#lte_tsk_title").val('');
+	jQuery("#ltetskcontent").val('');
+	jQuery("#ltetskdesc").val('');
+	jQuery("#lte_tsk_rank").val('');
+	jQuery("#lte_tsk_points").val('');
+	jQuery("#lte_tsk_currency").val('');
+	jQuery("#ltetskmasterymessage").val('');
+	jQuery("#lte_tsk_repeat").val('');
 }
 function tsk_admn_clsr() {
-	document.getElementById('tsk_admin_light').style.display='none';;
-	document.getElementById('tsk_admin_fade').style.display='none';;
+	document.getElementById('tsk_admin_light').style.display='none';
+	document.getElementById('tsk_admin_fade').style.display='none';
+	quck_tsk_clear();
 }
-
 function new_task_ajax() {
 	var lite_tsk_title = jQuery("#lte_tsk_title").val();
 	var lite_tsk_content = tinymce.editors['ltetskcontent'].getContent();

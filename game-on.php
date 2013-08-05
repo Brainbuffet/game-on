@@ -16,6 +16,7 @@ include('go_globals.php');
 include('go_admin_bar.php');
 include('go_message.php');
 include('styles/go_enque_styles.php');
+include('go_options.php');
 register_activation_hook( __FILE__, 'go_table_totals' );
 register_activation_hook( __FILE__, 'go_table_individual' );
 register_activation_hook( __FILE__, 'go_ranks_registration' );
@@ -41,5 +42,5 @@ add_action('wp_ajax_task_change_stage','task_change_stage');
 add_action('admin_bar_init', 'go_admin_bar');
 add_action('init', 'go_style_everypage' );
 add_action('go_update_admin_bar','go_update_admin_bar');
-
+add_action('admin_menu', 'go_options', $capability, $menu_slug, $function);
 ?>
