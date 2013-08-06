@@ -18,7 +18,7 @@ function tsk_new_ajx(){
 	$repeat = $_POST['theRepeat'];
 	if ($repeat == true) {
 		$repeats = 'on';
-	} else {
+	} elseif ($repeat == false) {
 		$repeats = 'off';
 	}
 	$go_new_task = array(
@@ -41,6 +41,30 @@ function tsk_new_ajx(){
 	die();
 }
 add_action('wp_ajax_tsk_new_ajx', 'tsk_new_ajx');
+// Post Type Boxes ajax
+function tsk_cpt_bx_ajx() {
+	$type = $_POST['theType'];
+	$tsk_id = $_POST['theID'];
+	$type_info = get_post_type_object($type);
+	$args = array(
+		'numberposts'      => 500000,
+		'orderby'          => 'post_date',
+		'order'            => 'DESC',
+		'post_type'        => $type
+	);
+	$the_posts = get_posts($args);
+	$the_admin_url = get_admin_url();
+	
+	echo '<h2>'.$type_info->label.'</h2><br /><br />';
+	$the_create_new_url = $the_admin_url.'post-new.php?&action=edit&go_tsk_id='.$tsk_id;
+	echo '<a href="'.$the_create_new_url.'" target="_blank"><span>Add New...</span></a>';
+	foreach ($the_posts as $post) {
+		$the_url = $the_admin_url.'post.php?post='.$post->ID.'&action=edit&go_tsk_id='.$tsk_id;
+		echo '<a href="'.$the_url.'" target="_blank"><span>'.$post->post_title.'</span></a>';
+	}
+	die();
+}
+add_action('wp_ajax_tsk_cpt_bx_ajx', 'tsk_cpt_bx_ajx');
 function task_admin_lb($the_task_id, $task_check) {
 ?>
 <script type="text/javascript">
@@ -91,6 +115,28 @@ function new_task_ajax() {
 		success:function(results){
 			tinyMCE.execInstanceCommand('content', 'mceInsertContent', false, '[go_task id="'+results+'"]');
 			tsk_admn_clsr();
+		},
+		error: function(MLHttpRequest, textStatus, errorThrown){  
+  			alert(errorThrown);
+  		}
+		});
+}
+function tsk_cpt_bx(type, id) {
+	jQuery('#tsk_pt_bx_'+type+'').fadeOut(500);
+	jQuery.ajax({
+		type:"POST",
+		url: ajaxurl,
+		data: {  
+  			action: 'tsk_cpt_bx_ajx',
+			theType: type,
+			theID: id, 		
+		},
+		dataType : 'html',
+		success:function(results){
+			jQuery('#tsk_pt_bx_'+type+'').css('width', '95%');
+			jQuery('#tsk_pt_bx_'+type+'').insertAfter(jQuery('.tsk_body_info'));
+			jQuery('#tsk_pt_bx_'+type+'').fadeIn(500);
+			jQuery('#tsk_pt_bx_'+type+'').html(results);
 		},
 		error: function(MLHttpRequest, textStatus, errorThrown){  
   			alert(errorThrown);
@@ -170,7 +216,6 @@ function new_task_ajax() {
                         	<p class="cmb_metabox_description">currency awarded for encountering, accepting, completing, and mastering the task. (comma seperated, e.g. 10,20,50,70)</p>
                         </td>
                     </tr>
-                    
                     <tr>
                        		<th style="width:18%">
                             	<label for="lte_tsk_mastery_message">Mastery Message</label>
@@ -180,7 +225,6 @@ function new_task_ajax() {
                                 <p class="cmb_metabox_description">Enter a message for the user to recieve when they have mastered the task</p>
                             </td>
                       </tr>
-                      
                     <tr>
                     	<th style="width:18%">
                     		<label for="lte_tsk_repeat">Repeatable</label>
@@ -190,16 +234,27 @@ function new_task_ajax() {
                     		<span class="cmb_metabox_description">Select to make task repeatable</span>
                     	</td>
                     </tr>
-                    
                 </table>
                 </form>
                 <br />
                 <div id="tsk_shortcode"></div>
                 <a id="lte_tsk_submit" class="tsk_submitter" onclick="new_task_ajax();">Create Task</a>
                 <br />
-            <?php } elseif ($task_check == true) { ?>
-            	<span>Select a task to insert!</span>
-            <?php } ?>
+            <?php } elseif ($task_check == true) { 
+					echo '<div class="tsk_body_info"><h2>Display Current Task</h2>&nbsp;Click on any of the post types below to choose one of its items. You will be redirected to that item, and the shortcode that displays this Task will be inserted in the content area for you (make sure to click Update!).</div><br />';
+            	$post_types = get_post_types( '', 'objects' ); 
+				foreach ( $post_types as $post_type ) {
+					$name = $post_type->name;
+					if ($name !== 'tasks' && $name!== 'revision') {
+					$a_name = "'".$name."'";
+					$a_id = "'".$_GET['post']."'";
+					$label = $post_type->label;
+					echo '<div class="tsk_pt_bxs" id="tsk_pt_bx_'.$name.'" onclick="tsk_cpt_bx('.$a_name.', '.$a_id.');">'.$label.'</div>';
+					}
+				}
+				
+			}
+?>
             </div>
         </div>
         
