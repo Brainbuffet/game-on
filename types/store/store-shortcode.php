@@ -20,13 +20,10 @@ function go_gold_store_sc ($atts, $content = null) {
 			echo $cat.'<br />';
 			foreach ($the_items as $item) {
 				// Definitions
-				$set_ranks = (array)get_option('cp_module_ranks_data'); // All Possible Ranks defined by admin, least to greatest
 				$user_rank = go_get_rank($student_id); // Rank of current user
-				$user_rank_key = array_search($user_rank, $set_ranks); // Order of current user out of all possible ranks
 				$custom_fields = get_post_custom($the_id);
 				$req_currency = $custom_fields['go_mta_store_currency'][0];
 				$req_rank =  go_get_rank_key($custom_fields['go_mta_store_rank'][0]);
-				$go_rank_key = array_search($go_rank, $set_ranks); // Order of rank required out of all possible ranks
 				$the_title = get_the_title($item); // get item title
 				echo '<a onclick="go_lb_opener('.$item.');">'.$the_title.' ('.$req_currency.')</a><br />';
 			}
@@ -37,14 +34,6 @@ function go_gold_store_sc ($atts, $content = null) {
 			$req_currency = $custom_fields['go_mta_store_currency'][0];
 			echo '<a onclick="go_lb_opener('.$id.');">'.$the_title.' ('.$req_currency.')</a>';
 		}
-	?>
-	<!-- <form>
-    	<label for="go_store">
-		<input type="submit" value="<?php //the_title(); echo ' ('.$go_gold_req.')'; ?>" <?php //if ($user_points >= $go_rank_key) { } else { echo "disabled"; } ?> />
-    	</label>
-    </form>
-    -->
-<?php
 endif;
 }
 add_shortcode ('go_store', 'go_gold_store_sc');
