@@ -56,7 +56,7 @@ function tsk_cpt_bx_ajx() {
 	$the_admin_url = get_admin_url();
 	
 	echo '<h2>'.$type_info->label.'</h2><br /><br />';
-	$the_create_new_url = $the_admin_url.'post-new.php?&action=edit&go_tsk_id='.$tsk_id;
+	$the_create_new_url = $the_admin_url.'post-new.php?&action=edit&post_type='.$type.'&go_tsk_id='.$tsk_id;
 	echo '<a href="'.$the_create_new_url.'" target="_blank"><span>Add New...</span></a>';
 	foreach ($the_posts as $post) {
 		$the_url = $the_admin_url.'post.php?post='.$post->ID.'&action=edit&go_tsk_id='.$tsk_id;
@@ -112,6 +112,7 @@ function new_task_ajax() {
 			theRepeat: lite_tsk_repeat,
   		},
 		dataType : 'html',
+
 		success:function(results){
 			tinyMCE.execInstanceCommand('content', 'mceInsertContent', false, '[go_task id="'+results+'"]');
 			tsk_admn_clsr();
