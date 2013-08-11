@@ -40,7 +40,7 @@ add_action('admin_bar_init','go_global_info');
 add_action('go_get_all_ranks','go_get_all_ranks');
 add_action('wp_ajax_task_change_stage','task_change_stage');
 add_action('admin_bar_init', 'go_admin_bar');
-add_action('init', 'go_style_everypage' );
+add_action('admin_bar_init', 'go_style_everypage' );
 add_action('go_update_admin_bar','go_update_admin_bar');
-add_action('admin_menu', 'go_options', $capability, $menu_slug, $function);
+add_action('go_update_progress_bar','go_update_progress_bar');
 ?>

@@ -1,4 +1,5 @@
 <?php
+// Includes
 include('includes/lightbox/frontend-lightbox.php');
 // Store Shortcode
 function go_gold_store_sc ($atts, $content = null) {

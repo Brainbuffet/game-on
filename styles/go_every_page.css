@@ -12,3 +12,30 @@
 	background: #111111;
 	opacity: .9;
 }
+
+#go_admin_bar_progress_bar_border{
+	height:15px;
+	width:120px;
+	border:thin grey solid;
+	-moz-border-radius: 2em 2em 2em 2em;
+border-radius: 2em 2em 2em 2em;
+	}
+#go_admin_bar_progress_bar{
+	height:15px;
+	-moz-border-radius: 2em 2em 2em 2em;
+border-radius: 2em 2em 2em 2em;
+background-color: #ff6600;
+	}
+#go_admin_bar_title{
+	text-align:left;
+	}
+#go_admin_bar_input{
+	width:250px;
+	}
+#go_admin_bar_points{
+	width:50px;
+	}
+#go_admin_bar_reason{
+	width:175px;}
+#wp-admin-bar-points-for-currency-for-minutes-for{
+	height:207px;}

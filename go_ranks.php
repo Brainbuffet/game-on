@@ -24,7 +24,7 @@ function go_ranks_menu() {
 		?>
      <div>   <table style="width:250px;" id="ranks_table" class="widefat">
         <th style="width:125px;">Rank</th>
-        <th style="width:125px;">Points</th><tbody id="table_rows">
+        <th style="width:125px;"><?php echo get_option('go_points_name'); ?></th><tbody id="table_rows">
         <?php  
 		foreach($ranks as $level => $points){
 			echo '<tr><td>'.$level.'</td><td>'.$points.'</td><td><button onclick="go_remove_ranks(\''.$level.'\');">Remove</button></td></tr>';
@@ -36,7 +36,7 @@ function go_ranks_menu() {
         </div>
         <div class="widefat">
         Ranks: <textarea id="ranks"></textarea>
-        Points: <textarea id="points"></textarea>
+        <?php echo get_option('go_points_name');?>: <textarea id="points"></textarea>
         Separator: <textarea id="separator"></textarea><button onclick="go_add_ranks();" >+</button>
         </div>
         <script language="javascript">
@@ -116,6 +116,7 @@ function go_update_ranks($user_id, $total_points){
 	global $current_points;
 	if($next_rank != ''){
 	if($total_points >= $next_rank_points){
+		
 		$ranks = get_option('go_ranks');
 		$ranks_keys = array_keys($ranks);
 		$new_rank_key = array_search($next_rank, $ranks_keys);
@@ -123,11 +124,33 @@ function go_update_ranks($user_id, $total_points){
 		
 		$new_rank = array(array($next_rank, $next_rank_points),	array($new_next_rank, $ranks[$new_next_rank]));
 		update_user_meta($user_id, 'go_rank', $new_rank);
+		$update = true;}}
+		else {
+			$ranks = get_option('go_ranks', false);
+ $current_points = go_return_points($uids);
+ while($current_points >= current($ranks)){
+	 next($ranks);
+	 }
+ $next_rank_points = current($ranks);
+ $next_rank = array_search($next_rank_points, $ranks);
+ $rank_points = prev($ranks);
+ $new_rank = array_search($rank_points, $ranks);
+ $new_rank_array= array(array($new_rank, $rank_points),array($next_rank, $next_rank_points));
+  update_user_meta($uids,'go_rank', $new_rank_array );
+		$update = true;}
+			if($update){
+		go_get_rank($user_id);
+		global $current_rank;
+	global $current_rank_points;
+	global $next_rank;
+	global $next_rank_points;
 		global $counter;
 	$counter++;
 	$space = $counter*85;
-	echo '<div id="go_notification" class="go_notification" style="top: '.$space.'px; color: #FFD700;"> '.$next_rank.'!</div><script type="text/javascript" language="javascript">go_notification();</script>';
-		}
+	echo '<div id="go_notification" class="go_notification" style="top: '.$space.'px; color: #FFD700;"> '.$current_rank.'!</div><script type="text/javascript" language="javascript">go_notification();
+		jQuery("#go_admin_bar_rank").html("'.$current_rank.'");
+	</script>';
+		
 		
 	}
 	}

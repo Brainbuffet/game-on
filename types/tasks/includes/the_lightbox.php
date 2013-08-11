@@ -112,7 +112,6 @@ function new_task_ajax() {
 			theRepeat: lite_tsk_repeat,
   		},
 		dataType : 'html',
-
 		success:function(results){
 			tinyMCE.execInstanceCommand('content', 'mceInsertContent', false, '[go_task id="'+results+'"]');
 			tsk_admn_clsr();

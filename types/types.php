@@ -20,7 +20,7 @@ function go_mta_con_meta( array $meta_boxes ) {
 	// Tasks Meta Boxes
 	$meta_boxes[] = array(
 		'id'         => 'go_mta_metabox',
-		'title'      => 'Task Options',
+		'title'      => get_option('go_tasks_name').' Options',
 		'pages'      => array( 'tasks' ), // Post type
 		'context'    => 'normal',
 		'priority'   => 'high',
@@ -32,42 +32,42 @@ function go_mta_con_meta( array $meta_boxes ) {
 				'id' => $prefix . 'quick_desc',
 				'type' => 'wysiwyg',
         		'options' => array(
-           			'wpautop' => true, // use wpautop?
+           			'wpautop' => true,
           			'textarea_rows' => '5',
            		),
 			),
 			array(
 				'name' => 'Required Rank',
-				'desc' => 'rank required to begin task',
+				'desc' => 'rank required to begin '.get_option('go_tasks_name'),
 				'id'   => $prefix . 'req_rank',
 				'type' => 'select',
 				'options' => go_get_all_ranks()
 			),
 			array(
 				'name' => 'Points',
-				'desc' => 'points awarded for encountering, accepting, completing, and mastering the task. (comma seperated, e.g. 10,20,50,70)',
+				'desc' => 'points awarded for encountering, accepting, completing, and mastering the '.get_option('go_tasks_name').'. (comma seperated, e.g. 10,20,50,70)',
 				'id'   => $prefix . 'task_points',
 				'type' => 'text',
 			),
 			array(
 				'name' => 'Currency',
-				'desc' => 'currency awarded for encountering, accepting, completing, and mastering the task. (comma seperated, e.g. 10,20,50,70)',
+				'desc' => 'currency awarded for encountering, accepting, completing, and mastering the '.get_option('go_tasks_name').'. (comma seperated, e.g. 10,20,50,70)',
 				'id'   => $prefix . 'task_currency',
 				'type' => 'text',
 			),
 			array(
 				'name' => 'Mastery Message (Optional)',
-				'desc' => 'Enter a message for the user to recieve when they have mastered the task',
+				'desc' => 'Enter a message for the user to recieve when they have mastered the '.get_option('go_tasks_name'),
 				'id' => $prefix . 'mastery_message',
 				'type' => 'wysiwyg',
-        'options' => array(
-           'wpautop' => true, // use wpautop?
-           'textarea_rows' => '5',
-          ),
+        		'options' => array(
+           			'wpautop' => true,
+           			'textarea_rows' => '5',
+         		),
 				),
 			array(
 					'name' => 'Repeatable',
-					'desc' => ' Select to make task repeatable',
+					'desc' => ' Select to make '.get_option('go_tasks_name').' repeatable',
 					'id'   => $prefix . 'task_repeat',
 					'type' => 'checkbox'
 				),

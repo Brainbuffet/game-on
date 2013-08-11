@@ -92,16 +92,16 @@ function go_update_totals($user_id,$points, $currency, $minutes){
 		$totalpoints = go_return_points($user_id);
 		$wpdb->update($table_name_go_totals, array('points'=> $totalpoints+$points), array('uid'=>$user_id));
 		go_update_ranks($user_id, ($totalpoints+$points));
-		go_notify('Points', $points);
+		go_notify(get_option('go_points_name'), $points);
 		$p = (string)($totalpoints+$points);
-		go_update_admin_bar('points','Points',$p);
+		go_update_admin_bar(strtolower(get_option('go_points_name')),get_option('go_points_name'),$p);
 		}
 	if($currency != 0){
 		$table_name_go_totals = $wpdb->prefix . "go_totals";
 		$totalcurrency = go_return_currency($user_id);
 		$wpdb->update($table_name_go_totals, array('currency'=> $totalcurrency+$currency), array('uid'=>$user_id));
-		go_notify('Currency', $currency);
-		go_update_admin_bar('currency', 'Currency', ($totalcurrency+$currency));
+		go_notify(get_option('go_currency_name'), $currency);
+		go_update_admin_bar(strtolower(get_option('go_currency_name')), get_option('go_currency_name'), ($totalcurrency+$currency));
 		}
 	if($minutes != 0){
 		$table_name_go_totals = $wpdb->prefix . "go_totals";

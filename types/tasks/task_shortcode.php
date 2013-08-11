@@ -80,7 +80,7 @@ $status = (int)$wpdb->get_var("select status from ".$go_table_ind." where post_i
 		
 <?php
 		echo $the_stage; // Just for Testing Purposes
-		edit_post_link('Edit Task', '<br />
+		edit_post_link('Edit '.get_option('go_tasks_name'), '<br />
 <p>', '</p>', $id);
 	}
 }
