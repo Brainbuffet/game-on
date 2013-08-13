@@ -9,6 +9,11 @@ function go_task_shortcode($atts, $content = null) {
 	if ($id) {
 		$custom_fields = get_post_custom($id); // Just gathering some data about this task with its post id
 		$req_rank = $custom_fields['go_mta_req_rank'][0]; // Required Rank to accept Task
+		global $current_points;
+		if ($current_points < $req_rank) {
+			$points = $req_rank - $current_points;
+			echo 'You need '.$points.' points to begin this task.';
+		} else {
 		$task_currency = $custom_fields['go_mta_task_currency'][0]; // Currency granted after each stage of task
 		$task_points = $custom_fields['go_mta_task_points'][0]; // Points granted after each stage of task
 		$repeat = $custom_fields['go_mta_task_repeat'][0]; // Whether or not you can repeat the task
@@ -82,6 +87,7 @@ $status = (int)$wpdb->get_var("select status from ".$go_table_ind." where post_i
 		echo $the_stage; // Just for Testing Purposes
 		edit_post_link('Edit '.get_option('go_tasks_name'), '<br />
 <p>', '</p>', $id);
+	}
 	}
 }
 add_shortcode('go_task','go_task_shortcode');
