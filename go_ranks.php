@@ -1,9 +1,9 @@
 <?php
-
 function go_ranks() {
 global $wpdb;
 $dir = plugin_dir_url(__FILE__);
-add_menu_page('Ranks options', 'Ranks', 'manage_options', 'go_ranks_settings', 'go_ranks_menu');
+ add_submenu_page( 'game-on-options.php', 'Ranks', 'Ranks', 'manage_options', 'go_ranks', 'go_ranks_menu');
+//add_menu_page('Ranks options', 'Ranks', 'manage_options', 'go_ranks_settings', 'go_ranks_menu');
 }
 
 function go_ranks_menu() {
@@ -13,14 +13,45 @@ function go_ranks_menu() {
 	}
 	else{
 		
+     
+	
+    ?>      
+        
+        <form method="post" action="">
+        <input name="go_fix_ranks" type="submit" value="Fix Ranks"/>
+        </form>
+
+		<?php
+		if(isset($_POST['go_fix_ranks'])){
+			 $table_name_user_meta = $wpdb->prefix . "usermeta";
+	 $table_name_go_totals = $wpdb->prefix . "go_totals";
+global $default_role;
+	$role = get_option('go_role',$default_role);
+	$uid = $wpdb->get_results("SELECT user_id
+FROM ".$table_name_user_meta."
+WHERE meta_key =  'wp_capabilities'
+AND (meta_value LIKE  '%".$role."%' or meta_value like '%administrator%')");
+			
+			foreach($uid as $id){foreach($id as $uids){
+			
+			
+$ranks = get_option('go_ranks', false);
+ $current_points = go_return_points($uids);
+ while($current_points >= current($ranks)){
+	 next($ranks);
+	 }
+ $next_rank_points = current($ranks);
+ $next_rank = array_search($next_rank_points, $ranks);
+ $rank_points = prev($ranks);
+ $new_rank = array_search($rank_points, $ranks);
+ $new_rank_array= array(array($new_rank, $rank_points),array($next_rank, $next_rank_points));
+  update_user_meta($uids,'go_rank', $new_rank_array );
+}	
+			
+			}}
+
 		$ranks = get_option('go_ranks',false);
-		if(!$ranks){
-			$ranks = array('Level 1'=>0);
-			}
-			
-		
-			
-			
+
 		?>
      <div>   <table style="width:250px;" id="ranks_table" class="widefat">
         <th style="width:125px;">Rank</th>
@@ -58,8 +89,8 @@ ajaxurl = '<?= get_site_url() ?>/wp-admin/admin-ajax.php';
 		}
 	}); }
 </script>
-        <?php
-		
+  
+		<?php		
 		}
 	
 	}
@@ -193,4 +224,6 @@ function go_get_rank_key($points) {
 		}
 	}
 }
+
+
 ?>

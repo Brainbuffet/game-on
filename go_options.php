@@ -66,10 +66,44 @@ function game_on_options() { ?>
         </form>  
     </div>  
 <?php  
+
+	go_style_periods();
+		go_jquery_periods();
+		?> 
+		<div id="periods_container">
+       <ul id="sortable_go_periods">
+       <?php
+	   $periods = get_option('go_periods',false);
+	   if($periods){foreach($periods as $key=>$value){
+		  
+	    ?>
+       <li class="ui-state-default" class="go_list"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input id="go_periods_input" type="text" value="<?= $value ?>"/></li> <?php }} ?>
+       </ul>
+       <button style="width:170px;" onclick="go_periods_new_input();" id="go_periods_add_input">New</button>
+       <button style="width:170px;" onclick="go_periods_save();" id="go_periods_add_input">Save</button>
+        </div>
+		<?php
+
+
+
 }
 function add_game_on_options() {  
     add_menu_page('Game On', 'Game On', 'manage_options', 'game-on-options.php','game_on_options', plugins_url( 'images/ico.png' , __FILE__ ), '81');  
 }
 add_action('admin_menu', 'add_game_on_options');
+}
+
+function go_periods_save(){
+	$array = $_POST['periods_array'];
+	foreach($array as $key=>$value){
+		if ($value == ''){unset($array[$key]);}
+	} 
+update_option('go_periods',$array);
+ $periods = get_option('go_periods',false);
+	   if($periods){foreach($periods as $key=>$value){
+		  
+	    ?>
+       <li class="ui-state-default" class="go_list"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input id="go_periods_input" type="text" value="<?= $value ?>"/></li> <?php }} 
+die();
 }
 ?>

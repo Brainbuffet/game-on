@@ -29,7 +29,7 @@ add_action('go_add_minutes','go_add_minutes');
 add_action('go_return_currency','go_return_currency');
 add_action('go_return_points','go_return_points');
 add_action('go_return_minutes','go_return_minutes');
-add_action('admin_menu', 'go_ranks', $capability, $menu_slug, $function);
+add_action('admin_menu', 'go_ranks');
 add_action('go_update_totals','go_update_totals');
 add_action( 'init', 'go_jquery' );
 add_action('wp_ajax_go_add_ranks', 'go_add_ranks');
@@ -43,4 +43,8 @@ add_action('admin_bar_init', 'go_admin_bar');
 add_action('admin_bar_init', 'go_style_everypage' );
 add_action('go_update_admin_bar','go_update_admin_bar');
 add_action('go_update_progress_bar','go_update_progress_bar');
+add_action('go_style_periods','go_style_periods');
+add_action('go_jquery_periods','go_jquery_periods');
+add_action('wp_ajax_go_admin_bar_add','go_admin_bar_add');
+add_action('wp_ajax_go_periods_save','go_periods_save');
 ?>

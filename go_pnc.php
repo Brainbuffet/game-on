@@ -26,7 +26,8 @@ function go_add_currency($user_id, $reason, $status, $points, $currency, $update
 		} else if($update == true) {
 			$wpdb->update($table_name_go,array('status'=>$status, 'points'=>$points, 'currency'=> $currency), array('uid'=>$user_id, 'reason'=>$reason));
 			}
-	
+		go_update_totals($user_id,$points,$currency,0);
+
 	}
 
 
@@ -110,5 +111,40 @@ function go_update_totals($user_id,$points, $currency, $minutes){
 		go_notify('Minutes', $minutes);
 		}
 	}
+
+
+
+
+
+function go_admin_bar_add(){
+	
+$points_points = $_POST['go_admin_bar_points_points'];
+$points_reason = $_POST['go_admin_bar_points_reason'];
+
+$currency_points = $_POST['go_admin_bar_currency_points'];
+$currency_reason = $_POST['go_admin_bar_currency_reason'];
+
+$minutes_points = $_POST['go_admin_bar_minutes_points'];
+$minutes_reason = $_POST['go_admin_bar_minutes_reason'];
+	$user_id = get_current_user_id();
+
+if($points_points != ''&& $points_reason != ''){
+	go_add_currency($user_id,$points_reason, 6, $points_points, 0, false);
+	}
+if($currency_points!= ''&&$currency_reason!= ''){
+	go_add_currency($user_id, $currency_reason, 6, 0, $currency_points, false);
+
+	}
+if($minutes_points!= ''&&$minutes_reason != ''){
+	go_add_minutes($user_id, $minutes_points, $minutes_reason);
+	}
+	
+	die();
+	
+	}
+
+
+
+
 
 ?>

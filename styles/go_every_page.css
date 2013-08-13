@@ -32,10 +32,10 @@ background-color: #ff6600;
 #go_admin_bar_input{
 	width:250px;
 	}
-#go_admin_bar_points{
-	width:50px;
+.go_admin_bar_points{
+	width:50px !important;
 	}
-#go_admin_bar_reason{
-	width:175px;}
-#wp-admin-bar-points-for-currency-for-minutes-for{
+.go_admin_bar_reason{
+	width:175px !important;}
+ul#wp-admin-bar-go_add-default.ab-submenu{
 	height:207px;}
