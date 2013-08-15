@@ -17,6 +17,7 @@ include('go_admin_bar.php');
 include('go_message.php');
 include('styles/go_enque_styles.php');
 include('go_options.php');
+include('go_stats.php');
 register_activation_hook( __FILE__, 'go_table_totals' );
 register_activation_hook( __FILE__, 'go_table_individual' );
 register_activation_hook( __FILE__, 'go_ranks_registration' );
@@ -44,7 +45,24 @@ add_action('admin_bar_init', 'go_style_everypage' );
 add_action('go_update_admin_bar','go_update_admin_bar');
 add_action('go_update_progress_bar','go_update_progress_bar');
 add_action('go_style_periods','go_style_periods');
+add_action('admin_bar_init','go_style_stats');
 add_action('go_jquery_periods','go_jquery_periods');
 add_action('wp_ajax_go_admin_bar_add','go_admin_bar_add');
+add_action('wp_ajax_go_admin_bar_stats','go_admin_bar_stats');
 add_action('wp_ajax_go_periods_save','go_periods_save');
+add_shortcode( 'go_stats_page', 'go_stats_page' );
+register_activation_hook(__FILE__, 'go_tsk_actv_activate');
+add_action('admin_init', 'go_tsk_actv_redirect');
+function go_tsk_actv_activate() {
+    add_option('go_tsk_actv_do_activation_redirect', true);
+}
+function go_tsk_actv_redirect() {
+    if (get_option('go_tsk_actv_do_activation_redirect', false)) {
+        delete_option('go_tsk_actv_do_activation_redirect');
+        if(!isset($_GET['activate-multi']))
+        {
+            wp_redirect("admin.php?page=game-on-options.php");
+        }
+    }
+}
 ?>

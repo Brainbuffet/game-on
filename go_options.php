@@ -59,33 +59,31 @@ function game_on_options() { ?>
                 <input type="text" name="go_points_sym" size="45" value="<?php echo get_option('go_points_sym'); ?>" /><br />
                 <i>what symbol would you like associated with points?</i>   
             </div>
+			<div id="periods_container">
+       		<ul id="sortable_go_periods">
+       <?php
+	   $periods = get_option('go_periods',false);
+	   if($periods){
+		   foreach($periods as $key=>$value){ 
+	    ?>
+       <li class="ui-state-default" class="go_list"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input id="go_periods_input" type="text" value="<?= $value ?>"/></li> 
+<?php     }
+	   } 
+?>
+       </ul>
+       <button style="width:170px;" onclick="go_periods_new_input();" id="go_periods_add_input">New</button>
+       <button style="width:170px;" onclick="go_periods_save();" id="go_periods_add_input">Save</button>
+        </div>
+		
             </div>
             <span class="opt-inp"><input type="submit" name="Submit" value="Save Options" /> </span> 
             <input type="hidden" name="action" value="update" />  
             <input type="hidden" name="page_options" value="go_tasks_name,go_tasks_plural_name,go_currency_name,go_currency_sym,go_points_name,go_points_sym" />  
         </form>  
     </div>  
-<?php  
-
-	go_style_periods();
-		go_jquery_periods();
-		?> 
-		<div id="periods_container">
-       <ul id="sortable_go_periods">
-       <?php
-	   $periods = get_option('go_periods',false);
-	   if($periods){foreach($periods as $key=>$value){
-		  
-	    ?>
-       <li class="ui-state-default" class="go_list"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input id="go_periods_input" type="text" value="<?= $value ?>"/></li> <?php }} ?>
-       </ul>
-       <button style="width:170px;" onclick="go_periods_new_input();" id="go_periods_add_input">New</button>
-       <button style="width:170px;" onclick="go_periods_save();" id="go_periods_add_input">Save</button>
-        </div>
-		<?php
-
-
-
+<?php
+go_style_periods();
+go_jquery_periods();
 }
 function add_game_on_options() {  
     add_menu_page('Game On', 'Game On', 'manage_options', 'game-on-options.php','game_on_options', plugins_url( 'images/ico.png' , __FILE__ ), '81');  

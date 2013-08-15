@@ -11,4 +11,9 @@ function go_style_periods() {
         wp_enqueue_style( 'jquery-ui' );
 		
 }
+
+function go_style_stats(){
+	wp_register_style( 'go_style_stats', plugin_dir_url( __FILE__).'go_stats.css' );
+        wp_enqueue_style( 'go_style_stats' );
+	}
 ?>

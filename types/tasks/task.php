@@ -1,7 +1,11 @@
 <?php
+function hey_shortcode() {
+	echo 'hey';
+}
+add_shortcode('heys', 'hey_shortcode');
 // Includes
 include('task_shortcode.php'); // Task Shotcode
-include('includes/task_insert.php'); // New Task Inserter
+include('includes/task_insert.php'); // Task Inserter
 // Task custom post type
 function register_cpt_task() {
     $labels = array( 

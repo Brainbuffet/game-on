@@ -22,3 +22,17 @@ function go_admin_bar_add(){
 	
 	}
 	
+function go_admin_bar_stats_page_button(){
+	ajaxurl = 'http://'+location.host+'/wp-admin/admin-ajax.php';
+		jQuery.ajax({
+		type: "post",url: ajaxurl,data: { 
+		action: 'go_admin_bar_stats'},
+		success: function(html){
+jQuery('#go_stats_page').html(html);
+		}
+	});
+		}
+function go_stats_close(){
+	jQuery('#go_stats_lay').remove();
+	
+	}

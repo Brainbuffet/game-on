@@ -3,7 +3,6 @@ function go_ranks() {
 global $wpdb;
 $dir = plugin_dir_url(__FILE__);
  add_submenu_page( 'game-on-options.php', 'Ranks', 'Ranks', 'manage_options', 'go_ranks', 'go_ranks_menu');
-//add_menu_page('Ranks options', 'Ranks', 'manage_options', 'go_ranks_settings', 'go_ranks_menu');
 }
 
 function go_ranks_menu() {

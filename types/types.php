@@ -5,9 +5,6 @@ include('tasks/task.php');
 //Store Includes
 include('store/super-store.php');
 
-// Temp Include
-include('tasks/temp.php');
-
 // Meta Boxes
 function go_init_mtbxs() {
 	if ( ! class_exists( 'cmb_Meta_Box' ) )
@@ -56,8 +53,18 @@ function go_mta_con_meta( array $meta_boxes ) {
 				'type' => 'text',
 			),
 			array(
+				'name' => 'Completion Message (Optional)',
+				'desc' => 'Enter a message for the user to recieve when they have <i>completed</i> the '.get_option('go_tasks_name'),
+				'id' => $prefix . 'complete_message',
+				'type' => 'wysiwyg',
+        		'options' => array(
+           			'wpautop' => true,
+           			'textarea_rows' => '5',
+         		),
+				),
+			array(
 				'name' => 'Mastery Message (Optional)',
-				'desc' => 'Enter a message for the user to recieve when they have mastered the '.get_option('go_tasks_name'),
+				'desc' => 'Enter a message for the user to recieve when they have <i>mastered</i> the '.get_option('go_tasks_name'),
 				'id' => $prefix . 'mastery_message',
 				'type' => 'wysiwyg',
         		'options' => array(

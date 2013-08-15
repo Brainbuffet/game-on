@@ -22,6 +22,7 @@
 	z-index: 1002;
 	overflow: auto;
 	border-radius: 3px;
+	overflow-x: hidden;
 }
 .tsk_light_head {
 	width: 100%;

@@ -73,7 +73,15 @@ function go_admin_bar(){
 		'parent' => 'go_add',
 	));
 
+///////////////////////////////////////////////////////////////////////////
 
+if (!is_admin_bar_showing() || !is_user_logged_in() )
+		return;
+		$wp_admin_bar->add_menu( array(
+		'title' => '<div onclick="go_admin_bar_stats_page_button();">Stats Page</div><div id="go_stats_page"></div>',
+		'href' => false,
+		'id' => 'go_stats',
+	));
 	
 }
 ?>

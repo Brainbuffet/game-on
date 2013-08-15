@@ -31,7 +31,7 @@ function go_gold_store_sc ($atts, $content = null) {
 		} 
 	}	elseif ($id) {
 			$the_title = get_the_title($id); // get item title
-			$custom_fields = get_post_custom($the_id);
+			$custom_fields = get_post_custom($id);
 			$req_currency = $custom_fields['go_mta_store_currency'][0];
 			echo '<a onclick="go_lb_opener('.$id.');">'.$the_title.' ('.$req_currency.')</a>';
 		}
