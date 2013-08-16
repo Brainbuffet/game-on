@@ -28,11 +28,79 @@ function go_admin_bar_stats_page_button(){
 		type: "post",url: ajaxurl,data: { 
 		action: 'go_admin_bar_stats'},
 		success: function(html){
-jQuery('#go_stats_page').html(html);
+jQuery('#go_stats_white_overlay').html(html);
+jQuery('#go_stats_page_black_bg').show();
+jQuery('#go_stats_white_overlay').show();
 		}
 	});
 		}
 function go_stats_close(){
-	jQuery('#go_stats_lay').remove();
+	jQuery('#go_stats_white_overlay').hide();
+	jQuery('#go_stats_page_black_bg').hide();
+	jQuery('#go_stats_lay').hide();
+
+	
+	}
+	
+	
+function go_stats_task_list(){
+	ajaxurl = 'http://'+location.host+'/wp-admin/admin-ajax.php';
+		jQuery.ajax({
+		type: "post",url: ajaxurl,data: { 
+		action: 'go_stats_task_list', stage:1},
+		success: function(html){
+jQuery('#go_stats_encountered_list').html(html);
+		}
+	});
+
+	jQuery.ajax({
+		type: "post",url: ajaxurl,data: { 
+		action: 'go_stats_task_list', stage:2},
+		success: function(html){
+jQuery('#go_stats_accepted_list').html(html);
+		}
+	});
+
+	jQuery.ajax({
+		type: "post",url: ajaxurl,data: { 
+		action: 'go_stats_task_list', stage:3},
+		success: function(html){
+jQuery('#go_stats_completed_list').html(html);
+		}
+	});
+
+	jQuery.ajax({
+		type: "post",url: ajaxurl,data: { 
+		action: 'go_stats_task_list', stage:4},
+		success: function(html){
+jQuery('#go_stats_mastered_list').html(html);
+		}
+	});
+	
+	}
+	
+	
+function go_stats_third_tab(){
+jQuery.ajax({
+		type: "post",url: ajaxurl,data: { 
+		action: 'go_stats_points'},
+		success: function(html){
+jQuery('#go_stats_points').html(html);
+		}
+	});	
+jQuery.ajax({
+		type: "post",url: ajaxurl,data: { 
+		action: 'go_stats_currency'},
+		success: function(html){
+jQuery('#go_stats_currency').html(html);
+		}
+	});
+jQuery.ajax({
+		type: "post",url: ajaxurl,data: { 
+		action: 'go_stats_minutes'},
+		success: function(html){
+jQuery('#go_stats_minutes').html(html);
+		}
+	});
 	
 	}

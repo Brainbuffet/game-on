@@ -49,20 +49,17 @@ $status = (int)$wpdb->get_var("select status from ".$go_table_ind." where post_i
 				echo '<div id="go_content">'. do_shortcode(wpautop($task_content)).'<br /> <button id="go_button" status="3" onclick="task_stage_change();">Complete</button></div>';
 				break;
 			case '3': // Completed
-				echo '<div id="go_content">'. do_shortcode(wpautop($task_content)).''.go_message($completion_message).'<br /> <button id="go_button" status="4" onclick="task_stage_change();">Master</button></div>';
+				echo '<div id="go_content">'. do_shortcode(wpautop($task_content)).''.do_shortcode(go_message($completion_message)).'<br /> <button id="go_button" status="4" onclick="task_stage_change();">Master</button></div>';
 				break;
 			case '4': // Mastered 
 				echo'<div id="go_content">'. do_shortcode(wpautop($task_content)).'';
-				go_message($mastery_message);
+				do_shortcode(go_message($mastery_message));
 				if ($repeat == 'on') {
 				echo '<button id="go_button" status="1" onclick="task_stage_change();">Repeat</button></div>';
 					} else {
 				echo '</div>';
 				}
-				break;
-				
-				 
-				
+				break;		
 		}
 ?>
 		
@@ -119,11 +116,11 @@ function task_change_stage(){
 			echo '<div id="go_content">'.do_shortcode(wpautop($task_content, false)).' <button id="go_button" status="3" onclick="task_stage_change();">Complete</button></div>';
 			break;
 		case 3:
-			echo '<div id="go_content">'.do_shortcode(wpautop($task_content, false)).go_message($completion_message).' <button id="go_button" status="4" onclick="task_stage_change();">Master</button</div>';
+			echo '<div id="go_content">'.do_shortcode(wpautop($task_content, false)).do_shortcode(go_message($completion_message)).' <button id="go_button" status="4" onclick="task_stage_change();">Master</button</div>';
 			break;
 		case 4:
 			echo '<div id="go_content">'.do_shortcode(wpautop($task_content, false));
-			go_message($mastery_message);
+			do_shortcode(go_message($mastery_message));
 			if ($repeat == 'on') {
 				echo '<button id="go_button" status="1" onclick="task_stage_change();">Repeat</button></div>';
 			} else {

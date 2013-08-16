@@ -89,3 +89,9 @@
 .golb-fr-boxes-g:active {
 	background-color: #93e293;
 }
+.go_str_item {
+	cursor:pointer;
+}
+.go_str_item:hover {
+	cursor:pointer;
+}

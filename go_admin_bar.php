@@ -7,9 +7,12 @@ function go_admin_bar(){
 	global $current_rank;
 	global $next_rank_points;
 	global $current_rank_points;
-	$percentage = ($current_points-$current_rank_points)/($next_rank_points-$current_rank_points)*100;
+	$dom = ($next_rank_points-$current_rank_points);
+	if($dom <= 0){ $dom = 1;}
+	$percentage = ($current_points-$current_rank_points)/$dom*100;
+	if($percentage <= 0){ $percentage = 0;} else if($percentage >= 100){$percentage = 100;}
 	
-	if (!is_admin_bar_showing() || !is_user_logged_in() )
+	if (!is_admin_bar_showing() && !is_user_logged_in() )
 		return;
 		$wp_admin_bar->add_menu( array(
 		'title' => '<div style="padding-top:5px;"><div id="go_admin_bar_progress_bar_border"><div id="go_admin_bar_progress_bar" style="width: '.$percentage.'%"></div></div></div>',
@@ -17,7 +20,7 @@ function go_admin_bar(){
 		'id' => 'go_info',
 	));
 	
-		if (!is_admin_bar_showing() || !is_user_logged_in() )
+		if (!is_admin_bar_showing() && !is_user_logged_in() )
 		return;
 		$wp_admin_bar->add_menu( array(
 		'title' => '<div id="go_admin_bar_points">'.get_option('go_points_name').': '.$current_points.get_option('go_points_sym').'</div>',
@@ -25,21 +28,21 @@ function go_admin_bar(){
 		'parent' => 'go_info',
 	));
 	
-		if (!is_admin_bar_showing() || !is_user_logged_in() )
+		if (!is_admin_bar_showing() && !is_user_logged_in() )
 		return;
 		$wp_admin_bar->add_menu( array(
 		'title' => '<div id="go_admin_bar_currency">'.get_option('go_currency_sym').$current_currency. ' '.get_option('go_currency_name').' </div>',
 		'href' => false,
 		'parent' => 'go_info',
 	));
-	if (!is_admin_bar_showing() || !is_user_logged_in() )
+	if (!is_admin_bar_showing() && !is_user_logged_in() )
 		return;
 		$wp_admin_bar->add_menu( array(
 		'title' => '<div id="go_admin_bar_rank">'.$current_rank.'</div>',
 		'href' => false,
 		'parent' => 'go_info',
 	));
-	if (!is_admin_bar_showing() || !is_user_logged_in() )
+	if (!is_admin_bar_showing() && !is_user_logged_in() )
 		return;
 		$wp_admin_bar->add_menu( array(
 		'title' => '<div id="go_admin_bar_rank_left">'.($next_rank_points-$current_points).get_option('go_points_sym').' '.get_option('go_points_name').' Left</div>',
@@ -50,7 +53,7 @@ function go_admin_bar(){
 	
 ////////////////////////////////////////////////////////////////////////	
 	
-	if (!is_admin_bar_showing() || !is_user_logged_in() )
+	if (!is_admin_bar_showing() && !is_user_logged_in() )
 		return;
 		$wp_admin_bar->add_menu( array(
 		'title' => 'Add',
@@ -58,7 +61,7 @@ function go_admin_bar(){
 		'id' => 'go_add',
 	));
 	
-		if (!is_admin_bar_showing() || !is_user_logged_in() )
+		if (!is_admin_bar_showing() && !is_user_logged_in() )
 		return;
 		$wp_admin_bar->add_menu( array(
 		'title' => 
@@ -75,7 +78,7 @@ function go_admin_bar(){
 
 ///////////////////////////////////////////////////////////////////////////
 
-if (!is_admin_bar_showing() || !is_user_logged_in() )
+if (!is_admin_bar_showing() && !is_user_logged_in() )
 		return;
 		$wp_admin_bar->add_menu( array(
 		'title' => '<div onclick="go_admin_bar_stats_page_button();">Stats Page</div><div id="go_stats_page"></div>',

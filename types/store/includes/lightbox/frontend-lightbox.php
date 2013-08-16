@@ -26,7 +26,7 @@ function go_the_lb_ajax(){
 	$user_points = go_return_points( $user_ID );
 	$user_gold = go_return_currency($user_ID); 
 	echo '<h2>'.$the_title.'</h2>';
-	echo '<div id="go-lb-the-content">'.$the_content.'</div>';
+	echo '<div id="go-lb-the-content">'.wpautop($the_content).'</div>';
 	if ($user_points >= $req_rank) { $lvl_color = "g"; } else { $lvl_color = "r"; }
 	if ($user_gold >= $req_currency) { $gold_color = "g"; } else { $gold_color = "r"; }
 	if ($lvl_color == "g" && $gold_color == "g") { $buy_color = "g"; } else { $buy_color = "r"; };

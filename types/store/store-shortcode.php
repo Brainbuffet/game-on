@@ -26,14 +26,14 @@ function go_gold_store_sc ($atts, $content = null) {
 				$req_currency = $custom_fields['go_mta_store_currency'][0];
 				$req_rank =  go_get_rank_key($custom_fields['go_mta_store_rank'][0]);
 				$the_title = get_the_title($item); // get item title
-				echo '<a onclick="go_lb_opener('.$item.');">'.$the_title.' ('.$req_currency.')</a><br />';
+				echo '<a class="go_str_item" onclick="go_lb_opener('.$item.');">'.$the_title.' ('.$req_currency.')</a><br />';
 			}
 		} 
 	}	elseif ($id) {
 			$the_title = get_the_title($id); // get item title
 			$custom_fields = get_post_custom($id);
 			$req_currency = $custom_fields['go_mta_store_currency'][0];
-			echo '<a onclick="go_lb_opener('.$id.');">'.$the_title.' ('.$req_currency.')</a>';
+			return '<a class="go_str_item" onclick="go_lb_opener('.$id.');">'.$the_title.' ('.$req_currency.')</a>';
 		}
 endif;
 }

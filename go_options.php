@@ -80,7 +80,7 @@ function game_on_options() { ?>
             <input type="hidden" name="action" value="update" />  
             <input type="hidden" name="page_options" value="go_tasks_name,go_tasks_plural_name,go_currency_name,go_currency_sym,go_points_name,go_points_sym" />  
         </form>  
-    </div>  
+    
 <?php
 go_style_periods();
 go_jquery_periods();

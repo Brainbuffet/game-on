@@ -50,9 +50,16 @@ add_action('go_jquery_periods','go_jquery_periods');
 add_action('wp_ajax_go_admin_bar_add','go_admin_bar_add');
 add_action('wp_ajax_go_admin_bar_stats','go_admin_bar_stats');
 add_action('wp_ajax_go_periods_save','go_periods_save');
+add_action('wp_ajax_go_stats_task_list','go_stats_task_list');
+add_action('wp_ajax_go_stats_points','go_stats_points');
+add_action('wp_ajax_go_stats_currency','go_stats_currency');
+add_action('wp_ajax_go_stats_minutes','go_stats_minutes');
 add_shortcode( 'go_stats_page', 'go_stats_page' );
 register_activation_hook(__FILE__, 'go_tsk_actv_activate');
 add_action('admin_init', 'go_tsk_actv_redirect');
+add_action('isEven','isEven');
+add_action('wp_head', 'go_stats_overlay');
+add_action('admin_head', 'go_stats_overlay');
 function go_tsk_actv_activate() {
     add_option('go_tsk_actv_do_activation_redirect', true);
 }
@@ -65,4 +72,12 @@ function go_tsk_actv_redirect() {
         }
     }
 }
+
+function isEven($value) {
+	if ($value%2 == 0){
+		return 'even';}
+	else{
+		return 'odd';
+}}
+
 ?>
