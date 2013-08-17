@@ -21,12 +21,11 @@ function go_gold_store_sc ($atts, $content = null) {
 			echo $cat.'<br />';
 			foreach ($the_items as $item) {
 				// Definitions
-				$user_rank = go_get_rank($student_id); // Rank of current user
-				$custom_fields = get_post_custom($the_id);
-				$req_currency = $custom_fields['go_mta_store_currency'][0];
-				$req_rank =  go_get_rank_key($custom_fields['go_mta_store_rank'][0]);
+				$id = $item;
 				$the_title = get_the_title($item); // get item title
-				echo '<a class="go_str_item" onclick="go_lb_opener('.$item.');">'.$the_title.' ('.$req_currency.')</a><br />';
+				$custom_fields = get_post_custom($id);
+				$req_currency[$id] = $custom_fields['go_mta_store_currency'][0];
+				echo '<a class="go_str_item" onclick="go_lb_opener('.$item.');">'.$the_title.' ('.$req_currency[$id].')</a><br />';
 			}
 		} 
 	}	elseif ($id) {
