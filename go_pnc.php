@@ -67,7 +67,7 @@ function go_add_minutes($user_id, $minutes, $reason){
 	
 function go_notify($type, $points='', $currency='', $time='') {
 	if ($points < 0 || $currency < 0) {
-		$sym = '-';
+		$sym = '';
 	} else {
 		$sym = '+';
 	}

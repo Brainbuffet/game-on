@@ -1,10 +1,10 @@
 <?php
 ////////////////////////////////////////
-// Lightbox for BACK END Cube Gold Store Inserts
-// The Author: Vincent Astolfi
+// Lightbox for BACK END Game On Store Inserts
+// The Author: Vincent Astolfi (http://nueue.net/)
 ////////////////////////////////////////
 include('cat-item-ajax.php');
-function go_store_head() { // Run this function that inserts things into the head
+function go_store_head() { // <head>*</head>
 	global $post_type; // Bring the post type into global scope
 	if( 'go_store' != $post_type ) { // If the current post type isn't go_store, do the following
 ?>
@@ -221,7 +221,7 @@ cursor:pointer;
   <div class="go_box_top"> <a href="javascript:void(0)" class="go_box_close" onclick="document.getElementById('go_lightbox').style.display='none';document.getElementById('fade').style.display='none'">Close</a> </div>
   <div id="go_lightbox_desc">
     <h2>Choose a Content Type</h2>
-    <div class="description">These buttons generate the shortcode needed for this item to appear, and create a new instance of the selected content type with the shortcode already pasted in the content area.</div>
+    <div class="description">These buttons create a new instance of the selected post type with the shortcode automatically inserted in their respective content areas. You will be forwarded to the edit interface for this node.</div>
   </div>
   <?php
 $go_get_post_types = get_post_types(); 
