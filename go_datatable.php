@@ -66,6 +66,28 @@ function go_install_data(){
 	 $table_name_go_totals = $wpdb->prefix . "go_totals";
 global $default_role;
 	$role = get_option('go_role',$default_role);
+	
+	$options_array = array(
+	'go_first_stage_name' => 'Encountered',
+	'go_second_stage_name' => 'Accepted',
+	'go_third_stage_name' => 'Completed',
+	'go_fourth_stage_name' => 'Mastered',
+	'go_second_stage_button' => 'Accept',
+	'go_third_stage_button' => 'Complete',
+	'go_fourth_stage_button' => 'Master',
+	'go_currency_prefix' => '$',
+	'go_currency_suffix' => '',
+	'go_points_prefix' => '',
+	'go_points_suffix' => 'XP',
+	'go_currency_name' => 'Dollars',
+	'go_points_name' => 'Points'
+	);
+	foreach($options_array as $key => $value){
+		 add_option( $key, $value );
+		}
+	
+	
+	
 	$uid = $wpdb->get_results("SELECT user_id
 FROM ".$table_name_user_meta."
 WHERE meta_key =  'wp_capabilities'
