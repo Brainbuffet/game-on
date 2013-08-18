@@ -8,6 +8,16 @@ function go_opt_style() {
     wp_enqueue_style( 'go_opt_css' );
 }
 add_action('admin_enqueue_scripts', 'go_opt_style');
+
+function sub_option($explanation_name, $explanation, $title, $field_name, $option_name, $explanation_question){ ?>
+	    <div class="pa">
+            	<?php go_opt_help($explanation_name,$explanation); ?> 
+            	<strong><?= $title ?>:</strong><br />  
+                <input type="text" name="<?= $field_name ?>" size="45" value="<?php echo get_option($option_name); ?>" /><br />
+                <i><?= $explanation_question ?></i> 
+            </div> <?php
+            
+	}
 function game_on_options() { ?>  
     <div class="go-wrap">  
         <h2>Game On Options</h2>  
@@ -31,8 +41,26 @@ function game_on_options() { ?>
             <br />
             <div id="curr" class="opt-box">
             <h3>Currency Settings</h3>
+            
+            
+        
+            
+            
             <div class="pa">
-            	<?php go_opt_help('tasks_currency_name','This is what your currency will be called. It could be everything from Bread to Franks.'); ?> 
+            	<?php go_opt_help('tasks_currency_sym', 'The symbol used to represent your currency, such as a dollar sign.'); ?> 
+            	<strong>Currency Symbol:</strong><br />  
+                <input type="text" name="go_currency_sym" size="45" value="<?php echo get_option('go_currency_sym'); ?>" /><br /> 
+                <i>what symbol would you like associated with points?</i> 
+            </div>
+            </div><br />
+
+    
+    
+    
+<div class="opt-box">
+            <h3>Title</h3>
+            <div class="pa">
+            	<?php go_opt_help('field','Explanation'); ?> 
             	<strong>Currency Name:</strong><br />  
                 <input type="text" name="go_currency_name" size="45" value="<?php echo get_option('go_currency_name'); ?>" /><br />
                 <i>what would you like currency to be called?</i> 
@@ -42,8 +70,16 @@ function game_on_options() { ?>
             	<strong>Currency Symbol:</strong><br />  
                 <input type="text" name="go_currency_sym" size="45" value="<?php echo get_option('go_currency_sym'); ?>" /><br /> 
                 <i>what symbol would you like associated with points?</i> 
-            </div>
-            </div>
+            </div>    
+</div>        
+            
+            
+            
+            
+            
+            
+            
+
             <br />
             <div id="poi" class="opt-box">       
             <h3>Points Settings</h3>
