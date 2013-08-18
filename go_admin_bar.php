@@ -23,7 +23,7 @@ function go_admin_bar(){
 		if (!is_admin_bar_showing() && !is_user_logged_in() )
 		return;
 		$wp_admin_bar->add_menu( array(
-		'title' => '<div id="go_admin_bar_points">'.get_option('go_points_name').': '.$current_points.get_option('go_points_sym').'</div>',
+		'title' => '<div id="go_admin_bar_points">'.get_option('go_points_name').': '.get_option('go_points_prefix').$current_points.get_option('go_points_suffix').'</div>',
 		'href' => false,
 		'parent' => 'go_info',
 	));
@@ -31,7 +31,7 @@ function go_admin_bar(){
 		if (!is_admin_bar_showing() && !is_user_logged_in() )
 		return;
 		$wp_admin_bar->add_menu( array(
-		'title' => '<div id="go_admin_bar_currency">'.get_option('go_currency_sym').$current_currency. ' '.get_option('go_currency_name').' </div>',
+		'title' => '<div id="go_admin_bar_currency">'.get_option('go_currency_name').': '.go_display_currency($current_currency).'</div>',
 		'href' => false,
 		'parent' => 'go_info',
 	));
@@ -45,7 +45,7 @@ function go_admin_bar(){
 	if (!is_admin_bar_showing() && !is_user_logged_in() )
 		return;
 		$wp_admin_bar->add_menu( array(
-		'title' => '<div id="go_admin_bar_rank_left">'.($next_rank_points-$current_points).get_option('go_points_sym').' '.get_option('go_points_name').' Left</div>',
+		'title' => '<div id="go_admin_bar_rank_left">'.go_display_points($next_rank_points-$current_points).' Left</div>',
 		'href' => false,
 		'parent' => 'go_info',
 	));

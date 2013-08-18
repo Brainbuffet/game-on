@@ -35,21 +35,21 @@ $status = (int)$wpdb->get_var("select status from ".$go_table_ind." where post_i
 				go_add_post($user_ID, $id, 0, $points_array[0], $currency_array[0]);
 ?>
 				<div id="go_content"> <br />
-				<button id="go_button" status="2" onclick="task_stage_change();"><?php echo 'Accept'; ?></button>
+				<button id="go_button" status="2" onclick="task_stage_change();"><?= get_option('go_second_stage_button') ?></button>
             	</div>
 <?php			break;
 			case '1': // Encountered
 ?>
 				<div id="go_content"> <br />
-				<button id="go_button" status= "2" onclick="task_stage_change();"><?php echo 'Accept'; ?></button>
+				<button id="go_button" status= "2" onclick="task_stage_change();"><?= get_option('go_second_stage_button') ?></button>
          		</div>   
 <?php
 				break;
 			case '2': // Accepted
-				echo '<div id="go_content">'. do_shortcode(wpautop($task_content)).'<br /> <button id="go_button" status="3" onclick="task_stage_change();">Complete</button></div>';
+				echo '<div id="go_content">'. do_shortcode(wpautop($task_content)).'<br /> <button id="go_button" status="3" onclick="task_stage_change();">'.get_option('go_third_stage_button').'</button></div>';
 				break;
 			case '3': // Completed
-				echo '<div id="go_content">'. do_shortcode(wpautop($task_content)).''.do_shortcode(go_message($completion_message)).'<br /> <button id="go_button" status="4" onclick="task_stage_change();">Master</button></div>';
+				echo '<div id="go_content">'. do_shortcode(wpautop($task_content)).''.do_shortcode(go_message($completion_message)).'<br /> <button id="go_button" status="4" onclick="task_stage_change();">'.get_option('go_fourth_stage_button').'</button></div>';
 				break;
 			case '4': // Mastered 
 				echo'<div id="go_content">'. do_shortcode(wpautop($task_content)).'';
@@ -110,13 +110,13 @@ function task_change_stage(){
 	go_add_post($user_id, $task_id, $status, $points_array[$status-1], $currency_array[$status-1]  );
 	switch($status) {
 		case 1:
-			echo '<div id="go_content">'.do_shortcode(wpautop($task_content, false)).' <button id="go_button" status="2" onclick="task_stage_change();">Accept</button></div>';
+			echo '<div id="go_content">'.do_shortcode(wpautop($task_content, false)).' <button id="go_button" status="2" onclick="task_stage_change();">'.get_option('go_second_stage_button').'</button></div>';
 			break;
 		case 2:
-			echo '<div id="go_content">'.do_shortcode(wpautop($task_content, false)).' <button id="go_button" status="3" onclick="task_stage_change();">Complete</button></div>';
+			echo '<div id="go_content">'.do_shortcode(wpautop($task_content, false)).' <button id="go_button" status="3" onclick="task_stage_change();">'.get_option('go_third_stage_button').'</button></div>';
 			break;
 		case 3:
-			echo '<div id="go_content">'.do_shortcode(wpautop($task_content, false)).do_shortcode(go_message($completion_message)).' <button id="go_button" status="4" onclick="task_stage_change();">Master</button</div>';
+			echo '<div id="go_content">'.do_shortcode(wpautop($task_content, false)).do_shortcode(go_message($completion_message)).' <button id="go_button" status="4" onclick="task_stage_change();">'.get_option('go_fourth_stage_button').'</button</div>';
 			break;
 		case 4:
 			echo '<div id="go_content">'.do_shortcode(wpautop($task_content, false));

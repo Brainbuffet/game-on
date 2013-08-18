@@ -74,12 +74,19 @@ function go_notify($type, $points='', $currency='', $time='') {
 	global $counter;
 	$counter++;
 	$space = $counter*85;
-	echo '<div id="go_notification" class="go_notification" style="top: '.$space.'px">'.$sym.$points.' '.$type.'</div><script type="text/javascript" language="javascript">go_notification();</script>';
+	if($type == 'points'){$display = go_display_points($points);}elseif ($type == 'currency'){$display = go_display_currency($currency);}
+	echo '<div id="go_notification" class="go_notification" style="top: '.$space.'px">'.$display.'</div><script type="text/javascript" language="javascript">jQuery(".go_notification").fadeIn(200);
+	setTimeout(function(){
+		jQuery(".go_notification").fadeOut("slow");
+	},1500) </script>';
 }
 
 function go_update_admin_bar($type, $title, $points_currency){
+	if($type == 'points'){$display = go_display_points($points_currency);}elseif ($type == 'currency'){$display = go_display_currency($points_currency);}
+	$percentage = go_get_level_percentage(get_current_user_id());
 	echo '<script language="javascript">
-		jQuery("#go_admin_bar_'.$type.'").html("'.$points_currency.' '.$title.'");
+		jQuery("#go_admin_bar_'.$type.'").html("'.$title.': '.$display.'");
+		jQuery("#go_admin_bar_progress_bar").css("width", "'.$percentage.'%");
 	</script>';
 	}
 
@@ -93,22 +100,22 @@ function go_update_totals($user_id,$points, $currency, $minutes){
 		$totalpoints = go_return_points($user_id);
 		$wpdb->update($table_name_go_totals, array('points'=> $totalpoints+$points), array('uid'=>$user_id));
 		go_update_ranks($user_id, ($totalpoints+$points));
-		go_notify(get_option('go_points_name'), $points);
+		go_notify('points', $points);
 		$p = (string)($totalpoints+$points);
-		go_update_admin_bar(strtolower(get_option('go_points_name')),get_option('go_points_name'),$p);
+		go_update_admin_bar('points',get_option('go_points_name'),$p);
 		}
 	if($currency != 0){
 		$table_name_go_totals = $wpdb->prefix . "go_totals";
 		$totalcurrency = go_return_currency($user_id);
 		$wpdb->update($table_name_go_totals, array('currency'=> $totalcurrency+$currency), array('uid'=>$user_id));
-		go_notify(get_option('go_currency_name'), $currency);
-		go_update_admin_bar(strtolower(get_option('go_currency_name')), get_option('go_currency_name'), ($totalcurrency+$currency));
+		go_notify('currency',0, $currency);
+		go_update_admin_bar('currency', get_option('go_currency_name'), ($totalcurrency+$currency));
 		}
 	if($minutes != 0){
 		$table_name_go_totals = $wpdb->prefix . "go_totals";
 		$totalminutes = go_return_minutes($user_id);
 		$wpdb->update($table_name_go_totals, array('minutes'=> $totalminutes+$minutes), array('uid'=>$user_id));
-		go_notify('Minutes', $minutes);
+		go_notify('Minutes', 0,0,$minutes);
 		}
 	}
 
@@ -143,8 +150,20 @@ if($minutes_points!= ''&&$minutes_reason != ''){
 	
 	}
 
-
-
+function go_get_level_percentage($user_id){
+	global $wpdb;
+	$current_points = go_return_points($user_id);
+	go_get_rank($user_id);
+	global $current_currency;
+	global $current_rank;
+	global $next_rank_points;
+	global $current_rank_points;
+	$dom = ($next_rank_points-$current_rank_points);
+	if($dom <= 0){ $dom = 1;}
+	$percentage = ($current_points-$current_rank_points)/$dom*100;
+	if($percentage <= 0){ $percentage = 0;} else if($percentage >= 100){$percentage = 100;}
+	return $percentage;
+	}
 
 
 ?>
