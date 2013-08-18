@@ -60,6 +60,8 @@ add_action('admin_init', 'go_tsk_actv_redirect');
 add_action('isEven','isEven');
 add_action('wp_head', 'go_stats_overlay');
 add_action('admin_head', 'go_stats_overlay');
+add_action('go_display_points','go_display_points');
+add_action('go_display_currency','go_display_currency');
 function go_tsk_actv_activate() {
     add_option('go_tsk_actv_do_activation_redirect', true);
 }

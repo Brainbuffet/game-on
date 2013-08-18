@@ -52,7 +52,7 @@ jQuery('#go_stats_accordion').accordion({
 jQuery( "#go_stats_progress_bar" ).progressbar({
       value: <?= $percentage ?>
     });
-	var Pie = createPie("students","200px","white",4,[<?= $percentage_encountered ?>,<?= $percentage_accepted ?>,<?= $percentage_completed ?>, <?= $percentage_mastered ?>],["rgba(0,0,0,.25)","rgba(0,0,0,.5)","rgba(0,0,0,.75)","rgba(0,0,0,1)"]);
+	var Pie = createPie("students","200px","white",4,[<?= $percentage_encountered ?>,<?= $percentage_accepted ?>,<?= $percentage_completed ?>, <?= $percentage_mastered ?>],["rgba(255, 102, 0,.25)","rgba(255, 102, 0,.5)","rgba(255, 102, 0,.75)","rgba(255, 102, 0,1)"]);
 
 
 	 document.getElementById("go_stats_chart_div").appendChild(Pie);
@@ -82,10 +82,10 @@ font-size: 19px;"><?= $current_points.'/'.$next_rank_points ?></div></div>
 <div id="go_stats_next_rank"><?= $next_rank ?></div>
     <div id="go_stats_chart_div" style="margin-left: 55px;
 margin-top: 40px; width:200px; display:inline;"></div
-><div id="go_stats_chart_key"><div><div id="go_key_box" style="background-color:rgba(0,0,0,.25);"></div> Encountered (<?= $numb_encountered ?>)</div>
-<div><div id="go_key_box" style="background-color:rgba(0,0,0,.5);"></div> Accepted (<?= $numb_accepted ?>)</div>
-<div><div id="go_key_box" style="background-color:rgba(0,0,0,.75);"></div> Completed (<?= $numb_completed ?>)</div>
-<div><div id="go_key_box" style="background-color:rgba(0,0,0,1);"></div> Mastered (<?= $numb_mastered ?>)</div></div>
+><div id="go_stats_chart_key"><div><div id="go_key_box" style="background-color:rgba(255, 102, 0,.25);"></div> <?= get_option('go_first_stage_name') ?> (<?= $numb_encountered ?>)</div>
+<div><div id="go_key_box" style="background-color:rgba(255, 102, 0,.5);"></div><?= get_option('go_second_stage_name') ?>(<?= $numb_accepted ?>)</div>
+<div><div id="go_key_box" style="background-color:rgba(255, 102, 0,.75);"></div> <?= get_option('go_third_stage_name') ?> (<?= $numb_completed ?>)</div>
+<div><div id="go_key_box" style="background-color:rgba(255, 102, 0,1);"></div> <?= get_option('go_fourth_stage_name') ?> (<?= $numb_mastered ?>)</div></div>
   </div>
   
   
@@ -95,20 +95,20 @@ margin-top: 40px; width:200px; display:inline;"></div
   
   <h3 class="go_stats_header" onclick="go_stats_task_list();"><?= get_option('go_tasks_name'); ?></h3>
   <div class="go_stats_box">
-   <div id="go_stats_task_columns"><h6 class="go_stats_box_title">Encountered</h6>
+   <div id="go_stats_task_columns"><h6 class="go_stats_box_title"><?= get_option('go_first_stage_name') ?></h6>
 <ul id="go_stats_encountered_list" class="go_stats_task_lists" ></ul></div>
-   <div id="go_stats_task_columns" ><h6 class="go_stats_box_title">Accepted</h6>
+   <div id="go_stats_task_columns" ><h6 class="go_stats_box_title"><?= get_option('go_second_stage_name') ?></h6>
 <ul id="go_stats_accepted_list" class="go_stats_task_lists"></ul></div>
-   <div id="go_stats_task_columns"><h6 class="go_stats_box_title">Completed</h6>
+   <div id="go_stats_task_columns"><h6 class="go_stats_box_title"><?= get_option('go_third_stage_name') ?></h6>
 <ul id="go_stats_completed_list" class="go_stats_task_lists"></ul></div>
-   <div id="go_stats_task_columns"><h6 class="go_stats_box_title">Mastered</h6>
+   <div id="go_stats_task_columns"><h6 class="go_stats_box_title"><?= get_option('go_fourth_stage_name') ?></h6>
 <ul id="go_stats_mastered_list" class="go_stats_task_lists"></ul></div>
 
   </div>
   <h3 class="go_stats_header" onclick="go_stats_third_tab();"><?= get_option('go_points_name').' - '. get_option('go_currency_name').' - '. 'Minutes' ?></h3>
   <div class="go_stats_box">
-  <div id="go_stats_third_tab_points"><h6 class="go_stats_box_title">Points</h6><ul id="go_stats_points" class="go_stats_task_lists" ></ul></div>
-  <div id="go_stats_third_tab_currency"><h6 class="go_stats_box_title">Currency</h6><ul id="go_stats_currency" class="go_stats_task_lists" ></ul></div>
+  <div id="go_stats_third_tab_points"><h6 class="go_stats_box_title"><?= get_option('go_points_name') ?></h6><ul id="go_stats_points" class="go_stats_task_lists" ></ul></div>
+  <div id="go_stats_third_tab_currency"><h6 class="go_stats_box_title"><?= get_option('go_currency_name') ?></h6><ul id="go_stats_currency" class="go_stats_task_lists" ></ul></div>
   <div id="go_stats_third_tab_minutes"><h6 class="go_stats_box_title">Minutes</h6><ul id="go_stats_minutes" class="go_stats_task_lists" ></ul></div>
   </div>
 
@@ -130,7 +130,7 @@ function go_stats_task_list(){
 	foreach($list as $lists){
 		
 			$x++;
-		?> <li class="go_<?= isEven($x)?>" ><a href=" <?= get_permalink( $lists->post_id) ?>" style="color:rgba(0,0,0,.4); font-size:12px;"> <?= get_the_title($lists->post_id) ?> (<?= $lists->points ?> <?=  $sym ?>)</a></li> <?php
+		?> <li class="go_<?= isEven($x)?>" ><a href=" <?= get_permalink( $lists->post_id) ?>" style="color:rgba(0,0,0,.4); font-size:12px;"> <?= get_the_title($lists->post_id) ?> (<?= go_display_points($lists->points) ?>)</a></li> <?php
 		}
 		die();
 	}
@@ -146,10 +146,10 @@ function go_stats_points(){
 	foreach($list as $lists){
 		if ($lists->post_id != 0){
 			$x++;
-		?> <li class="go_<?= isEven($x)?>" ><a href=" <?= get_permalink( $lists->post_id) ?>" style="color:rgba(0,0,0,.4); font-size:12px;"> <?= get_the_title($lists->post_id) ?> (<?= $lists->points ?> <?=  $sym ?>)</a></li> <?php
+		?> <li class="go_<?= isEven($x)?>" ><a href=" <?= get_permalink( $lists->post_id) ?>" style="color:rgba(0,0,0,.4); font-size:12px;"> <?= get_the_title($lists->post_id) ?> (<?=go_display_points($lists->points) ?>)</a></li> <?php
 		} else{
 			$x++;
-		?> <li class="go_<?= isEven($x)?>" ><?= $lists->reason ?> (<?= $lists->points ?> <?=  $sym ?>)</li> <?php
+		?> <li class="go_<?= isEven($x)?>" ><?= $lists->reason ?> (<?= go_display_points($lists->points) ?>)</li> <?php
 			}}
 		die(); 
 	}
@@ -167,7 +167,7 @@ function go_stats_currency(){
 		?> <li class="go_<?= isEven($x)?>" ><a href=" <?= get_permalink( $lists->post_id) ?>" style="color:rgba(0,0,0,.4); font-size:12px;"> <?= get_the_title($lists->post_id) ?> (<?= $lists->currency ?> <?=  $sym ?>)</a></li> <?php
 		} else{
 			$x++;
-		?> <li class="go_<?= isEven($x)?>" ><?= $lists->reason ?> (<?= $lists->currency ?> <?=  $sym ?>)</li> <?php
+		?> <li class="go_<?= isEven($x)?>" ><?= $lists->reason ?> (<?= go_display_currency($lists->currency) ?>)</li> <?php
 			}}
 		die(); 
 	}

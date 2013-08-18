@@ -24,19 +24,19 @@
 	overflow: auto;
 	border-radius: 3px;
 }
-.go_lb_closer {
+.cb_lb_closer {
 	position: absolute;
 	top: 7px;
 	right: 13px;
 }
-.go-lb-loading {
-	background: url('/wp-content/plugins/game-on/types/store/images/ajax-loader.gif');
+.cb-lb-loading {
+	background: url('/wp-content/plugins/cube-gold/test-store/images/ajax-loader.gif');
 	width: 16px;
 	height: 16px;
 	margin: 0 auto;
 	margin-top: 25%;
 }
-#go-buy-loading {
+#cb-buy-loading {
 	width: 16px;
 	height: 11px;
 	margin: 0 auto;
@@ -44,12 +44,12 @@
 	margin-bottom: 5px;
 }
 .buy_g {
-	background: url('/wp-content/plugins/game-on/types/store/images/ajax-loader-buy-green.gif');
+	background: url('/wp-content/plugins/cube-gold/test-store/images/ajax-loader-buy-green.gif');
 }
 .buy_r {
-	background: url('/wp-content/plugins/game-on/types/store/images/ajax-loader-buy-red.gif');
+	background: url('/wp-content/plugins/cube-gold/test-store/images/ajax-loader-buy-red.gif');
 }
-.golb-fr-boxes-r {
+.cblb-fr-boxes-r {
 	float: left;
 	width: 30%;
 	padding: 5px 0px 5px 0px;
@@ -63,13 +63,13 @@
 	border-radius: 3px;
 	cursor:pointer;
 }
-.golb-fr-boxes-r:hover {
+.cblb-fr-boxes-r:hover {
 	background-color: #fff7f5;
 }
-.golb-fr-boxes-r:active {
+.cblb-fr-boxes-r:active {
 	background-color: #ffccc5;
 }
-.golb-fr-boxes-g {
+.cblb-fr-boxes-g {
 	float: left;
 	width: 30%;
 	padding: 5px 0px 5px 0px;
@@ -83,9 +83,9 @@
 	border-radius: 3px;
 	cursor: pointer;
 }
-.golb-fr-boxes-g:hover {
+.cblb-fr-boxes-g:hover {
 	background-color: #e8ffe8;
 }
-.golb-fr-boxes-g:active {
+.cblb-fr-boxes-g:active {
 	background-color: #93e293;
 }
