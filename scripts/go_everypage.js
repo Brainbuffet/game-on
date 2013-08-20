@@ -1,7 +1,6 @@
 function go_admin_bar_add(){
-	ajaxurl = 'http://'+location.host+'/wp-admin/admin-ajax.php';
 		jQuery.ajax({
-		type: "post",url: ajaxurl,data: { 
+		type: "post",url: MyAjax.ajaxurl,data: { 
 		action: 'go_admin_bar_add',
 		go_admin_bar_points_points:jQuery('#go_admin_bar_points_points').val(),
 		go_admin_bar_points_reason:jQuery('#go_admin_bar_points_reason').val(),
@@ -23,9 +22,8 @@ function go_admin_bar_add(){
 	}
 	
 function go_admin_bar_stats_page_button(){
-	ajaxurl = 'http://'+location.host+'/wp-admin/admin-ajax.php';
 		jQuery.ajax({
-		type: "post",url: ajaxurl,data: { 
+		type: "post",url: MyAjax.ajaxurl,data: { 
 		action: 'go_admin_bar_stats'},
 		success: function(html){
 jQuery('#go_stats_white_overlay').html(html);
@@ -44,9 +42,8 @@ function go_stats_close(){
 	
 	
 function go_stats_task_list(){
-	ajaxurl = 'http://'+location.host+'/wp-admin/admin-ajax.php';
 		jQuery.ajax({
-		type: "post",url: ajaxurl,data: { 
+		type: "post",url: MyAjax.ajaxurl,data: { 
 		action: 'go_stats_task_list', stage:1},
 		success: function(html){
 jQuery('#go_stats_encountered_list').html(html);
@@ -54,7 +51,7 @@ jQuery('#go_stats_encountered_list').html(html);
 	});
 
 	jQuery.ajax({
-		type: "post",url: ajaxurl,data: { 
+		type: "post",url: MyAjax.ajaxurl,data: { 
 		action: 'go_stats_task_list', stage:2},
 		success: function(html){
 jQuery('#go_stats_accepted_list').html(html);
@@ -62,7 +59,7 @@ jQuery('#go_stats_accepted_list').html(html);
 	});
 
 	jQuery.ajax({
-		type: "post",url: ajaxurl,data: { 
+		type: "post",url: MyAjax.ajaxurl,data: { 
 		action: 'go_stats_task_list', stage:3},
 		success: function(html){
 jQuery('#go_stats_completed_list').html(html);
@@ -70,7 +67,7 @@ jQuery('#go_stats_completed_list').html(html);
 	});
 
 	jQuery.ajax({
-		type: "post",url: ajaxurl,data: { 
+		type: "post",url: MyAjax.ajaxurl,data: { 
 		action: 'go_stats_task_list', stage:4},
 		success: function(html){
 jQuery('#go_stats_mastered_list').html(html);
@@ -82,21 +79,21 @@ jQuery('#go_stats_mastered_list').html(html);
 	
 function go_stats_third_tab(){
 jQuery.ajax({
-		type: "post",url: ajaxurl,data: { 
+		type: "post",url: MyAjax.ajaxurl,data: { 
 		action: 'go_stats_points'},
 		success: function(html){
 jQuery('#go_stats_points').html(html);
 		}
 	});	
 jQuery.ajax({
-		type: "post",url: ajaxurl,data: { 
+		type: "post",url: MyAjax.ajaxurl,data: { 
 		action: 'go_stats_currency'},
 		success: function(html){
 jQuery('#go_stats_currency').html(html);
 		}
 	});
 jQuery.ajax({
-		type: "post",url: ajaxurl,data: { 
+		type: "post",url: MyAjax.ajaxurl,data: { 
 		action: 'go_stats_minutes'},
 		success: function(html){
 jQuery('#go_stats_minutes').html(html);
