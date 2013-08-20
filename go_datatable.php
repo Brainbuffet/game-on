@@ -64,6 +64,8 @@ function go_install_data(){
 	global $wpdb;
 	 $table_name_user_meta = $wpdb->prefix . "usermeta";
 	 $table_name_go_totals = $wpdb->prefix . "go_totals";
+	 $table_name_go = $wpdb->prefix . "go";
+
 global $default_role;
 	$role = get_option('go_role',$default_role);
 	
@@ -103,10 +105,13 @@ AND (meta_value LIKE  '%".$role."%' or meta_value like '%administrator%')");
 
 
 			$check = (int)$wpdb->get_var("select uid from ".$table_name_go_totals." where uid = $uids ");
+			$total_points = (int)$wpdb->get_var("select sum(points) from ".$table_name_go." where uid = $uids ");
+			$total_currency = (int)$wpdb->get_var("select sum(currency) from ".$table_name_go." where uid = $uids ");
+
 				if($check == 0){
-					$wpdb->insert( $table_name_go_totals,array( 'uid' => $uids ), array(  '%d' ) );
+					$wpdb->insert( $table_name_go_totals,array( 'uid' => $uids, 'points'=>$total_points, 'currency'=>$total_currency ), array(  '%d' ) );
 						} else {
-		 					$wpdb->update( $table_name_go_totals, array( 'uid' => $uids), array( 'uid' => $uids ), array('%d'), array( '%d') ) ;
+		 					$wpdb->update( $table_name_go_totals, array( 'uid' => $uids,  'points'=>$total_points, 'currency'=>$total_currency), array( 'uid' => $uids ), array('%d'), array( '%d') ) ;
 								}
 								
 								
@@ -136,7 +141,7 @@ function go_user_registration($user_id) {
  global $role_default;
  $table_name_go_totals = $wpdb->prefix . "go_totals";
  $table_name_user_meta = $wpdb->prefix . "usermeta";
- $role = get_option('go_role',$role_default);
+ $role = get_option('go_role','subscriber');
  $user_role = get_user_meta($user_id,'wp_capabilities', true);
  if(array_search(1, $user_role) == $role || $user_role == 'administrator'){
  	$ranks = get_option('go_ranks');
@@ -145,7 +150,7 @@ function go_user_registration($user_id) {
 		$next_rank_points = next($ranks);
 		$next_rank = array_search($next_rank_points, $ranks);
 		$new_rank = array(array($current_rank, $current_rank_points),array($next_rank, $next_rank_points));
- $wpdb->insert( $table_name_go_totals,array( 'uid' => $user_id, 'totalpoints' => 0 ),  array(  '%s' ) );
+ $wpdb->insert( $table_name_go_totals,array( 'uid' => $user_id, 'points' => 0 ),  array(  '%s' ) );
  update_user_meta($user_id,'go_rank', $new_rank);
  }
 }	
