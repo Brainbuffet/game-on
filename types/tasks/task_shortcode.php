@@ -52,7 +52,7 @@ $status = (int)$wpdb->get_var("select status from ".$go_table_ind." where post_i
 				echo '<div id="go_content">'. do_shortcode(wpautop($task_content)).''.do_shortcode(wpautop($completion_message)).'<br /> <button id="go_button" status="4" onclick="task_stage_change();">'.get_option('go_fourth_stage_button').'</button></div>';
 				break;
 			case '4': // Mastered 
-				echo'<div id="go_content">'. do_shortcode(wpautop($task_content)).'';
+				echo'<div id="go_content">'. do_shortcode(wpautop($task_content)).do_shortcode(wpautop($completion_message));
 				do_shortcode(go_message($mastery_message));
 				if ($repeat == 'on') {
 				echo '<button id="go_button" status="1" onclick="task_stage_change();">Repeat</button></div>';
@@ -119,7 +119,7 @@ function task_change_stage(){
 			echo '<div id="go_content">'.do_shortcode(wpautop($task_content, false)).do_shortcode(wpautop($completion_message)).' <button id="go_button" status="4" onclick="task_stage_change();">'.get_option('go_fourth_stage_button').'</button</div>';
 			break;
 		case 4:
-			echo '<div id="go_content">'.do_shortcode(wpautop($task_content, false));
+			echo '<div id="go_content">'.do_shortcode(wpautop($task_content, false)).do_shortcode(wpautop($completion_message));
 			do_shortcode(go_message($mastery_message));
 			if ($repeat == 'on') {
 				echo '<button id="go_button" status="1" onclick="task_stage_change();">Repeat</button></div>';
