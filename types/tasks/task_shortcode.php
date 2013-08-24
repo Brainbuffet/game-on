@@ -128,6 +128,7 @@ function task_change_stage(){
 			}
 			break;
 	}
+	
 die();
 }
 ?>

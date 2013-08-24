@@ -18,7 +18,19 @@ function go_sub_option($explanation_name, $explanation, $title, $field_name, $op
             </div> <?php
             
 	}
+	
+function go_sub_option_radio($explanation_name, $explanation, $title, $field_name, $option_name, $explanation_question){ ?>
+	    <div class="pa">
+            	<?php go_opt_help($explanation_name,$explanation); ?> 
+            	<strong><?= $title ?>:</strong><br />  
+                 On: <input type="radio" name="<?= $option_name ?>" size="45" value="On" /><br />
+                Off: <input type="radio" name="<?= $option_name ?>" size="45" value="Off" /><br />
+                <i><?= $explanation_question ?></i> 
+            </div> <?php
+            
+	}	
 add_action('go_sub_option','go_sub_option');
+add_action('go_sub_option_radio','go_sub_option_radio');
 function game_on_options() { ?>  
     <div class="go-wrap">  
         <h2>Game On Options</h2>  
@@ -26,17 +38,17 @@ function game_on_options() { ?>
             <?php wp_nonce_field('update-options') ?> 
             <div id="tsk" class="opt-box">
             <h3>Task Settings</h3>
-            <?=
-				go_sub_option( 'tasks_name', 'This is the word that will be used in place of Task all over your website. Make sure that it is singular (e.g. Assignment, Quest)', 'Singular Tasks Name', 'go_tasks_name', 'go_tasks_name', 'what would you like tasks to be called? (singular)' );
-				go_sub_option('tasks_plural_name','This is the word used in place of Task all over your website. Use only plural words here (e.g. Assignments, Quests)','Plural Tasks Name', 'go_tasks_plural_name', 'go_tasks_plural_name', 'what would you like tasks to be called? (plural)' );
+            <?php
+			echo	go_sub_option( 'tasks_name', 'This is the word that will be used in place of Task all over your website. Make sure that it is singular (e.g. Assignment, Quest)', 'Singular Tasks Name', 'go_tasks_name', 'go_tasks_name', 'what would you like tasks to be called? (singular)' );
+			echo	go_sub_option('tasks_plural_name','This is the word used in place of Task all over your website. Use only plural words here (e.g. Assignments, Quests)','Plural Tasks Name', 'go_tasks_plural_name', 'go_tasks_plural_name', 'what would you like tasks to be called? (plural)' );
 		
-				go_sub_option( 'first_stage_name', 'This is the word that will be used for the first stage of the Task stages which is triggered upon visting the page for the first time. Such as Encountered.', 'First Stage Name', 'go_first_stage_name', 'go_first_stage_name', 'What would you like the first stage to be called?'  );
-				go_sub_option( 'second_stage_name', 'This is the word that will be used for the second stage of Task stages. Such as Accepted.', 'Second Stage Name', 'go_second_stage_name','go_second_stage_name', 'What would you like the second stage to be called?' );
-				go_sub_option('second_stage_button', 'This is the word that will be displayed on the button for the second stage of Task stages. Such as Accept', 'Second Stage Button', 'go_second_stage_button', 'go_second_stage_button', 'What would you like the button for the second stage to say?');
-				go_sub_option( 'third_stage_name', 'This is the word that will be used for the third stage of Task stages. Such as Completed.', 'Third Stage Name', 'go_third_stage_name','go_third_stage_name', 'What would you like the third stage to be called?' );
-				go_sub_option('third_stage_button', 'This is the word that will be displayed on the button for the third stage of Task stages. Such as Complete', 'Third Stage Button', 'go_third_stage_button', 'go_third_stage_button', 'What would you like the button for the third stage to say?');
-				go_sub_option( 'fourth_stage_name', 'This is the word that will be used for the fourth stage of Task stages. Such as Mastered.', 'Fourth Stage Name', 'go_fourth_stage_name','go_fourth_stage_name', 'What would you like the fourth stage to be called?' );
-				go_sub_option('fourth_stage_button', 'This is the word that will be displayed on the button for the fourth stage of Task stages. Such as Master', 'Fourth Stage Button', 'go_fourth_stage_button', 'go_fourth_stage_button', 'What would you like the button for the fourth stage to say?');
+			echo	go_sub_option( 'first_stage_name', 'This is the word that will be used for the first stage of the Task stages which is triggered upon visting the page for the first time. Such as Encountered.', 'First Stage Name', 'go_first_stage_name', 'go_first_stage_name', 'What would you like the first stage to be called?'  );
+			echo	go_sub_option( 'second_stage_name', 'This is the word that will be used for the second stage of Task stages. Such as Accepted.', 'Second Stage Name', 'go_second_stage_name','go_second_stage_name', 'What would you like the second stage to be called?' );
+			echo	go_sub_option('second_stage_button', 'This is the word that will be displayed on the button for the second stage of Task stages. Such as Accept', 'Second Stage Button', 'go_second_stage_button', 'go_second_stage_button', 'What would you like the button for the second stage to say?');
+			echo	go_sub_option( 'third_stage_name', 'This is the word that will be used for the third stage of Task stages. Such as Completed.', 'Third Stage Name', 'go_third_stage_name','go_third_stage_name', 'What would you like the third stage to be called?' );
+			echo	go_sub_option('third_stage_button', 'This is the word that will be displayed on the button for the third stage of Task stages. Such as Complete', 'Third Stage Button', 'go_third_stage_button', 'go_third_stage_button', 'What would you like the button for the third stage to say?');
+			echo	go_sub_option( 'fourth_stage_name', 'This is the word that will be used for the fourth stage of Task stages. Such as Mastered.', 'Fourth Stage Name', 'go_fourth_stage_name','go_fourth_stage_name', 'What would you like the fourth stage to be called?' );
+			echo	go_sub_option('fourth_stage_button', 'This is the word that will be displayed on the button for the fourth stage of Task stages. Such as Master', 'Fourth Stage Button', 'go_fourth_stage_button', 'go_fourth_stage_button', 'What would you like the button for the fourth stage to say?');
 
 ?> 
         
@@ -45,11 +57,11 @@ function game_on_options() { ?>
             <br />
             <div id="curr" class="opt-box">
             <h3>Currency Settings</h3>
-            <?= 
+            <?php 
             
-             go_sub_option('currency_name', 'This is what your currency will be called. Use a name like Dollars, or Gold.','Currency Name','go_currency_name', 'go_currency_name', 'what would you like currency to be called?' ); 
-			 go_sub_option( 'tasks_currency_prefix', 'The prefix symbol used to represent your currency, such as a dollar sign.', 'Currency Prefix', 'go_currency_prefix', 'go_currency_prefix', 'what prefix would you like associated with currency? (Optional)' ); 
-			 go_sub_option( 'tasks_currency_suffix', 'The suffix symbol used to represent your currency, such as Dollar.', 'Currency Suffix', 'go_currency_suffix', 'go_currency_suffix', 'what suffix would you like associated with currency? (Optional)' ); 
+           echo  go_sub_option('currency_name', 'This is what your currency will be called. Use a name like Dollars, or Gold.','Currency Name','go_currency_name', 'go_currency_name', 'what would you like currency to be called?' ); 
+			echo go_sub_option( 'tasks_currency_prefix', 'The prefix symbol used to represent your currency, such as a dollar sign.', 'Currency Prefix', 'go_currency_prefix', 'go_currency_prefix', 'what prefix would you like associated with currency? (Optional)' ); 
+			echo go_sub_option( 'tasks_currency_suffix', 'The suffix symbol used to represent your currency, such as Dollar.', 'Currency Suffix', 'go_currency_suffix', 'go_currency_suffix', 'what suffix would you like associated with currency? (Optional)' ); 
             ?>
         
             
@@ -71,12 +83,27 @@ function game_on_options() { ?>
             <br />
             <div id="poi" class="opt-box">       
             <h3>Points Settings</h3>
-           <?= go_sub_option('tasks_points_name', 'This is what your points will be called. Use a name like Points, or Experience.', 'Points Name', 'go_points_name', 'go_points_name', 'what would you like points to be called?');
-           go_sub_option( 'tasks_points_prefix', 'The prefix symbol used to represent your points, such as a dollar sign.', 'Points Prefix', 'go_points_sym', 'go_points_prefix', 'what prefix would you like associated with points? (Optional)' ); 
-			 go_sub_option( 'tasks_points_suffix', 'The suffix symbol used to represent your points, such as Exp.', 'Points Suffix', 'go_points_suffix', 'go_points_suffix', 'what suffix would you like associated with points? (Optional)' );  ?>
+           <?php echo go_sub_option('tasks_points_name', 'This is what your points will be called. Use a name like Points, or Experience.', 'Points Name', 'go_points_name', 'go_points_name', 'what would you like points to be called?');
+          echo  go_sub_option( 'tasks_points_prefix', 'The prefix symbol used to represent your points, such as a dollar sign.', 'Points Prefix', 'go_points_sym', 'go_points_prefix', 'what prefix would you like associated with points? (Optional)' ); 
+			echo go_sub_option( 'tasks_points_suffix', 'The suffix symbol used to represent your points, such as Exp.', 'Points Suffix', 'go_points_suffix', 'go_points_suffix', 'what suffix would you like associated with points? (Optional)' );  ?>
           
           
             </div>
+            
+            
+              <br />
+            <div id="poi" class="opt-box">       
+            <h3> Admin Bar Settings</h3>
+       
+          <?php
+		//  echo go_sub_option_radio( 'admin_bar_add_trigger', 'Turn on and off the add section of the admin bar.','Add Switch', 'add_switch','go_add_switch', 'Would you like to have the Add section of the admin bar?');
+		   ?>
+            </div>
+            
+            
+            
+            
+            
             <span class="opt-inp"><input type="submit" name="Submit" value="Save Options" /> </span> 
             <input type="hidden" name="action" value="update" />  
             <input type="hidden" name="page_options" value="go_tasks_name,go_tasks_plural_name,go_currency_name,go_points_name,go_first_stage_name,go_second_stage_name,go_second_stage_button,go_third_stage_name,go_third_stage_button,go_fourth_stage_name,go_fourth_stage_button,go_currency_prefix,go_currency_suffix, go_points_prefix, go_points_suffix" />  
