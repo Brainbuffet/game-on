@@ -278,13 +278,17 @@ function tsk_cpt_bx(type, id) {
                             <td id="tsk_cat_qt">
 								<?php
 								$the_task_terms = get_terms('task_categories');
-								$tsk_term_count = count($the_task_terms);
-								if ( $tsk_term_count > 0 ){
-									 foreach ($the_task_terms as $term) {
-									   echo '<input class="qck_tsk_catbox" type="checkbox" value="'.$term->slug.'" /> '.$term->name.'<br />';
+								if( !$the_task_terms){
+								
+								} else {
+									$tsk_term_count = count($the_task_terms);
+									if ( $tsk_term_count > 0 ){
+										 foreach ($the_task_terms as $term) {
+										   echo '<input class="qck_tsk_catbox" type="checkbox" value="'.$term->slug.'" /> '.$term->name.'<br />';
+										}
+									 } else {
+										return 'You either have no Task Categories, or you have no tasks with a category assigned.';
 									}
-								 } else {
-									return 'You either have no Task Categories, or you have no tasks with a category assigned.';
 								}
 								?>
                                 <p class="cmb_metabox_description">Select all Categories you would like this task to fall under.</p>
