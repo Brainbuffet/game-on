@@ -78,6 +78,16 @@ function go_mta_con_meta( array $meta_boxes ) {
 					'id'   => $prefix . 'task_repeat',
 					'type' => 'checkbox'
 				),
+			array(
+				'name' => 'Repeat Message (Optional)',
+				'desc' => 'Enter a message for the user to recieve when they have <i>repeated</i> the '.get_option('go_tasks_name'),
+				'id' => $prefix . 'repeat_message',
+				'type' => 'wysiwyg',
+        		'options' => array(
+								'wpautop' => true,
+								'textarea_rows' => '5',
+							),
+				),
 			),
 		);
 	// Store Meta Boxes
@@ -97,9 +107,21 @@ function go_mta_con_meta( array $meta_boxes ) {
 				'options' => go_get_all_ranks()
 			),
 			array(
-				'name' => 'Price',
+				'name' => 'Currency',
 				'desc' => 'currency required to purchase the item',
 				'id'   => $prefix . 'store_currency',
+				'type' => 'text',
+			),
+			array(
+				'name' => 'Points',
+				'desc' => 'points required to purchase item',
+				'id'   => $prefix . 'store_points',
+				'type' => 'text',
+			),
+			array(
+				'name' => 'Time',
+				'desc' => 'time required to purchase item',
+				'id'   => $prefix . 'store_time',
 				'type' => 'text',
 			),
 			array(

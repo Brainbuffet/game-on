@@ -15,28 +15,35 @@ function tsk_new_ajx(){
 	$points = $_POST['thePoints'];
 	$currency = $_POST['theCurrency'];
 	$mastery_message = $_POST['theMessage'];
+	$complete_message = $_POST['theCompleteMessage'];
 	$repeat = $_POST['theRepeat'];
+	$repeat_message = $_POST['theRepeatMessage'];
 	if ($repeat == true) {
 		$repeats = 'on';
 	} elseif ($repeat == false) {
 		$repeats = 'off';
 	}
+	$the_cats = $_POST['theCats'];
 	$go_new_task = array(
 		'post_title'    => $title,
 		'post_content'  => $content,
 		'post_status'   => 'publish',
 		'post_author'   => $user_id,
-		'post_category' => '',
-		'post_type'     => 'tasks'
+		'post_type'     => 'tasks',
 	);
 	// Insert the post into the database
 	$new_task_id = wp_insert_post($go_new_task);
+	foreach ($the_cats as $cat) {
+		wp_set_object_terms($new_task_id, $cat, 'task_categories');
+	}
 	update_post_meta($new_task_id, 'go_mta_quick_desc', $description);
 	update_post_meta($new_task_id, 'go_mta_req_rank', $rank);
 	update_post_meta($new_task_id, 'go_mta_task_points', $points);
 	update_post_meta($new_task_id, 'go_mta_task_currency', $currency);
 	update_post_meta($new_task_id, 'go_mta_mastery_message', $mastery_message);
+	update_post_meta($new_task_id, 'go_mta_complete_message', $complete_message);
 	update_post_meta($new_task_id, 'go_mta_task_repeat', $repeats);
+	update_post_meta($new_task_id, 'go_mta_repeat_message', $repeat_message);
 	echo $new_task_id;
 	die();
 }
@@ -80,7 +87,9 @@ function quck_tsk_clear() {
 	jQuery("#lte_tsk_points").val('');
 	jQuery("#lte_tsk_currency").val('');
 	jQuery("#ltetskmasterymessage").val('');
+	jQuery("#ltetskcompeltemessage").val('');
 	jQuery("#lte_tsk_repeat").val('');
+	jQuery("#ltetskrepeatmessage").val('');
 }
 function tsk_admn_clsr() {
 	document.getElementById('tsk_admin_light').style.display='none';
@@ -88,6 +97,7 @@ function tsk_admn_clsr() {
 	quck_tsk_clear();
 }
 function new_task_ajax() {
+	var lite_tsk_cat_arr = [];
 	var lite_tsk_title = jQuery("#lte_tsk_title").val();
 	var lite_tsk_content = tinymce.editors['ltetskcontent'].getContent();
 	var lite_tsk_desc = tinymce.editors['ltetskdesc'].getContent();
@@ -95,7 +105,13 @@ function new_task_ajax() {
 	var lite_tsk_points = jQuery("#lte_tsk_points").val();
 	var lite_tsk_currency = jQuery("#lte_tsk_currency").val();
 	var lite_tsk_mastery_message = tinymce.editors['ltetskmasterymessage'].getContent();
+	var lite_tsk_complete_message = tinymce.editors['ltetskcompletemessage'].getContent();
 	var lite_tsk_repeat = jQuery('#lte_tsk_repeat').is(':checked');
+	var lite_tsk_repeat_message = tinymce.editors['ltetskrepeatmessage'].getContent();
+	
+	jQuery(".qck_tsk_catbox:checked").each(function() {
+		lite_tsk_cat_arr.push(this.value);
+	});
 	
 	jQuery.ajax({
 		type:"POST",
@@ -109,7 +125,10 @@ function new_task_ajax() {
 			thePoints: lite_tsk_points,
 			theCurrency: lite_tsk_currency,
 			theMessage: lite_tsk_mastery_message,
+			theCompleteMessage: lite_tsk_complete_message,
 			theRepeat: lite_tsk_repeat,
+			theRepeatMessage: lite_tsk_repeat_message,
+			theCats: lite_tsk_cat_arr,
   		},
 		dataType : 'html',
 		success:function(results){
@@ -216,6 +235,15 @@ function tsk_cpt_bx(type, id) {
                         	<p class="cmb_metabox_description">currency awarded for encountering, accepting, completing, and mastering the task. (comma seperated, e.g. 10,20,50,70)</p>
                         </td>
                     </tr>
+					<tr>
+                       		<th style="width:18%">
+                            	<label for="lte_tsk_complete_message">Completion Message</label>
+                            </th> 
+                            <td>
+                            	<?php wp_editor( '', 'ltetskcompletemessage', $settings = array('textarea_name' => 'ltetskcompletemessage') ); ?>
+                                <p class="cmb_metabox_description">Enter a message for the user to recieve when they have completed the task</p>
+                            </td>
+                    </tr>
                     <tr>
                        		<th style="width:18%">
                             	<label for="lte_tsk_mastery_message">Mastery Message</label>
@@ -224,7 +252,7 @@ function tsk_cpt_bx(type, id) {
                             	<?php wp_editor( '', 'ltetskmasterymessage', $settings = array('textarea_name' => 'ltetskmasterymessage') ); ?>
                                 <p class="cmb_metabox_description">Enter a message for the user to recieve when they have mastered the task</p>
                             </td>
-                      </tr>
+                    </tr>
                     <tr>
                     	<th style="width:18%">
                     		<label for="lte_tsk_repeat">Repeatable</label>
@@ -234,6 +262,43 @@ function tsk_cpt_bx(type, id) {
                     		<span class="cmb_metabox_description">Select to make task repeatable</span>
                     	</td>
                     </tr>
+					<tr id="rpt_mssg" style="display:none;">
+                       		<th style="width:18%">
+                            	<label for="lte_tsk_repeat_message">Repeat Message</label>
+                            </th> 
+                            <td>
+                            	<?php wp_editor( '', 'ltetskrepeatmessage', $settings = array('textarea_name' => 'ltetskrepeatmessage') ); ?>
+                                <p class="cmb_metabox_description">Enter a message for the user to recieve when they have repeated the task</p>
+                            </td>
+                    </tr>
+					<tr >
+                       		<th style="width:18%">
+                            	<label for="lte_tsk_cats">Task Categories</label>
+                            </th> 
+                            <td id="tsk_cat_qt">
+								<?php
+								$the_task_terms = get_terms('task_categories');
+								$tsk_term_count = count($the_task_terms);
+								if ( $tsk_term_count > 0 ){
+									 foreach ($the_task_terms as $term) {
+									   echo '<input class="qck_tsk_catbox" type="checkbox" value="'.$term->slug.'" /> '.$term->name.'<br />';
+									}
+								 } else {
+									return 'You either have no Task Categories, or you have no tasks with a category assigned.';
+								}
+								?>
+                                <p class="cmb_metabox_description">Select all Categories you would like this task to fall under.</p>
+                            </td>
+                    </tr>
+					<script type="text/javascript">
+						jQuery('#lte_tsk_repeat').click(function() {
+							if (jQuery('#lte_tsk_repeat').prop('checked')) {
+								jQuery('#rpt_mssg').show('slow');
+							} else {
+								jQuery('#rpt_mssg').hide('slow');
+							}
+						});
+					</script>
                 </table>
                 </form>
                 <br />
