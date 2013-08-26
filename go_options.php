@@ -12,9 +12,9 @@ add_action('admin_enqueue_scripts', 'go_opt_style');
 function go_sub_option($explanation_name, $explanation, $title, $field_name, $option_name, $explanation_question){ ?>
 	    <div class="pa">
             	<?php go_opt_help($explanation_name,$explanation); ?> 
-            	<strong><?= $title ?>:</strong><br />  
-                <input type="text" name="<?= $field_name ?>" size="45" value="<?php echo get_option($option_name); ?>" /><br />
-                <i><?= $explanation_question ?></i> 
+            	<strong><?php echo $title; ?>:</strong><br />  
+                <input type="text" name="<?php echo $field_name; ?>" size="45" value="<?php echo get_option($option_name); ?>" /><br />
+                <i><?php echo $explanation_question; ?></i> 
             </div> <?php
             
 	}
@@ -22,10 +22,10 @@ function go_sub_option($explanation_name, $explanation, $title, $field_name, $op
 function go_sub_option_radio($explanation_name, $explanation, $title, $field_name, $option_name, $explanation_question){ ?>
 	    <div class="pa">
             	<?php go_opt_help($explanation_name,$explanation); ?> 
-            	<strong><?= $title ?>:</strong><br />  
-                 On: <input type="radio" name="<?= $option_name ?>" size="45" value="On" /><br />
-                Off: <input type="radio" name="<?= $option_name ?>" size="45" value="Off" /><br />
-                <i><?= $explanation_question ?></i> 
+            	<strong><?php echo $title; ?>:</strong><br />  
+                   On:<input type="radio" <?php if(get_option($option_name) == 'On'){echo 'checked="checked"';} ?> name="<?php echo $option_name; ?>" size="45" value="On" /><br />
+                Off:<input type="radio" <?php if(get_option($option_name) == 'Off'){echo 'checked="checked"';} ?> name="<?php echo $option_name; ?>" size="45" value="Off" /><br />
+                <i><?php echo $explanation_question; ?></i> 
             </div> <?php
             
 	}	
@@ -92,41 +92,45 @@ function game_on_options() { ?>
             
             
               <br />
-            <div id="poi" class="opt-box">       
+            <div class="opt-box">       
             <h3> Admin Bar Settings</h3>
        
           <?php
-		//  echo go_sub_option_radio( 'admin_bar_add_trigger', 'Turn on and off the add section of the admin bar.','Add Switch', 'add_switch','go_add_switch', 'Would you like to have the Add section of the admin bar?');
-		   ?>
+		 echo go_sub_option_radio( 'admin_bar_add_trigger', 'Turn on and off the add section of the admin bar.','Add Switch', 'go_admin_bar_add_switch','go_admin_bar_add_switch', 'Would you like to have the Add section of the admin bar?');
+		   ?><br />
+
             </div>
-            
-            
-            
-            
-            
-            <span class="opt-inp"><input type="submit" name="Submit" value="Save Options" /> </span> 
-            <input type="hidden" name="action" value="update" />  
-            <input type="hidden" name="page_options" value="go_tasks_name,go_tasks_plural_name,go_currency_name,go_points_name,go_first_stage_name,go_second_stage_name,go_second_stage_button,go_third_stage_name,go_third_stage_button,go_fourth_stage_name,go_fourth_stage_button,go_currency_prefix,go_currency_suffix, go_points_prefix, go_points_suffix" />  
-        </form>
-        <?php /*
-        <div id="periods_container">
+                   <div class="opt-box">       
+            <h3> Classifications </h3>
+       <div class="pa">
+        
        		<ul id="sortable_go_periods">
        <?php
 	   $periods = get_option('go_periods',false);
 	   if($periods){
 		   foreach($periods as $key=>$value){ 
 	    ?>
-       <li class="ui-state-default" class="go_list"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input id="go_periods_input" type="text" value="<?= $value ?>"/></li> 
+       <li class="ui-state-default" class="go_list"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input id="go_periods_input" type="text" value="<?php echo $value; ?>"/></li> 
 <?php     }
 	   } 
 ?>
        </ul>
-       <button style="width:170px;" onclick="go_periods_new_input();" id="go_periods_add_input">New</button>
-       <button style="width:170px;" onclick="go_periods_save();" id="go_periods_add_input">Save</button>
+       <input type="button" style="width:100%;" onclick="go_periods_new_input();" id="go_periods_add_input" value="New" />
+       <input type="button" style="width:100%;" onclick="go_periods_save();" id="go_periods_add_input" value="Save Classifications" />
         </div>
-   
+   <?php
 go_style_periods();
-go_jquery_periods();  */
+go_jquery_periods();  
+		  ?>
+            </div>
+            
+            
+            <span class="opt-inp"><input type="submit" name="Submit" value="Save Options" /> </span> 
+            <input type="hidden" name="action" value="update" />  
+            <input type="hidden" name="page_options" value="go_tasks_name,go_tasks_plural_name,go_currency_name,go_points_name,go_first_stage_name,go_second_stage_name,go_second_stage_button,go_third_stage_name,go_third_stage_button,go_fourth_stage_name,go_fourth_stage_button,go_currency_prefix,go_currency_suffix, go_points_prefix, go_points_suffix, go_admin_bar_add_switch" />  
+        </form>
+        <?php /*
+      */
 } 
 function add_game_on_options() {  
     add_menu_page('Game On', 'Game On', 'manage_options', 'game-on-options.php','game_on_options', plugins_url( 'images/ico.png' , __FILE__ ), '81');  
@@ -144,7 +148,7 @@ update_option('go_periods',$array);
 	   if($periods){foreach($periods as $key=>$value){
 		  
 	    ?>
-       <li class="ui-state-default" class="go_list"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input id="go_periods_input" type="text" value="<?= $value ?>"/></li> <?php }} 
+       <li class="ui-state-default" class="go_list"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input id="go_periods_input" type="text" value="<?php echo $value; ?>"/></li> <?php }} 
 die();
 }
 ?>

@@ -52,7 +52,7 @@ function go_admin_bar(){
 	
 	
 ////////////////////////////////////////////////////////////////////////	
-	
+if(get_option('go_admin_bar_add_switch') != 'Off'){	
 	if (!is_admin_bar_showing() && !is_user_logged_in() )
 		return;
 		$wp_admin_bar->add_menu( array(
@@ -84,7 +84,7 @@ if (!is_admin_bar_showing() && !is_user_logged_in() )
 		'title' => '<div onclick="go_admin_bar_stats_page_button();">Stats Page</div><div id="go_stats_page"></div>',
 		'href' => false,
 		'id' => 'go_stats',
-	));
+	));}
 	
 }
 ?>

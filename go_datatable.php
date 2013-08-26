@@ -82,7 +82,8 @@ global $default_role;
 	'go_points_prefix' => '',
 	'go_points_suffix' => 'XP',
 	'go_currency_name' => 'Dollars',
-	'go_points_name' => 'Points'
+	'go_points_name' => 'Points',
+	'go_admin_bar_add_switch' => 'On'
 	);
 	foreach($options_array as $key => $value){
 		 add_option( $key, $value );

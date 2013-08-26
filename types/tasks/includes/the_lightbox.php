@@ -286,9 +286,9 @@ function tsk_cpt_bx(type, id) {
 										 foreach ($the_task_terms as $term) {
 										   echo '<input class="qck_tsk_catbox" type="checkbox" value="'.$term->slug.'" /> '.$term->name.'<br />';
 										}
-									 } else {
+									} else {
 										return 'You either have no Task Categories, or you have no tasks with a category assigned.';
-									}
+									} 
 								}
 								?>
                                 <p class="cmb_metabox_description">Select all Categories you would like this task to fall under.</p>
