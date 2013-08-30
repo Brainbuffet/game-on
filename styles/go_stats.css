@@ -128,7 +128,7 @@ display:inline-block;
 margin-left:10px;
 }
 #go_stats_task_columns{
-	width: 376px;
+	width:100%;
 height: 205px;
 	border: thin solid black;
 	-webkit-border-radius: 2px;
@@ -137,27 +137,55 @@ border-radius: 2px;
 margin-right:2px;
 display:inline-table;}
 .go_stats_box_title{
-	background-color:rgba(255, 102, 0,.75) !important;
-	width:100%;
+background: rgb(255,168,76); /* Old browsers */
+background: -moz-linear-gradient(top, rgba(255,168,76,1) 0%, rgba(255,123,13,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,168,76,1)), color-stop(100%,rgba(255,123,13,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, rgba(255,168,76,1) 0%,rgba(255,123,13,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, rgba(255,168,76,1) 0%,rgba(255,123,13,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, rgba(255,168,76,1) 0%,rgba(255,123,13,1) 100%); /* IE10+ */
+background: linear-gradient(to bottom, rgba(255,168,76,1) 0%,rgba(255,123,13,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffa84c', endColorstr='#ff7b0d',GradientType=0 ); /* IE6-9 */	width:100%;
 	height:28px;
 	margin:0px;
 	font-size: 15px;
 text-align: center;
 padding-top: 7px;}
 	.go_odd{
-		width:100% !important;
-		height:18px !important;
+		height:30px !important;
 		color:black !important;
-		background-color:rgba(255, 102, 0,.1) !important;
 		margin:0px;
-		padding-top:3px;}
+		padding-top:3px;
+		margin-left: -40px;
+padding-left: 10px;
+
+
+background: rgb(242,245,246); /* Old browsers */
+background: -moz-linear-gradient(top, rgba(242,245,246,1) 0%, rgba(227,234,237,1) 37%, rgba(200,215,220,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(242,245,246,1)), color-stop(37%,rgba(227,234,237,1)), color-stop(100%,rgba(200,215,220,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, rgba(242,245,246,1) 0%,rgba(227,234,237,1) 37%,rgba(200,215,220,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, rgba(242,245,246,1) 0%,rgba(227,234,237,1) 37%,rgba(200,215,220,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, rgba(242,245,246,1) 0%,rgba(227,234,237,1) 37%,rgba(200,215,220,1) 100%); /* IE10+ */
+background: linear-gradient(to bottom, rgba(242,245,246,1) 0%,rgba(227,234,237,1) 37%,rgba(200,215,220,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f5f6', endColorstr='#c8d7dc',GradientType=0 ); /* IE6-9 */
+}
 	.go_even{
-		width:100% !important;
-		height:18px !important;
+		height:30px !important;
 		color:black !important;
-		background-color:rgba(255, 102, 0,.05) !important;
 		margin:0px;
-		padding-top:3px;}
+		padding-top:3px;
+		margin-left: -40px;
+padding-left: 10px;
+
+
+
+background: rgb(242,245,246); /* Old browsers */
+background: -moz-linear-gradient(top, rgba(242,245,246,1) 0%, rgba(227,234,237,1) 37%, rgba(200,215,220,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(242,245,246,1)), color-stop(37%,rgba(227,234,237,1)), color-stop(100%,rgba(200,215,220,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, rgba(242,245,246,1) 0%,rgba(227,234,237,1) 37%,rgba(200,215,220,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, rgba(242,245,246,1) 0%,rgba(227,234,237,1) 37%,rgba(200,215,220,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, rgba(242,245,246,1) 0%,rgba(227,234,237,1) 37%,rgba(200,215,220,1) 100%); /* IE10+ */
+background: linear-gradient(to bottom, rgba(242,245,246,1) 0%,rgba(227,234,237,1) 37%,rgba(200,215,220,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f5f6', endColorstr='#c8d7dc',GradientType=0 ); /* IE6-9 */}
 .go_stats_task_lists{
 	height:177px;
 	margin-top:0px;
@@ -191,3 +219,16 @@ height: 205px;
 border-radius: 2px;
 margin-right:2px;
 display:inline-table;}
+.go_status_icon_wrap{
+	width:100px;
+	float:right;}
+.go_status_icon{
+	float:left;
+	border: thin solid black;
+	-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+border-radius: 10px;
+	width:20px;
+	height:20px;
+	margin:2px;
+	opacity: .8;}

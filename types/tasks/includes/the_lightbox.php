@@ -23,16 +23,19 @@ function tsk_new_ajx(){
 	} elseif ($repeat == false) {
 		$repeats = 'off';
 	}
+	$the_cats = $_POST['theCats'];
 	$go_new_task = array(
 		'post_title'    => $title,
 		'post_content'  => $content,
 		'post_status'   => 'publish',
 		'post_author'   => $user_id,
-		'post_category' => '',
-		'post_type'     => 'tasks'
+		'post_type'     => 'tasks',
 	);
 	// Insert the post into the database
 	$new_task_id = wp_insert_post($go_new_task);
+	foreach ($the_cats as $cat) {
+		wp_set_object_terms($new_task_id, $cat, 'task_categories');
+	}
 	update_post_meta($new_task_id, 'go_mta_quick_desc', $description);
 	update_post_meta($new_task_id, 'go_mta_req_rank', $rank);
 	update_post_meta($new_task_id, 'go_mta_task_points', $points);
@@ -94,6 +97,7 @@ function tsk_admn_clsr() {
 	quck_tsk_clear();
 }
 function new_task_ajax() {
+	var lite_tsk_cat_arr = [];
 	var lite_tsk_title = jQuery("#lte_tsk_title").val();
 	var lite_tsk_content = tinymce.editors['ltetskcontent'].getContent();
 	var lite_tsk_desc = tinymce.editors['ltetskdesc'].getContent();
@@ -104,6 +108,10 @@ function new_task_ajax() {
 	var lite_tsk_complete_message = tinymce.editors['ltetskcompletemessage'].getContent();
 	var lite_tsk_repeat = jQuery('#lte_tsk_repeat').is(':checked');
 	var lite_tsk_repeat_message = tinymce.editors['ltetskrepeatmessage'].getContent();
+	
+	jQuery(".qck_tsk_catbox:checked").each(function() {
+		lite_tsk_cat_arr.push(this.value);
+	});
 	
 	jQuery.ajax({
 		type:"POST",
@@ -120,6 +128,7 @@ function new_task_ajax() {
 			theCompleteMessage: lite_tsk_complete_message,
 			theRepeat: lite_tsk_repeat,
 			theRepeatMessage: lite_tsk_repeat_message,
+			theCats: lite_tsk_cat_arr,
   		},
 		dataType : 'html',
 		success:function(results){
@@ -260,6 +269,29 @@ function tsk_cpt_bx(type, id) {
                             <td>
                             	<?php wp_editor( '', 'ltetskrepeatmessage', $settings = array('textarea_name' => 'ltetskrepeatmessage') ); ?>
                                 <p class="cmb_metabox_description">Enter a message for the user to recieve when they have repeated the task</p>
+                            </td>
+                    </tr>
+					<tr >
+                       		<th style="width:18%">
+                            	<label for="lte_tsk_cats">Task Categories</label>
+                            </th> 
+                            <td id="tsk_cat_qt">
+								<?php
+								$the_task_terms = get_terms('task_categories');
+								if( !$the_task_terms){
+								
+								} else {
+									$tsk_term_count = count($the_task_terms);
+									if ( $tsk_term_count > 0 ){
+										 foreach ($the_task_terms as $term) {
+										   echo '<input class="qck_tsk_catbox" type="checkbox" value="'.$term->slug.'" /> '.$term->name.'<br />';
+										}
+									} else {
+										return 'You either have no Task Categories, or you have no tasks with a category assigned.';
+									} 
+								}
+								?>
+                                <p class="cmb_metabox_description">Select all Categories you would like this task to fall under.</p>
                             </td>
                     </tr>
 					<script type="text/javascript">
