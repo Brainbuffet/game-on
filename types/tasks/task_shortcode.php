@@ -35,13 +35,13 @@ $status = (int)$wpdb->get_var("select status from ".$go_table_ind." where post_i
 				go_add_post($user_ID, $id, 0, $points_array[0], $currency_array[0], get_the_ID());
 ?>
 				<div id="go_content"> <br />
-				<button id="go_button" status="2" onclick="task_stage_change();"><?= get_option('go_second_stage_button') ?></button>
+				<button id="go_button" status="2" onclick="task_stage_change();this.disabled=true;"><?= get_option('go_second_stage_button') ?></button>
             	</div>
 <?php			break;
 			case '1': // Encountered
 ?>
 				<div id="go_content"> <br />
-				<button id="go_button" status= "2" onclick="task_stage_change();"><?= get_option('go_second_stage_button') ?></button>
+				<button id="go_button" status= "2" onclick="task_stage_change();this.disabled=true;"><?= get_option('go_second_stage_button') ?></button>
          		</div>   
 <?php
 				break;

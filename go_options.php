@@ -49,6 +49,7 @@ function game_on_options() { ?>
 			echo	go_sub_option('third_stage_button', 'This is the word that will be displayed on the button for the third stage of Task stages. Such as Complete', 'Third Stage Button', 'go_third_stage_button', 'go_third_stage_button', 'What would you like the button for the third stage to say?');
 			echo	go_sub_option( 'fourth_stage_name', 'This is the word that will be used for the fourth stage of Task stages. Such as Mastered.', 'Fourth Stage Name', 'go_fourth_stage_name','go_fourth_stage_name', 'What would you like the fourth stage to be called?' );
 			echo	go_sub_option('fourth_stage_button', 'This is the word that will be displayed on the button for the fourth stage of Task stages. Such as Master', 'Fourth Stage Button', 'go_fourth_stage_button', 'go_fourth_stage_button', 'What would you like the button for the fourth stage to say?');
+			echo	go_sub_option('repeat_button', 'This is the word that will be displayed on the button for repeat. Such as Repeat.', 'Repeat Button', 'go_repeat_button', 'go_repeat_button', 'What would you like the button for repeat to say?');
 
 ?> 
         

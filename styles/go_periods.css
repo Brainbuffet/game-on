@@ -1,5 +1,5 @@
 #periods_container{
-	width:180px;
+	width:80%px;
 	border: thin solid black;
 	margin-top:10px;
 	padding:5px;
@@ -10,7 +10,7 @@
 	width:155px;
 	margin-bottom:0px;}
 #go_periods_input{
-	width:128px;
+	width:80%px;
 	margin-left:20px;}
 #grip{
 	height: 24px;
