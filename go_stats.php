@@ -42,7 +42,7 @@ function go_admin_bar_stats(){
 ?>
 <div id="go_stats_lay">
 
-<button title="Close" onclick="go_stats_close();" id="go_stats_close_all"></button>
+<button title="Close" onclick="go_stats_close();" ><span class="ui-icon ui-icon-circle-close"></span></button>
  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script language="javascript">
 jQuery('#go_stats_accordion').accordion({
@@ -95,14 +95,8 @@ margin-top: 40px; width:200px; display:inline;"></div
   
   <h3 class="go_stats_header" onclick="go_stats_task_list();"><?= get_option('go_tasks_name'); ?></h3>
   <div class="go_stats_box">
-   <div id="go_stats_task_columns"><h6 class="go_stats_box_title"><?= get_option('go_first_stage_name') ?></h6>
+   <div id="go_stats_task_columns"><h6 class="go_stats_box_title"></h6>
 <ul id="go_stats_encountered_list" class="go_stats_task_lists" ></ul></div>
-   <div id="go_stats_task_columns" ><h6 class="go_stats_box_title"><?= get_option('go_second_stage_name') ?></h6>
-<ul id="go_stats_accepted_list" class="go_stats_task_lists"></ul></div>
-   <div id="go_stats_task_columns"><h6 class="go_stats_box_title"><?= get_option('go_third_stage_name') ?></h6>
-<ul id="go_stats_completed_list" class="go_stats_task_lists"></ul></div>
-   <div id="go_stats_task_columns"><h6 class="go_stats_box_title"><?= get_option('go_fourth_stage_name') ?></h6>
-<ul id="go_stats_mastered_list" class="go_stats_task_lists"></ul></div>
 
   </div>
   <h3 class="go_stats_header" onclick="go_stats_third_tab();"><?= get_option('go_points_name').' - '. get_option('go_currency_name').' - '. 'Minutes' ?></h3>
@@ -124,13 +118,27 @@ function go_stats_task_list(){
  	$current_user = wp_get_current_user();
     $user_id = $current_user->ID ;
 	$table_name_go = $wpdb->prefix . "go";
-	$list = $wpdb->get_results("select post_id, points from ".$table_name_go." where uid = $user_id and status = $stage order by id desc");
+	$list = $wpdb->get_results("select page_id,status,count,post_id, points from ".$table_name_go." where uid = $user_id and (status = 1 or status = 2 or status = 3 or status = 4) order by id desc");
 	$x = 0;
 	$sym = get_option('go_points_sym');
 	foreach($list as $lists){
-		
+		switch($lists->status){
+			case '1':
+			$status_icon = '<div class="go_status_icon" style="background-color:rgba(255, 102, 0,.25);"></div>';
+			break;
+			case '2':
+			$status_icon = '<div class="go_status_icon" style="background-color:rgba(255, 102, 0,.25);"></div><div class="go_status_icon" style="background-color:rgba(255, 102, 0,.5);"></div>';
+			break;
+			case '3':
+			$status_icon = '<div class="go_status_icon" style="background-color:rgba(255, 102, 0,.25);"></div><div class="go_status_icon" style="background-color:rgba(255, 102, 0,.5);"></div><div class="go_status_icon" style="background-color:rgba(255, 102, 0,.75);" ></div>';
+			break;
+			case '4':
+			$status_icon = '<div class="go_status_icon" style="background-color:rgba(255, 102, 0,.25);"></div><div class="go_status_icon" style="background-color:rgba(255, 102, 0,.5);"></div><div class="go_status_icon" style="background-color:rgba(255, 102, 0,.75);"></div><div class="go_status_icon" style="background-color:rgba(255, 102, 0,1); font-size:8px;"></div>';
+			break;
+			}
+			if($lists->page_id){ $post_id = $lists->page_id; } else {$post_id = $lists->post_id;}
 			$x++;
-		?> <li class="go_<?= isEven($x)?>" ><a href=" <?= get_permalink( $lists->post_id) ?>" style="color:rgba(0,0,0,.4); font-size:12px;"> <?= get_the_title($lists->post_id) ?> (<?= go_display_points($lists->points) ?>)</a></li> <?php
+		?> <li class="go_<?php echo isEven($x);?>" ><a href=" <?php echo get_permalink( $post_id); ?>" target="_blank" style="color:rgba(0,0,0,.4); font-size:12px;"> <?= get_the_title($post_id) ?> (<?php echo go_display_points($lists->points); ?>)</a><div class="go_status_icon_wrap"> <?php echo $status_icon; ?></div><div style="float:right;"><?php echo $lists->count ?></div></li> <?php
 		}
 		die();
 	}

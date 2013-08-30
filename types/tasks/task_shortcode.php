@@ -32,7 +32,7 @@ $status = (int)$wpdb->get_var("select status from ".$go_table_ind." where post_i
 ?> <div id="go_description"> <?php echo  do_shortcode(wpautop($description)) ;?> </div><?php
 		switch ($status) {
 			case '': // This one's for you First Timers out there...
-				go_add_post($user_ID, $id, 0, $points_array[0], $currency_array[0]);
+				go_add_post($user_ID, $id, 0, $points_array[0], $currency_array[0], get_the_ID());
 ?>
 				<div id="go_content"> <br />
 				<button id="go_button" status="2" onclick="task_stage_change();"><?= get_option('go_second_stage_button') ?></button>
@@ -46,16 +46,16 @@ $status = (int)$wpdb->get_var("select status from ".$go_table_ind." where post_i
 <?php
 				break;
 			case '2': // Accepted
-				echo '<div id="go_content">'. do_shortcode(wpautop($task_content)).'<br /> <button id="go_button" status="3" onclick="task_stage_change();">'.get_option('go_third_stage_button').'</button></div>';
+				echo '<div id="go_content">'. do_shortcode(wpautop($task_content)).'<br /> <button id="go_button" status="3" onclick="task_stage_change();this.disabled=true;">'.get_option('go_third_stage_button').'</button></div>';
 				break;
 			case '3': // Completed
-				echo '<div id="go_content">'. do_shortcode(wpautop($task_content)).''.do_shortcode(wpautop($completion_message)).'<br /> <button id="go_button" status="4" onclick="task_stage_change();">'.get_option('go_fourth_stage_button').'</button></div>';
+				echo '<div id="go_content">'. do_shortcode(wpautop($task_content)).''.do_shortcode(wpautop($completion_message)).'<br /> <button id="go_button" status="4" onclick="task_stage_change();this.disabled=true;">'.get_option('go_fourth_stage_button').'</button></div>';
 				break;
 			case '4': // Mastered 
 				echo'<div id="go_content">'. do_shortcode(wpautop($task_content)).do_shortcode(wpautop($completion_message)).
 				do_shortcode(wpautop($mastery_message));
 				if ($repeat == 'on') {
-				echo '<button id="go_button" status="1" onclick="task_stage_change();">Repeat</button></div>';
+				echo '<button id="go_button" status="4" onclick="task_stage_change();this.disabled=true;" repeat="on">Repeat</button></div>';
 					} else {
 				echo '</div>';
 				}
@@ -73,7 +73,9 @@ $status = (int)$wpdb->get_var("select status from ".$go_table_ind." where post_i
 				action: 'task_change_stage', 
 				post_id: <?php echo $id ?>, 
 				user_id: <?php echo $user_ID ?>, 
-				status: jQuery('#go_button').attr('status')  },
+				status: jQuery('#go_button').attr('status'),
+				repeat: jQuery('#go_button').attr('repeat'),
+				page_id: <?php echo get_the_ID(); ?>  },
 				success: function(html){
 					jQuery('#go_content').html(html);
 				}
@@ -94,6 +96,8 @@ function task_change_stage(){
 	$task_id = $_POST['post_id'];
 	$user_id = $_POST['user_id'];
 	$status = $_POST['status'];
+	$page_id = $_POST['page_id'];
+	$repeat_button = $_POST['repeat'];
 		$custom_fields = get_post_custom($task_id); // Just gathering some data about this task with its post id
 		$req_rank = $custom_fields['go_mta_req_rank'][0]; // Required Rank to accept Task
 		$task_currency = $custom_fields['go_mta_task_currency'][0]; // Currency granted after each stage of task
@@ -107,22 +111,22 @@ function task_change_stage(){
 		// Stage Stuff
 		$content_post = get_post($task_id);
 		$task_content = $content_post->post_content;
-	go_add_post($user_id, $task_id, $status, $points_array[$status-1], $currency_array[$status-1]  );
+	go_add_post($user_id, $task_id, $status, $points_array[$status-1], $currency_array[$status-1], $page_id, $repeat_button  );
 	switch($status) {
 		case 1:
-			echo '<div id="go_content">'.do_shortcode(wpautop($task_content, false)).' <button id="go_button" status="2" onclick="task_stage_change();">'.get_option('go_second_stage_button').'</button></div>';
+			echo '<div id="go_content">'.do_shortcode(wpautop($task_content, false)).' <button id="go_button" status="2" onclick="task_stage_change();this.disabled=true;">'.get_option('go_second_stage_button').'</button></div>';
 			break;
 		case 2:
-			echo '<div id="go_content">'.do_shortcode(wpautop($task_content, false)).' <button id="go_button" status="3" onclick="task_stage_change();">'.get_option('go_third_stage_button').'</button></div>';
+			echo '<div id="go_content">'.do_shortcode(wpautop($task_content, false)).' <button id="go_button" status="3" onclick="task_stage_change();this.disabled=true;">'.get_option('go_third_stage_button').'</button></div>';
 			break;
 		case 3:
-			echo '<div id="go_content">'.do_shortcode(wpautop($task_content, false)).do_shortcode(wpautop($completion_message)).' <button id="go_button" status="4" onclick="task_stage_change();">'.get_option('go_fourth_stage_button').'</button</div>';
+			echo '<div id="go_content">'.do_shortcode(wpautop($task_content, false)).do_shortcode(wpautop($completion_message)).' <button id="go_button" status="4" onclick="task_stage_change();this.disabled=true;">'.get_option('go_fourth_stage_button').'</button</div>';
 			break;
 		case 4:
 			echo '<div id="go_content">'.do_shortcode(wpautop($task_content, false)).do_shortcode(wpautop($completion_message)).
 			do_shortcode(wpautop($mastery_message));
 			if ($repeat == 'on') {
-				echo '<button id="go_button" status="1" onclick="task_stage_change();">Repeat</button></div>';
+				echo '<button id="go_button" status="4" repeat ="on" onclick="task_stage_change();this.disabled=true;">'.get_option('go_repeat_button').'</button></div>';
 			} else {
 				echo '</div>';
 			}
