@@ -21,14 +21,16 @@ function go_admin_bar_add(){
 	
 	}
 	
-function go_admin_bar_stats_page_button(){
+function go_admin_bar_stats_page_button(id){
 		jQuery.ajax({
 		type: "post",url: MyAjax.ajaxurl,data: { 
-		action: 'go_admin_bar_stats'},
+		action: 'go_admin_bar_stats',
+		uid: id},
 		success: function(html){
 jQuery('#go_stats_white_overlay').html(html);
 jQuery('#go_stats_page_black_bg').show();
 jQuery('#go_stats_white_overlay').show();
+jQuery('#go_stats_hidden_input').val(id);
 		}
 	});
 		}
@@ -44,7 +46,7 @@ function go_stats_close(){
 function go_stats_task_list(){
 		jQuery.ajax({
 		type: "post",url: MyAjax.ajaxurl,data: { 
-		action: 'go_stats_task_list', stage:1},
+		action: 'go_stats_task_list', stage:1, uid:jQuery('#go_stats_hidden_input').val()},
 		success: function(html){
 jQuery('#go_stats_encountered_list').html(html);
 		}
@@ -52,7 +54,7 @@ jQuery('#go_stats_encountered_list').html(html);
 
 	jQuery.ajax({
 		type: "post",url: MyAjax.ajaxurl,data: { 
-		action: 'go_stats_task_list', stage:2},
+		action: 'go_stats_task_list', stage:2, uid:jQuery('#go_stats_hidden_input').val()},
 		success: function(html){
 jQuery('#go_stats_accepted_list').html(html);
 		}
@@ -60,7 +62,7 @@ jQuery('#go_stats_accepted_list').html(html);
 
 	jQuery.ajax({
 		type: "post",url: MyAjax.ajaxurl,data: { 
-		action: 'go_stats_task_list', stage:3},
+		action: 'go_stats_task_list', stage:3, uid:jQuery('#go_stats_hidden_input').val()},
 		success: function(html){
 jQuery('#go_stats_completed_list').html(html);
 		}
@@ -68,7 +70,7 @@ jQuery('#go_stats_completed_list').html(html);
 
 	jQuery.ajax({
 		type: "post",url: MyAjax.ajaxurl,data: { 
-		action: 'go_stats_task_list', stage:4},
+		action: 'go_stats_task_list', stage:4, uid:jQuery('#go_stats_hidden_input').val()},
 		success: function(html){
 jQuery('#go_stats_mastered_list').html(html);
 		}
@@ -80,21 +82,21 @@ jQuery('#go_stats_mastered_list').html(html);
 function go_stats_third_tab(){
 jQuery.ajax({
 		type: "post",url: MyAjax.ajaxurl,data: { 
-		action: 'go_stats_points'},
+		action: 'go_stats_points', uid: jQuery('#go_stats_hidden_input').val()},
 		success: function(html){
 jQuery('#go_stats_points').html(html);
 		}
 	});	
 jQuery.ajax({
 		type: "post",url: MyAjax.ajaxurl,data: { 
-		action: 'go_stats_currency'},
+		action: 'go_stats_currency', uid:jQuery('#go_stats_hidden_input').val()},
 		success: function(html){
 jQuery('#go_stats_currency').html(html);
 		}
 	});
 jQuery.ajax({
 		type: "post",url: MyAjax.ajaxurl,data: { 
-		action: 'go_stats_minutes'},
+		action: 'go_stats_minutes', uid: jQuery('#go_stats_hidden_input').val()},
 		success: function(html){
 jQuery('#go_stats_minutes').html(html);
 		}

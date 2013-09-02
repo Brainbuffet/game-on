@@ -102,33 +102,66 @@ function game_on_options() { ?>
 
             </div>
                    <div class="opt-box">       
-            <h3> Classifications </h3>
-       <div class="pa">
-        
-       		<ul id="sortable_go_periods">
+            <h3> Classifications </h3> 
+    <?php
+		 echo go_sub_option( 'class_a_name', 'The name of the first classification. Such as Period or Color.','Classification A Name', 'go_class_a_name','go_class_a_name', 'What would you like to call the first classification?');
+		  echo go_sub_option( 'class_b_name', 'The name of the second classification. Such as Computer or Skill.','Classification B Name', 'go_class_b_name','go_class_b_name', 'What would you like to call the second classification?');
+		   ?>  </div>
+           <div class="opt-box"> 
+                  <div class="pa">
+        <h4> A </h4>
+       		<ul id="sortable_go_class_a">
        <?php
-	   $periods = get_option('go_periods',false);
-	   if($periods){
-		   foreach($periods as $key=>$value){ 
+	   $class_a = get_option('go_class_a',false);
+	   if($class_a){
+		   foreach($class_a as $key=>$value){ 
 	    ?>
-       <li class="ui-state-default" class="go_list"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input id="go_periods_input" type="text" value="<?php echo $value; ?>"/></li> 
+       <li class="ui-state-default" class="go_list"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input id="go_class_a_input" type="text" value="<?php echo $value; ?>"/></li> 
 <?php     }
 	   } 
 ?>
        </ul>
-       <input type="button" style="width:100%;" onclick="go_periods_new_input();" id="go_periods_add_input" value="New" />
-       <input type="button" style="width:100%;" onclick="go_periods_save();" id="go_periods_add_input" value="Save Classifications" />
+       <button type="button" style="width:100%;" onclick="go_class_a_new_input();" id="go_class_a_add_input" value="New" >New</button>
+       <button type="button" style="width:100%;" onclick="go_class_a_save();" id="go_class_a_add_input" value="Save Classifications" >Save</button>
         </div>
    <?php
 go_style_periods();
 go_jquery_periods();  
 		  ?>
+          
+          
+               <div class="pa">
+        <h4> B </h4>
+       		<ul id="sortable_go_class_b">
+       <?php
+	   $class_b = get_option('go_class_b',false);
+	   if($class_b){
+		   foreach($class_b as $key=>$value){ 
+	    ?>
+       <li class="ui-state-default" class="go_list"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input id="go_class_b_input" type="text" value="<?php echo $value; ?>"/></li> 
+<?php     }
+	   } 
+?>
+       </ul>
+       <button type="button" style="width:100%;" onclick="go_class_b_new_input();" id="go_class_b_add_input" value="New" >New</button>
+       <button type="button" style="width:100%;" onclick="go_class_b_save();" id="go_class_b_add_input" value="Save Classifications" >Save</button>
+        </div>
+       
+          
             </div>
+            
+            
+            
+              
+            
+            
+            
+          
             
             
             <span class="opt-inp"><input type="submit" name="Submit" value="Save Options" /> </span> 
             <input type="hidden" name="action" value="update" />  
-            <input type="hidden" name="page_options" value="go_tasks_name,go_tasks_plural_name,go_currency_name,go_points_name,go_first_stage_name,go_second_stage_name,go_second_stage_button,go_third_stage_name,go_third_stage_button,go_fourth_stage_name,go_fourth_stage_button,go_currency_prefix,go_currency_suffix, go_points_prefix, go_points_suffix, go_admin_bar_add_switch" />  
+            <input type="hidden" name="page_options" value="go_tasks_name,go_tasks_plural_name,go_currency_name,go_points_name,go_first_stage_name,go_second_stage_name,go_second_stage_button,go_third_stage_name,go_third_stage_button,go_fourth_stage_name,go_fourth_stage_button,go_currency_prefix,go_currency_suffix, go_points_prefix, go_points_suffix, go_admin_bar_add_switch, go_repeat_button, class_a_name, class_b_name" />  
         </form>
         <?php /*
       */
@@ -139,17 +172,147 @@ function add_game_on_options() {
 add_action('admin_menu', 'add_game_on_options');
 }
 
-function go_periods_save(){
-	$array = $_POST['periods_array'];
+function go_class_a_save(){
+	$array = $_POST['class_a_array'];
 	foreach($array as $key=>$value){
 		if ($value == ''){unset($array[$key]);}
 	} 
-update_option('go_periods',$array);
- $periods = get_option('go_periods',false);
-	   if($periods){foreach($periods as $key=>$value){
+update_option('go_class_a',$array);
+ $class_a = get_option('go_class_a',false);
+	   if($class_a){foreach($class_a as $key=>$value){
 		  
 	    ?>
-       <li class="ui-state-default" class="go_list"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input id="go_periods_input" type="text" value="<?php echo $value; ?>"/></li> <?php }} 
+       <li class="ui-state-default" class="go_list"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input id="go_class_a_input" type="text" value="<?php echo $value; ?>"/></li> <?php }} 
 die();
 }
+
+function go_class_b_save(){
+	$array = $_POST['class_b_array'];
+	foreach($array as $key=>$value){
+		if ($value == ''){unset($array[$key]);}
+	} 
+update_option('go_class_b',$array);
+ $class_b = get_option('go_class_b',false);
+	   if($class_b){foreach($class_b as $key=>$value){
+		  
+	    ?>
+       <li class="ui-state-default" class="go_list"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input id="go_class_b_input" type="text" value="<?php echo $value; ?>"/></li> <?php }} 
+die();
+}
+
+
+
+add_action( 'show_user_profile', 'go_extra_profile_fields' );
+add_action( 'edit_user_profile', 'go_extra_profile_fields' );
+
+function go_extra_profile_fields( $user ) { ?>
+
+	<h3><?php echo get_option('go_class_a_name').' and '.get_option('go_class_b_name'); ?></h3>
+
+	<table id="go_user_form_table">
+<th><?php echo get_option('go_class_a_name'); ?></th><th><?php echo get_option('go_class_b_name'); ?></th>
+<tbody id="go_user_form_table_body">
+
+<?php
+ if(get_user_meta($user->ID, 'go_classifications',true)){ 
+
+foreach(get_user_meta($user->ID, 'go_classifications',true) as $keyu => $valueu){
+?>
+		<tr>
+			<td>
+			<?php $class_a = get_option('go_class_a', false);
+			if($class_a){
+				?><select name="class_a_user[]"><option name="<?php echo $keyu; ?>" value="<?php echo $keyu; ?>"><?php echo $keyu; ?></option><?php
+				foreach($class_a as $key => $value){
+					echo '<option name="'.$value.'" value="'.$value.'">'.$value.'</option>';
+					}
+				  ?></select><?php
+				} ?>	
+			</td> 
+            
+            
+            <td>
+			<?php $class_b = get_option('go_class_b', false);
+			if($class_b){
+				?><select name="class_b_user[]"><option name="<?php echo $valueu; ?>" value="<?php echo $valueu; ?>"><?php echo $valueu; ?></option><?php
+				foreach($class_b as $key => $value){
+					echo '<option name="'.$value.'" value="'.$value.'">'.$value.'</option>';
+					}
+				  ?></select><?php
+				} ?>	
+			</td> 
+            
+            
+		</tr> <?php }} ?> </tbody>
+        <tr> 
+        <td><button onclick="go_add_class();" type="button">+</button></td>
+        </tr>
+
+	</table>
+    <script type="text/javascript" language="javascript">
+    function go_add_class(){
+		var ajaxurl = "<?php global $wpdb;
+		echo admin_url( 'admin-ajax.php' ) ; ?>";
+		jQuery.ajax({
+		type: "post",url: ajaxurl,data: { 
+		action: 'go_user_option_add',
+		go_clipboard_class_a_choice: jQuery('#go_clipboard_class_a_choice').val()},
+		success: function(html){
+		jQuery('#go_user_form_table_body').append(html);
+		}
+	});
+		}
+    </script>
+<?php
+
+
+
+ }
+function go_user_option_add(){
+	?> 
+	
+    <tr>
+
+			<td>
+			<?php $class_a = get_option('go_class_a', false);
+			if($class_a){
+				?><select name="class_a_user[]"><?php
+				foreach($class_a as $key => $value){
+					echo '<option name="'.$value.'" value="'.$value.'">'.$value.'</option>';
+					}
+				  ?></select><?php
+				} ?>	
+			</td> 
+            
+            <td>
+			<?php $class_b = get_option('go_class_b', false);
+			if($class_b){
+				?><select name="class_b_user[]"><?php
+				foreach($class_b as $key => $value){
+					echo '<option name="'.$value.'" value="'.$value.'">'.$value.'</option>';
+					}
+				  ?></select><?php
+				} ?>	
+			</td> 
+		</tr>
+       
+	<?php
+	
+	}
+
+add_action( 'personal_options_update', 'go_save_extra_profile_fields' );
+add_action( 'edit_user_profile_update', 'go_save_extra_profile_fields' );
+
+function go_save_extra_profile_fields( $user_id ) {
+
+		if(isset($_POST['class_a_user'])){
+	foreach($_POST['class_a_user'] as $key=>$value){
+		$class_a = $value;
+		$class_b = $_POST['class_b_user'][$key];
+		$class[$class_a] = $class_b;
+		
+	}
+	update_user_meta( $user_id, 'go_classifications', $class );
+	 }
+}	
 ?>

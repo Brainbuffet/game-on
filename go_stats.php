@@ -4,15 +4,17 @@ function go_stats_overlay(){
 }
 function go_admin_bar_stats(){ 
  	global $wpdb;
+	if($_POST['uid']){
+		$current_user = get_userdata( $_POST['uid'] );
+		}else{
  	$current_user = wp_get_current_user();
+	}
+	?><input type="hidden" id="go_stats_hidden_input" value="<?php echo $_POST['uid'] ?>"/><?php
     $user_login =  $current_user->user_login ;
     $user_email = $current_user->user_email;
     $gamer_tag = $current_user->display_name ;
     $user_id = $current_user->ID ;
 	$user_website = $current_user->user_url;
-	global $current_points;
-	global $current_currency;
- 	$current_user = wp_get_current_user();
  	$current_user_id = $current_user->ID;
 	$current_points = go_return_points($current_user_id);
 	$current_currency = go_return_currency($current_user_id);
@@ -115,7 +117,11 @@ margin-top: 40px; width:200px; display:inline;"></div
 function go_stats_task_list(){
 	$stage = $_POST['stage'];
 	global $wpdb;
+ 	if($_POST['uid'] != ''){
+		$current_user = get_userdata( $_POST['uid'] );
+		}else{
  	$current_user = wp_get_current_user();
+	}
     $user_id = $current_user->ID ;
 	$table_name_go = $wpdb->prefix . "go";
 	$list = $wpdb->get_results("select page_id,status,count,post_id, points from ".$table_name_go." where uid = $user_id and (status = 1 or status = 2 or status = 3 or status = 4) order by id desc");
@@ -145,7 +151,11 @@ function go_stats_task_list(){
 	
 function go_stats_points(){
 		global $wpdb;
+ 	if($_POST['uid'] != ''){
+		$current_user = get_userdata( $_POST['uid'] );
+		}else{
  	$current_user = wp_get_current_user();
+	}
     $user_id = $current_user->ID ;
 	$table_name_go = $wpdb->prefix . "go";
 	$list = $wpdb->get_results("select post_id, points, reason from ".$table_name_go." where uid = $user_id and points != 0 order by id desc");
@@ -163,7 +173,11 @@ function go_stats_points(){
 	}
 function go_stats_currency(){
 		global $wpdb;
+ 	if($_POST['uid'] != ''){
+		$current_user = get_userdata( $_POST['uid'] );
+		}else{
  	$current_user = wp_get_current_user();
+	}
     $user_id = $current_user->ID ;
 	$table_name_go = $wpdb->prefix . "go";
 	$list = $wpdb->get_results("select post_id, currency, reason from ".$table_name_go." where uid = $user_id and currency != 0 order by id desc");
@@ -181,7 +195,11 @@ function go_stats_currency(){
 	}
 function go_stats_minutes(){
 		global $wpdb;
+ 	if($_POST['uid'] != ''){
+		$current_user = get_userdata( $_POST['uid'] );
+		}else{
  	$current_user = wp_get_current_user();
+	}
     $user_id = $current_user->ID ;
 	$table_name_go = $wpdb->prefix . "go";
 	$list = $wpdb->get_results("select minutes, reason from ".$table_name_go." where uid = $user_id and minutes != 0 order by id desc");

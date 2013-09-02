@@ -74,7 +74,7 @@ if(get_option('go_admin_bar_add_switch') != 'Off'){
 		<div><input type="button" style="width:250px; height: 20px;margin-top: 7px;" name="go_admin_bar_submit" onclick="go_admin_bar_add();" value="Add"><div id="admin_bar_add_return"></div></div>',
 		'href' => false,
 		'parent' => 'go_add',
-	));
+	));}
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -84,7 +84,7 @@ if (!is_admin_bar_showing() && !is_user_logged_in() )
 		'title' => '<div onclick="go_admin_bar_stats_page_button();">Stats Page</div><div id="go_stats_page"></div>',
 		'href' => false,
 		'id' => 'go_stats',
-	));}
+	));
 	
 }
 ?>

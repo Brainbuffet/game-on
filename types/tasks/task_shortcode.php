@@ -55,7 +55,7 @@ $status = (int)$wpdb->get_var("select status from ".$go_table_ind." where post_i
 				echo'<div id="go_content">'. do_shortcode(wpautop($task_content)).do_shortcode(wpautop($completion_message)).
 				do_shortcode(wpautop($mastery_message));
 				if ($repeat == 'on') {
-				echo '<button id="go_button" status="4" onclick="task_stage_change();this.disabled=true;" repeat="on">Repeat</button></div>';
+				echo '<button id="go_button" status="4" onclick="task_stage_change();this.disabled=true;" repeat="on">'.get_option('go_repeat_button').'</button></div>';
 					} else {
 				echo '</div>';
 				}

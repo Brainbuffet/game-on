@@ -18,10 +18,10 @@ function tsk_new_ajx(){
 	$complete_message = $_POST['theCompleteMessage'];
 	$repeat = $_POST['theRepeat'];
 	$repeat_message = $_POST['theRepeatMessage'];
-	if ($repeat == true) {
+	if ($repeat == 'false') {
+		$repeats = '';
+	} elseif ($repeat == 'true') {
 		$repeats = 'on';
-	} elseif ($repeat == false) {
-		$repeats = 'off';
 	}
 	$the_cats = $_POST['theCats'];
 	$go_new_task = array(
@@ -33,8 +33,10 @@ function tsk_new_ajx(){
 	);
 	// Insert the post into the database
 	$new_task_id = wp_insert_post($go_new_task);
-	foreach ($the_cats as $cat) {
-		wp_set_object_terms($new_task_id, $cat, 'task_categories');
+	if ($the_cats) {
+		foreach ($the_cats as $cat) {
+			wp_set_object_terms($new_task_id, $cat, 'task_categories');
+		}
 	}
 	update_post_meta($new_task_id, 'go_mta_quick_desc', $description);
 	update_post_meta($new_task_id, 'go_mta_req_rank', $rank);
@@ -44,7 +46,7 @@ function tsk_new_ajx(){
 	update_post_meta($new_task_id, 'go_mta_complete_message', $complete_message);
 	update_post_meta($new_task_id, 'go_mta_task_repeat', $repeats);
 	update_post_meta($new_task_id, 'go_mta_repeat_message', $repeat_message);
-	echo $new_task_id;
+	echo $repeats;
 	die();
 }
 add_action('wp_ajax_tsk_new_ajx', 'tsk_new_ajx');
@@ -312,13 +314,18 @@ function tsk_cpt_bx(type, id) {
             <?php } elseif ($task_check == true) { 
 					echo '<div class="tsk_body_info"><h2>Display Current Task</h2>&nbsp;Click on any of the post types below to choose one of its items. You will be redirected to that item, and the shortcode that displays this Task will be inserted in the content area for you (make sure to click Update!).</div><br />';
             	$post_types = get_post_types( '', 'objects' ); 
+				$pst_cntrs = 0;
 				foreach ( $post_types as $post_type ) {
-					$name = $post_type->name;
-					if ($name !== 'tasks' && $name!== 'revision') {
-					$a_name = "'".$name."'";
-					$a_id = "'".$_GET['post']."'";
-					$label = $post_type->label;
-					echo '<div class="tsk_pt_bxs" id="tsk_pt_bx_'.$name.'" onclick="tsk_cpt_bx('.$a_name.', '.$a_id.');">'.$label.'</div>';
+					if (++$pst_cntrs == 20) {
+						break;
+					} else {
+						$name = $post_type->name;
+						if ($name !== 'tasks' && $name!== 'revision') {
+						$a_name = "'".$name."'";
+						$a_id = "'".$_GET['post']."'";
+						$label = $post_type->label;
+						echo '<div class="tsk_pt_bxs" id="tsk_pt_bx_'.$name.'" onclick="tsk_cpt_bx('.$a_name.', '.$a_id.');">'.$label.'</div>';
+						}
 					}
 				}
 				

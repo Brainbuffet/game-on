@@ -1,4 +1,4 @@
-#periods_container{
+#class_a_container{
 	width:80%px;
 	border: thin solid black;
 	margin-top:10px;
@@ -9,7 +9,11 @@
 	padding:7px;
 	width:155px;
 	margin-bottom:0px;}
-#go_periods_input{
+#go_class_a_input{
+	width:80%px;
+	margin-left:20px;}
+	
+#go_class_b_input{
 	width:80%px;
 	margin-left:20px;}
 #grip{

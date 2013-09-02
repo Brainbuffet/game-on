@@ -18,29 +18,26 @@ function go_the_lb_ajax(){
 	$the_content = get_post_field('post_content', $the_id);
 	$custom_fields = get_post_custom($the_id);
 	$req_currency = $custom_fields['go_mta_store_currency'][0];
-	$req_points = $custom_fields['go_mta_store_points'][0];
-	$req_time = $custom_fields['go_mta_store_time'][0];
 	$req_rank_key =  go_get_rank_key($custom_fields['go_mta_store_rank'][0]);
 	$req_rank = $custom_fields['go_mta_store_rank'][0];
 	$go_store_repeat = $custom_fields['go_mta_store_repeat'][0];
 	$user_rank = go_get_rank($user_id); // Rank of current user
 	$user_ID = get_current_user_id(); // Current User ID
-	$user_points = go_return_points($user_ID);
-	$user_time = go_return_minutes($user_ID);
+	$user_points = go_return_points( $user_ID );
+	$user_gold = go_return_currency($user_ID); 
 	echo '<h2>'.$the_title.'</h2>';
 	echo '<div id="go-lb-the-content">'.wpautop($the_content).'</div>';
 	if ($user_points >= $req_rank) { $lvl_color = "g"; } else { $lvl_color = "r"; }
 	if ($user_gold >= $req_currency) { $gold_color = "g"; } else { $gold_color = "r"; }
-	if ($user_points >= $req_points) { $points_color = "g"; } else { $gold_color = "r"; }
-	if ($user_time >= $req_time) { $time_color = "g"; } else { $gold_color = "r"; }
-	if ($lvl_color == "g" && $gold_color == "g" && $points_color == "g" && $time_color == "g") { $buy_color = "g"; } else { $buy_color = "r"; }
+	if ($lvl_color == "g" && $gold_color == "g") { $buy_color = "g"; } else { $buy_color = "r"; };
+
 ?>
-	<div id="golb-fr-price" class="golb-fr-boxes-<?php echo $gold_color; ?>">Currency: <?php echo $req_currency; ?></div>
-	<div id="golb-fr-points" class="golb-fr-boxes-<?php echo $points_color; ?>">Points: <?php echo $req_points; ?></div>
-	<div id="golb-fr-time" class="golb-fr-boxes-<?php echo $time_color; ?>">Time: <?php echo $req_time; ?></div>
+	<div id="golb-fr-price" class="golb-fr-boxes-<?php echo $gold_color; ?>">Price: <?php echo $req_currency; ?></div>
     <div id="golb-fr-lvl" class="golb-fr-boxes-<?php echo $lvl_color; ?>">Required Rank: <span><?php echo $req_rank_key; ?></span></div>
 	<div id="golb-fr-buy" class="golb-fr-boxes-<?php echo $buy_color; ?>" onclick="goBuytheItem('<?php echo $the_id; ?>', '<?php echo $buy_color; ?>');">Buy</div>
+
 <?php
+	
     die;
 }
 add_action('wp_ajax_go_lb_ajax', 'go_the_lb_ajax');

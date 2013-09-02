@@ -86,7 +86,11 @@ global $default_role;
 	'go_currency_name' => 'Dollars',
 	'go_points_name' => 'Points',
 	'go_admin_bar_add_switch' => 'On',
-	'go_repeat_button' => 'Repeat'
+	'go_repeat_button' => 'Repeat',
+	'go_class_a_name' => 'Period',
+	'go_class_b_name' => 'Computer',
+	'go_class_a' => array('Period 1', 'Period 2', 'Period 3'),
+	'go_class_b' => array('Computer 1', 'Computer 2', 'Computer 3')
 	);
 	foreach($options_array as $key => $value){
 		 add_option( $key, $value );

@@ -14,33 +14,32 @@ function go_the_lb_ajax(){
     check_ajax_referer( 'go_lb_ajax_referall', 'nonce' );
 	$the_id = $_POST["the_item_id"];
 	$the_post = get_post($the_id);
-	$the_title = $the_post->post_title;
+    $the_title = $the_post->post_title;
 	$the_content = get_post_field('post_content', $the_id);
-	$custom_fields = get_post_custom($the_id);
-	$req_currency = $custom_fields['go_mta_store_currency'][0];
-	$req_points = $custom_fields['go_mta_store_points'][0];
-	$req_time = $custom_fields['go_mta_store_time'][0];
-	$req_rank_key =  go_get_rank_key($custom_fields['go_mta_store_rank'][0]);
-	$req_rank = $custom_fields['go_mta_store_rank'][0];
-	$go_store_repeat = $custom_fields['go_mta_store_repeat'][0];
-	$user_rank = go_get_rank($user_id); // Rank of current user
+	$set_ranks = (array)get_option('cp_module_ranks_data'); // All Possible Ranks defined by admin, least to greatest
+	$user_rank = cp_module_ranks_getRank($student_id); // Rank of current user
+	$user_rank_key = array_search($user_rank, $set_ranks); // Order of current user rank out of all possible ranks
+	$retrieve = get_post_custom($the_id); // prefaces all retrieves below
+	$go_gold_req = $retrieve["gos_gold_req"][0]; // Gold required to buy item
+	$go_repeat = $retrieve["gos_repeat"][0]; // Check if repeatable buy is on
+	$go_rank = $retrieve["gos_rank"][0]; // Rank required to buy item
+	$go_rank_key = array_search($go_rank, $set_ranks); // Order of rank required out of all possible ranks
 	$user_ID = get_current_user_id(); // Current User ID
-	$user_points = go_return_points($user_ID);
-	$user_time = go_return_minutes($user_ID);
+	$user_points = cp_getPoints( $user_ID ); // Current CubePoints points
+	$user_gold = display_cg_total($user_ID); // Current CubeGold gold
 	echo '<h2>'.$the_title.'</h2>';
-	echo '<div id="go-lb-the-content">'.wpautop($the_content).'</div>';
-	if ($user_points >= $req_rank) { $lvl_color = "g"; } else { $lvl_color = "r"; }
-	if ($user_gold >= $req_currency) { $gold_color = "g"; } else { $gold_color = "r"; }
-	if ($user_points >= $req_points) { $points_color = "g"; } else { $gold_color = "r"; }
-	if ($user_time >= $req_time) { $time_color = "g"; } else { $gold_color = "r"; }
-	if ($lvl_color == "g" && $gold_color == "g" && $points_color == "g" && $time_color == "g") { $buy_color = "g"; } else { $buy_color = "r"; }
+	echo '<div id="go-lb-the-content">'.$the_content.'</div>';
+	if ($user_points >= $go_rank_key) { $lvl_color = "g"; } else { $lvl_color = "r"; }
+	if ($user_gold >= $go_gold_req) { $gold_color = "g"; } else { $gold_color = "r"; }
+	if ($lvl_color == "g" && $gold_color == "g") { $buy_color = "g"; } else { $buy_color = "r"; };
+
 ?>
-	<div id="golb-fr-price" class="golb-fr-boxes-<?php echo $gold_color; ?>">Currency: <?php echo $req_currency; ?></div>
-	<div id="golb-fr-points" class="golb-fr-boxes-<?php echo $points_color; ?>">Points: <?php echo $req_points; ?></div>
-	<div id="golb-fr-time" class="golb-fr-boxes-<?php echo $time_color; ?>">Time: <?php echo $req_time; ?></div>
-    <div id="golb-fr-lvl" class="golb-fr-boxes-<?php echo $lvl_color; ?>">Required Rank: <span><?php echo $req_rank_key; ?></span></div>
+	<div id="golb-fr-price" class="golb-fr-boxes-<?php echo $gold_color; ?>">Price: <?php echo $go_gold_req; ?></div>
+    <div id="golb-fr-lvl" class="golb-fr-boxes-<?php echo $lvl_color; ?>">Required Rank: <span><?php echo $go_rank; ?></span></div>
 	<div id="golb-fr-buy" class="golb-fr-boxes-<?php echo $buy_color; ?>" onclick="goBuytheItem('<?php echo $the_id; ?>', '<?php echo $buy_color; ?>');">Buy</div>
+
 <?php
+	
     die;
 }
 add_action('wp_ajax_go_lb_ajax', 'go_the_lb_ajax');
@@ -55,8 +54,8 @@ add_action('wp_head', 'go_frontend_lightbox_css');
 function go_frontend_lightbox_html() {
 ?>
 <script type="text/javascript">
-var add_go_the_loader = jQuery('#lb-content').append('<div class="go-the-loader"></div>');
-var remove_go_the_loader = jQuery('.go-the-loader').remove();
+var add_go_the_loader = $('#lb-content').append('<div class="go-the-loader"></div>');
+var remove_go_the_loader = $('.go-the-loader').remove();
 
 function go_lb_closer() {
 	document.getElementById('light').style.display='none';
@@ -66,7 +65,7 @@ function go_lb_closer() {
 function go_lb_opener(id) {
 	document.getElementById('light').style.display='block';
 	document.getElementById('fade').style.display='block';
-	if( !jQuery.trim( jQuery('#lb-content').html() ).length ) {
+	if( !$.trim( $('#lb-content').html() ).length ) {
 	var get_id = id;
 	var gotoSend = {
                 action:"go_lb_ajax",
@@ -74,8 +73,8 @@ function go_lb_opener(id) {
 				the_item_id: get_id,
     };
 	url_action = "<?php echo admin_url('/admin-ajax.php'); ?>";
-            jQuery.ajaxSetup({cache:true});
-            jQuery.ajax({
+            $.ajaxSetup({cache:true});
+            $.ajax({
                 url: url_action,
                 type:'POST',
                 data: gotoSend,

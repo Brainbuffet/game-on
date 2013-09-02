@@ -23,4 +23,15 @@ function go_jquery_periods() {
 	
 	
 }
+function go_jquery_clipboard() {
+    wp_enqueue_script( 'jquery' );
+	wp_enqueue_script( 'go_jquery_clipboard', plugin_dir_url(__FILE__).'go_clipboard.js');
+	wp_enqueue_script( 'go_jquery_clipboard_tablesorter', plugin_dir_url(__FILE__).'sorttable.js');
+	wp_localize_script( 'go_jquery_clipboard', 'MyAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+	wp_enqueue_script( 'jquery-ui-accordion' );
+	wp_enqueue_script( 'jquery-ui-core' );
+	wp_enqueue_script( 'jquery-ui-sortable' );
+	
+	
+}
 ?>
