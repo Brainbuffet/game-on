@@ -1,5 +1,5 @@
 <?php
-if(is_admin) {
+if(is_admin()) {
 	$tsk_pst_id = $_GET['go_tsk_id'];
 	if($tsk_pst_id) {
 		function tsk_pop_js() {
