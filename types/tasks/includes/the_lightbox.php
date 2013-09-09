@@ -46,7 +46,7 @@ function tsk_new_ajx(){
 	update_post_meta($new_task_id, 'go_mta_complete_message', $complete_message);
 	update_post_meta($new_task_id, 'go_mta_task_repeat', $repeats);
 	update_post_meta($new_task_id, 'go_mta_repeat_message', $repeat_message);
-	echo $repeats;
+	echo $new_task_id;
 	die();
 }
 add_action('wp_ajax_tsk_new_ajx', 'tsk_new_ajx');

@@ -16,6 +16,7 @@ function go_the_lb_ajax(){
 	$the_post = get_post($the_id);
 	$the_title = $the_post->post_title;
 	$the_content = get_post_field('post_content', $the_id);
+	$adj_content = do_shortcode($the_content);
 	$custom_fields = get_post_custom($the_id);
 	$req_currency = $custom_fields['go_mta_store_currency'][0];
 	$req_rank_key =  go_get_rank_key($custom_fields['go_mta_store_rank'][0]);
@@ -24,9 +25,9 @@ function go_the_lb_ajax(){
 	$user_rank = go_get_rank($user_id); // Rank of current user
 	$user_ID = get_current_user_id(); // Current User ID
 	$user_points = go_return_points( $user_ID );
-	$user_gold = go_return_currency($user_ID); 
+	$user_gold = go_return_currency($user_ID);
 	echo '<h2>'.$the_title.'</h2>';
-	echo '<div id="go-lb-the-content">'.wpautop($the_content).'</div>';
+	echo '<div id="go-lb-the-content">'.do_shortcode($the_content).'</div>';
 	if ($user_points >= $req_rank) { $lvl_color = "g"; } else { $lvl_color = "r"; }
 	if ($user_gold >= $req_currency) { $gold_color = "g"; } else { $gold_color = "r"; }
 	if ($lvl_color == "g" && $gold_color == "g") { $buy_color = "g"; } else { $buy_color = "r"; };
@@ -35,7 +36,6 @@ function go_the_lb_ajax(){
 	<div id="golb-fr-price" class="golb-fr-boxes-<?php echo $gold_color; ?>">Price: <?php echo $req_currency; ?></div>
     <div id="golb-fr-lvl" class="golb-fr-boxes-<?php echo $lvl_color; ?>">Required Rank: <span><?php echo $req_rank_key; ?></span></div>
 	<div id="golb-fr-buy" class="golb-fr-boxes-<?php echo $buy_color; ?>" onclick="goBuytheItem('<?php echo $the_id; ?>', '<?php echo $buy_color; ?>');">Buy</div>
-
 <?php
 	
     die;
@@ -52,8 +52,6 @@ add_action('wp_head', 'go_frontend_lightbox_css');
 function go_frontend_lightbox_html() {
 ?>
 <script type="text/javascript">
-var add_go_the_loader = jQuery('#lb-content').append('<div class="go-the-loader"></div>');
-var remove_go_the_loader = jQuery('.go-the-loader').remove();
 
 function go_lb_closer() {
 	document.getElementById('light').style.display='none';

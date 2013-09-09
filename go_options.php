@@ -51,36 +51,16 @@ function game_on_options() { ?>
 			echo	go_sub_option('fourth_stage_button', 'This is the word that will be displayed on the button for the fourth stage of Task stages. Such as Master', 'Fourth Stage Button', 'go_fourth_stage_button', 'go_fourth_stage_button', 'What would you like the button for the fourth stage to say?');
 			echo	go_sub_option('repeat_button', 'This is the word that will be displayed on the button for repeat. Such as Repeat.', 'Repeat Button', 'go_repeat_button', 'go_repeat_button', 'What would you like the button for repeat to say?');
 
-?> 
-        
-           
-            </div>
+?></div>
             <br />
             <div id="curr" class="opt-box">
             <h3>Currency Settings</h3>
             <?php 
-            
            echo  go_sub_option('currency_name', 'This is what your currency will be called. Use a name like Dollars, or Gold.','Currency Name','go_currency_name', 'go_currency_name', 'what would you like currency to be called?' ); 
 			echo go_sub_option( 'tasks_currency_prefix', 'The prefix symbol used to represent your currency, such as a dollar sign.', 'Currency Prefix', 'go_currency_prefix', 'go_currency_prefix', 'what prefix would you like associated with currency? (Optional)' ); 
 			echo go_sub_option( 'tasks_currency_suffix', 'The suffix symbol used to represent your currency, such as Dollar.', 'Currency Suffix', 'go_currency_suffix', 'go_currency_suffix', 'what suffix would you like associated with currency? (Optional)' ); 
             ?>
-        
-            
-            
-            
-            </div><br />
-
-             
-            
-         
-            
-            
-            
-            
-            
-            
-            
-
+        </div><br />
             <br />
             <div id="poi" class="opt-box">       
             <h3>Points Settings</h3>
