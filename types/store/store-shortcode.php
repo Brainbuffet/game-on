@@ -18,21 +18,20 @@ function go_gold_store_sc ($atts, $content = null) {
 			$the_term_id = get_term_by('name', $cat, 'store_types')->term_id; // get the term's ID
 			$the_args = array('orderby' => 'name'); // an array, telling the_items how to display
 			$the_items = get_objects_in_term( $the_term_id, 'store_types', $the_args ); // gets all items under category
-			echo $cat.'<br />';
+			$upper_cat = ucwords($cat);
+			echo '<h3>'.$upper_cat.'</h3>';
 			foreach ($the_items as $item) {
 				// Definitions
-				$id = $item;
 				$the_title = get_the_title($item); // get item title
-				$custom_fields = get_post_custom($id);
-				$req_currency[$id] = $custom_fields['go_mta_store_currency'][0];
-				echo '<a class="go_str_item" onclick="go_lb_opener('.$item.');">'.$the_title.' ('.$req_currency[$id].')</a><br />';
+				echo '<a class="go_str_item" onclick="go_lb_opener('.$item.');">'.$the_title.'</a><br />';
+				
 			}
 		} 
 	}	elseif ($id) {
 			$the_title = get_the_title($id); // get item title
 			$custom_fields = get_post_custom($id);
 			$req_currency = $custom_fields['go_mta_store_currency'][0];
-			return '<a class="go_str_item" onclick="go_lb_opener('.$id.');">'.$the_title.' ('.$req_currency.')</a>';
+			return '<a class="go_str_item" onclick="go_lb_opener('.$id.');">'.$the_title.'</a>';
 		}
 endif;
 }
