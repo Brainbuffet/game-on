@@ -15,17 +15,18 @@ function go_buy_item(){
     $the_id = $_POST["the_id"];
 	$user_ID = get_current_user_id(); // Current User ID
 	$custom_fields = get_post_custom($the_id);
-///	$req_points = $custom_fields['go_mta_store_rank'][0];
 	$req_points = $custom_fields['go_mta_store_points'][0];
 	$req_currency = $custom_fields['go_mta_store_currency'][0];
 	$req_time = $custom_fields['go_mta_store_time'][0];
+	$req_rank = $custom_fields['go_mta_store_rank'][0];
 	$user_points = go_return_points($user_ID);
 	$user_currency = go_return_currency($user_ID);
 	$user_time = go_return_minutes($user_ID);
+	if ($req_rank <= $user_points) { $rank_re = true; } else { $rank_re = false; }
 	if ($req_points <= $user_points) { $points_re = true; } else { $points_re = false; }
 	if ($req_currency <= $user_currency) { $currency_re = true; } else { $currency_re = false; }
 	if ($req_time <= $user_time) { $time_re = true; } else { $time_re = false; }
-	$the_buy_arr = array('points','currency','time');
+	$the_buy_arr = array('points','currency','time', 'rank');
 	$stack_arr = array();
 	foreach ($the_buy_arr as $type) {
 		switch ($type) {
@@ -44,9 +45,14 @@ function go_buy_item(){
 					array_push($stack_arr, 'Time');
 				}
 				break;
+			case 'rank':
+				if ($rank_re == false) {
+					array_push($stack_arr, 'Rank');
+				}
+				break;
 		}
 	}
-	if ($points_re == true && $currency_re == true && $time_re == true) {
+	if ($points_re == true && $currency_re == true && $time_re == true && $rank_re == true) {
 		go_add_post($user_ID, $the_id, -1, -$req_points, -$req_currency, $page_id, $repeat = null);
 		go_add_minutes($user_ID, -$req_time, $the_id);
 		echo 'Purchased';
