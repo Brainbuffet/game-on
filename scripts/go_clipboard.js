@@ -7,6 +7,7 @@ function go_clipboard_class_a_choice(){
 			jQuery('#go_clipboard_table_body').html('');
 			jQuery('#go_clipboard_table_body').html(html);
 			
+			
 		}
 	});
 	

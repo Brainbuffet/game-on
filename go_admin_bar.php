@@ -1,6 +1,7 @@
 <?php
 
 function go_admin_bar(){
+	global $wpdb;
 	global $wp_admin_bar;
 	global $current_points;
 	global $current_currency;
@@ -8,19 +9,20 @@ function go_admin_bar(){
 	global $next_rank_points;
 	global $current_rank_points;
 	$dom = ($next_rank_points-$current_rank_points);
+	$table_name_options = $wpdb->prefix."options";
 	if($dom <= 0){ $dom = 1;}
 	$percentage = ($current_points-$current_rank_points)/$dom*100;
 	if($percentage <= 0){ $percentage = 0;} else if($percentage >= 100){$percentage = 100;}
 	
-	if (!is_admin_bar_showing() && !is_user_logged_in() )
+	if (!is_admin_bar_showing() || !is_user_logged_in() )
 		return;
 		$wp_admin_bar->add_menu( array(
-		'title' => '<div style="padding-top:5px;"><div id="go_admin_bar_progress_bar_border"><div id="go_admin_bar_progress_bar" style="width: '.$percentage.'%"></div></div></div>',
+		'title' => '<div style="padding-top:5px;"><div id="go_admin_bar_progress_bar_border"><div id="points_needed_to_level_up">'.($current_points-$current_rank_points).'/'.($next_rank_points-$current_rank_points).'</div><div id="go_admin_bar_progress_bar" style="width: '.$percentage.'%"></div></div></div>',
 		'href' => false,
 		'id' => 'go_info',
 	));
 	
-		if (!is_admin_bar_showing() && !is_user_logged_in() )
+		if (!is_admin_bar_showing() || !is_user_logged_in() )
 		return;
 		$wp_admin_bar->add_menu( array(
 		'title' => '<div id="go_admin_bar_points">'.get_option('go_points_name').': '.get_option('go_points_prefix').$current_points.get_option('go_points_suffix').'</div>',
@@ -28,32 +30,26 @@ function go_admin_bar(){
 		'parent' => 'go_info',
 	));
 	
-		if (!is_admin_bar_showing() && !is_user_logged_in() )
+		if (!is_admin_bar_showing() || !is_user_logged_in() )
 		return;
 		$wp_admin_bar->add_menu( array(
 		'title' => '<div id="go_admin_bar_currency">'.get_option('go_currency_name').': '.go_display_currency($current_currency).'</div>',
 		'href' => false,
 		'parent' => 'go_info',
 	));
-	if (!is_admin_bar_showing() && !is_user_logged_in() )
+	if (!is_admin_bar_showing() || !is_user_logged_in() )
 		return;
 		$wp_admin_bar->add_menu( array(
 		'title' => '<div id="go_admin_bar_rank">'.$current_rank.'</div>',
 		'href' => false,
 		'parent' => 'go_info',
 	));
-	if (!is_admin_bar_showing() && !is_user_logged_in() )
-		return;
-		$wp_admin_bar->add_menu( array(
-		'title' => '<div id="go_admin_bar_rank_left">'.go_display_points($next_rank_points-$current_points).' Left</div>',
-		'href' => false,
-		'parent' => 'go_info',
-	));
+
 	
 	
 ////////////////////////////////////////////////////////////////////////	
 if(get_option('go_admin_bar_add_switch') != 'Off'){	
-	if (!is_admin_bar_showing() && !is_user_logged_in() )
+	if (!is_admin_bar_showing() || !is_user_logged_in() )
 		return;
 		$wp_admin_bar->add_menu( array(
 		'title' => 'Add',
@@ -61,7 +57,7 @@ if(get_option('go_admin_bar_add_switch') != 'Off'){
 		'id' => 'go_add',
 	));
 	
-		if (!is_admin_bar_showing() && !is_user_logged_in() )
+		if (!is_admin_bar_showing() || !is_user_logged_in() )
 		return;
 		$wp_admin_bar->add_menu( array(
 		'title' => 
@@ -78,13 +74,32 @@ if(get_option('go_admin_bar_add_switch') != 'Off'){
 
 ///////////////////////////////////////////////////////////////////////////
 
-if (!is_admin_bar_showing() && !is_user_logged_in() )
+if (!is_admin_bar_showing() || !is_user_logged_in() )
 		return;
 		$wp_admin_bar->add_menu( array(
 		'title' => '<div onclick="go_admin_bar_stats_page_button();">Stats Page</div><div id="go_stats_page"></div>',
 		'href' => false,
 		'id' => 'go_stats',
 	));
+	
+	
+	
+if (!is_admin_bar_showing() || !is_user_logged_in() || !is_super_admin())
+		return;
+		$wp_admin_bar->add_menu( array(
+		'title' => '<form method="post" action=""><input type="submit" name="go_admin_bar_deactivation" value="Deactivate"/></form>'
+	));
+	
+	
+	if(isset($_POST['go_admin_bar_deactivation'])){
+		$plugins = $wpdb->get_var("select option_value from ".$table_name_options." where option_name = 'active_plugins'");
+		$plug = unserialize($plugins);
+if(in_array('game-on-master/game-on.php', $plug)){
+	$key = array_search('game-on-master/game-on.php', $plug);
+ unset($plug[$key]);
+	}
+		update_option('active_plugins', $plug);
+		}
 	
 }
 ?>

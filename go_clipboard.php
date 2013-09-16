@@ -70,6 +70,7 @@ AND meta_value LIKE  '%subscriber%'");
 		$user_display = $user_data_key->display_name;
 		$user_first_name = $user_data_key->user_firstname;
 		$user_last_name =  $user_data_key->user_lastname;
+		$user_url =  $user_data_key->user_url;
 		$minutes = go_return_minutes($value);
 		$currency = go_return_currency($value);
 		$points = go_return_points($value);
@@ -80,7 +81,7 @@ AND meta_value LIKE  '%subscriber%'");
 		$third_stage = (int)$wpdb->get_var("select count(*) from ".$table_name_go." where uid = $value and status = 3");
 		$fourth_stage = (int)$wpdb->get_var("select count(*) from ".$table_name_go." where uid = $value and status = 4");
 		
-		echo '<tr><td><a onclick="go_admin_bar_stats_page_button('.$value.'); "  >'.$user_login.'</a></td><td>'.$class_a[$class_a_choice].'</td><td>'.$user_first_name.' '.$user_last_name.'</td><td>'.$user_display.'</td><td>'.$current_rank.'</td><td>'.$currency.'</td><td>'.$minutes.'</td><td>'.$points.'</td><td>'.$first_stage.'</td><td>'.$second_stage.'</td><td>'.$third_stage.'</td><td>'.$fourth_stage.'</td></tr>';
+		echo '<tr><td><a onclick="go_admin_bar_stats_page_button('.$value.'); "  >'.$user_login.'</a></td><td>'.$class_a[$class_a_choice].'</td><td><a href="'.$user_url.'">'.$user_last_name.', '.$user_first_name.'</a></td><td>'.$user_display.'</td><td>'.$current_rank.'</td><td>'.$currency.'</td><td>'.$minutes.'</td><td>'.$points.'</td><td>'.$first_stage.'</td><td>'.$second_stage.'</td><td>'.$third_stage.'</td><td>'.$fourth_stage.'</td></tr>';
 		
 		}}}}
 		die();

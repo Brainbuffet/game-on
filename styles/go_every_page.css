@@ -19,6 +19,7 @@
 	border:thin grey solid;
 	-moz-border-radius: 2em 2em 2em 2em;
 border-radius: 2em 2em 2em 2em;
+
 	}
 #go_admin_bar_progress_bar{
 	height:15px;
@@ -39,3 +40,14 @@ background-color: #ff6600;
 	width:175px !important;}
 ul#wp-admin-bar-go_add-default.ab-submenu{
 	height:207px;}
+#points_needed_to_level_up{
+	position:absolute;
+	z-index:90000;
+	width: inherit;
+text-align: center;
+height: inherit;
+margin-top:-6px;
+color: white;
+text-shadow: 0px 0px #ff6600;}
+#points_needed_to_level_up:hover{
+	color:black;}

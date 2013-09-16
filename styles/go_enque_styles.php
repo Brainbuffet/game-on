@@ -27,6 +27,8 @@ function go_style_clipboard(){
 		
 		wp_register_style( 'go_style_clipboard', plugin_dir_url( __FILE__).'go_clipboard.css' );
         wp_enqueue_style( 'go_style_clipboard' );
+		wp_register_style( 'go_style_clipboard_sorter', plugin_dir_url( __FILE__).'go_clipboard.css' );
+        wp_enqueue_style( 'go_style_clipboard' );
 	
 	}
 ?>

@@ -111,7 +111,13 @@ function task_change_stage(){
 		// Stage Stuff
 		$content_post = get_post($task_id);
 		$task_content = $content_post->post_content;
-	go_add_post($user_id, $task_id, $status, $points_array[$status-1], $currency_array[$status-1], $page_id, $repeat_button  );
+			   $table_name_go = $wpdb->prefix . "go";
+if($repeat_button != 'on'){
+		$check = (int) $wpdb->get_var("select status from ".$table_name_go." where uid = $user_id and post_id = $task_id");
+		if($check == 0 || $check != ($status)){
+	go_add_post($user_id, $task_id, $status, $points_array[$status-1], $currency_array[$status-1], $page_id, $repeat_button  ); }} else {
+		go_add_post($user_id, $task_id, $status, $points_array[$status-1], $currency_array[$status-1], $page_id, $repeat_button  );
+		}
 	switch($status) {
 		case 1:
 			echo '<div id="go_content">'.do_shortcode(wpautop($task_content, false)).' <button id="go_button" status="2" onclick="task_stage_change();this.disabled=true;">'.get_option('go_second_stage_button').'</button></div>';

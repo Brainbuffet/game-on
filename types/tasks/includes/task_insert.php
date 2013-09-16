@@ -19,9 +19,9 @@ function go_task_insert_link( $arg, $post_id ){
 	global $wpdb;
 if( ereg('edit-slug', $arg) ){
 		$is_resetable = true;
-		
-			$go_page_ids = (int)$wpdb->get_var("SELECT `ID` FROM `".$wpdb->prefix.'posts'."` WHERE `post_parent` = 0 and `post_content` like '%go_task id=\'".$_GET['post']."\'%' limit 1");
-			$option = '<a class="button button-small" target="_blank" href="'.get_permalink($go_page_ids) .'">'. get_the_title($go_page_ids).'</a>';
+		$go_table_posts = $wpdb->prefix.'posts';
+			$go_page_ids = (int)$wpdb->get_var("SELECT `ID` FROM ".$go_table_posts." WHERE `post_parent` = 0 and `post_content` like '%go_task id=\"".$post_id."\"%' limit 1");
+			$option = '<a class="button button-small" target="_blank" href="'.get_permalink($go_page_ids) .'">View Page</a>';
 			$arg .= '<span id="edit-slug button button-small">'.$option.'
 		</span> ';
 		}

@@ -1,3 +1,4 @@
+
 function go_admin_bar_add(){
 		jQuery.ajax({
 		type: "post",url: MyAjax.ajaxurl,data: { 
@@ -31,8 +32,61 @@ jQuery('#go_stats_white_overlay').html(html);
 jQuery('#go_stats_page_black_bg').show();
 jQuery('#go_stats_white_overlay').show();
 jQuery('#go_stats_hidden_input').val(id);
+
+
+  jQuery( "#go_stats_class_a_list li" ).draggable({
+      });
+    
+jQuery( "#go_stats_class_a_choice" ).droppable({
+      activeClass: "ui-state-default",
+      hoverClass: "ui-state-hover",
+      accept: "#go_stats_class_a_list li",
+      drop: function( event, ui ) {
+        jQuery( this ).find( ".placeholder" ).remove();
+        jQuery( "<li></li>" ).text( ui.draggable.text() ).appendTo( this );
+		 ui.draggable.remove();
+		go_stats_leaderboard_choice();
+      }
+    }).sortable({
+      items: "li:not(.placeholder)",
+      sort: function() {
+        // gets added unintentionally by droppable interacting with sortable
+        // using connectWithSortable fixes this, but doesn't allow you to customize active/hoverClass options
+        jQuery( this ).removeClass( "ui-state-default" );
+      }
+    });
+
+jQuery( "#go_stats_class_a_choice li" ).draggable({
+      });
+
+    
+jQuery( "#go_stats_class_a_list" ).droppable({
+      activeClass: "ui-state-default",
+      hoverClass: "ui-state-hover",
+      accept: "#go_stats_class_a_choice li",
+      drop: function( event, ui ) {
+        jQuery( this ).find( ".placeholder" ).remove();
+        jQuery( "<li></li>" ).text( ui.draggable.text() ).appendTo( this );
+		 ui.draggable.remove();
+		 		go_stats_leaderboard_choice();
+
+      }
+    }).sortable({
+      items: "li:not(.placeholder)",
+      sort: function() {
+        // gets added unintentionally by droppable interacting with sortable
+        // using connectWithSortable fixes this, but doesn't allow you to customize active/hoverClass options
+        jQuery( this ).removeClass( "ui-state-default" );
+      }
+    });
+
+
 		}
 	});
+	
+	
+	
+	
 		}
 function go_stats_close(){
 	jQuery('#go_stats_white_overlay').hide();
@@ -103,3 +157,17 @@ jQuery('#go_stats_minutes').html(html);
 	});
 	
 	}
+function go_stats_leaderboard_choice(){
+	 var values = jQuery("#go_stats_class_a_choice li")
+              .map(function(){return jQuery(this).text();}).get();
+		jQuery.ajax({
+		type: "post",url: MyAjax.ajaxurl,data: { 
+		action: 'go_stats_leaderboard',
+		class_a_choice: values,
+		order: jQuery('#go_stats_leaderboard_select').val()},
+		success: function(html){
+			jQuery('#go_stats_leaderboard_table_body').html(html);
+		}
+	});
+	}
+	
