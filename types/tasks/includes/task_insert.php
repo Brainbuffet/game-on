@@ -7,7 +7,7 @@ function go_task_insert_bttn( $arg, $post_id ){
 	global $is_resetable;
 	if( ereg('edit-slug', $arg) ){
 		$is_resetable = true;
-		$arg .= '<span id="edit-slug button button-small hide-if-no-js"><a href="javascript:void(0);" onclick="tsk_admn_opnr();" class="button button-small" >Display Task... </a></span> ';
+		$arg .= '<span id="edit-slug button button-small hide-if-no-js"><a href="javascript:void(0);" onclick="tsk_admn_opnr();" class="button button-small" >Add To Other </a></span> ';
 	}
 	return $arg;
 } 
@@ -20,9 +20,13 @@ function go_task_insert_link( $arg, $post_id ){
 if( ereg('edit-slug', $arg) ){
 		$is_resetable = true;
 		$go_table_posts = $wpdb->prefix.'posts';
-			$go_page_ids = (int)$wpdb->get_var("SELECT `ID` FROM ".$go_table_posts." WHERE `post_parent` = 0 and `post_content` like '%go_task id=\"".$post_id."\"%' limit 1");
-			$option = '<a class="button button-small" target="_blank" href="'.get_permalink($go_page_ids) .'">View Page</a>';
-			$arg .= '<span id="edit-slug button button-small">'.$option.'
+			$go_page_ids = (int)$wpdb->get_var("SELECT `ID` FROM ".$go_table_posts." WHERE (`post_content` like '%go_task id=\"".$post_id."\"%' or `post_content` like '%go_task id=\'".$post_id."\'%') order by id asc limit 1");
+			
+			$the_create_new_url = $the_admin_url.'post-new.php?&action=edit&post_type=page&go_tsk_id='.$post_id;
+	
+			
+			$option = '<a class="button button-small" target="_blank" href="'.post_permalink( $go_page_ids ) .'">View Page</a>';
+			$arg .= '<span id="edit-slug button button-small"><a class="button button-small" href="'.$the_create_new_url.'" target="_blank">Add To New Page</a> </span><span id="edit-slug button button-small">'.$option.'
 		</span> ';
 		}
 		
