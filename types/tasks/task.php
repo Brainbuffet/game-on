@@ -26,7 +26,7 @@ function register_cpt_task() {
         'description' => get_option('go_tasks_plural_name'),
         'supports' => array( 'title', 'editor', 'thumbnail', 'custom-fields', 'revisions', 'page-attributes' ),
         'taxonomies' => array( 'task_categories' ),
-        'public' => true,
+        'public' => false,
         'show_ui' => true,
         'show_in_menu' => true,
         'menu_position' => 20,
