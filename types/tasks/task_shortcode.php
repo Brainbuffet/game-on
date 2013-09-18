@@ -12,7 +12,7 @@ function go_task_shortcode($atts, $content = null) {
 		global $current_points;
 		if ($current_points < $req_rank) {
 			$points = $req_rank - $current_points;
-			echo 'You need '.$points.' points to begin this task.';
+			echo 'You need '.$points.' more points to begin this task.';
 		} else {
 		$task_currency = $custom_fields['go_mta_task_currency'][0]; // Currency granted after each stage of task
 		$task_points = $custom_fields['go_mta_task_points'][0]; // Points granted after each stage of task
