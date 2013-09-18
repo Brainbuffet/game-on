@@ -64,7 +64,7 @@ function go_store_post_type() {
 				
 			),
 			'taxonomies' => array('store_types'),
-			'public' => true,
+			'public' => false,
 			'has_archive' => true,
 			'rewrite' => array('slug' => 'store'),
 			'menu_icon' => plugins_url( '/images/little-ico.png' , __FILE__ ),  // Icon Path
